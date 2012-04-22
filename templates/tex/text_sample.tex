@@ -1,0 +1,137 @@
+\documentclass[b5paper,8pt]{jreport}
+
+\usepackage{latexsym}
+
+\setlength{\oddsidemargin}{-.2in}
+\setlength{\evensidemargin}{-.2in}
+\setlength{\topmargin}{-4em}
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{10in}
+\setlength{\parskip}{0em}
+\setlength{\topsep}{0em}
+\setlength{\columnsep}{3zw}
+
+\makeatletter
+\def\section{\@startsection {section}{1}{\z@}
+{2.5ex plus -1ex minus-.2ex}%上スペース。
+{1.2ex}%下スペース
+{\LARGE\bf}%体裁
+}
+
+\def\subsection{\@startsection {subsection}{2}{\z@}
+{2.5ex plus -1ex minus-.2ex}%上スペース。
+{1.2ex}%下スペース
+{\large\bf}%体裁
+}
+
+\def\subsubsection{\@startsection{subsubsection}{3}{\z@}
+{1.5ex plus -1ex minus- .2ex}
+{0.1ex plus -.2ex}{\normalsize\bf\underline}
+}
+
+\makeatother
+
+\begin{document}
+\title{CoC2010 シナリオ案 タイトル: Univ.}
+
+\author{200911434 青木大祐}
+\date{2011年5月19日}
+\maketitle
+\tableofcontents
+\chapter{設定}
+\section{場所}
+首都近郊の国立大学。筑波大学がベース。
+
+\section{時期}
+12月上旬から一週間前後。
+
+\section{概要}
+民俗学専攻の望月研究室に空巣が入り、桐の箱が盗まれる。中に入っていたのは
+古い銅鏡。東北地方のとある村がダムに沈む事になった際に、付近一帯を守護し
+ていた神社も一緒に沈むということで、民俗学的価値がありそうな御神体を調査
+のために譲り受けたものである。 
+
+翌日、犯人と思しき男がの腕が総合研究棟Bの一階ロビーで発見される。依然として鏡は行方不明である
+上、通常では考えられない不可解な血痕が残っており、常識では犯行は不可能と
+思われる。
+
+それから数日が経ち、神隠しの噂が流れ始める。夕方になると、ついさっきまで
+一緒にいたはずの人間がこつ然と失踪しているというものだ。これを聞いた研究
+室の教授・望月和彦は盗まれた鏡が原因であると確信する。しかし望月を待って
+いたのは、望月を犯人殺害の容疑者として確保に動いた警察であった。やむを得
+ず勾留されることになってしまった望月は、親しくしていた研究室の学生に秘蔵
+の小刀を預け、事態の収束を託す。
+
+\section{成功条件}
+\begin{itemize}
+ \item 特定期日までに鏡を処理
+       \begin{enumerate}
+	\item 鏡を破壊する
+	\item 鏡を再封印する
+       \end{enumerate}
+ \item どちらかによって結末が変化
+\end{itemize}
+
+\chapter{登場人物/舞台設定}
+\section{Non-Player Charcters}
+\subsection{望月和彦}
+\subsubsection*{提示される情報}
+56歳/男性。T大学にて民俗学専攻の教鞭を執る。今回の騒動の発端となる銅鏡を
+持ってきた張本人。一人称「僕」。
+\subsubsection*{提示されない情報}
+いわゆる探索者。多少は魔術の心得がある。
+
+\subsection{犯人}
+\subsubsection*{提示される情報}
+研究室から銅鏡を持ち去った犯人。男性と見られる。
+\subsubsection*{提示されない情報}
+研究室を出た後、一階がワックス張りで封鎖されている事に気付き、必死に逃げ道を探している途中に転倒し、鏡の封印が解けてしま
+う。その際ワックスで反射した床の向こうを「見て」しまい、異界へと呑まれ
+る。 
+
+直後に「狼」に襲われ片腕を切断され、胴体側は「狼」に持ち去られる。後に死
+亡し、片腕だけが現世であるロビーに戻る事となる。乾きかけのワックスには足
+跡が残っておらず、壁を越えた不可解な血痕は以上の顛末によって為された。
+
+\chapter{シナリオの流れ}
+\chapter{ギミック}
+\section{玄石神社}
+\subsection{概要}
+\subsubsection{提示される情報}
+「くろいわ」と読む。東北の山奥に建っていた神社。東日本大震災による山崩れ
+の影響で祭殿が倒壊してしまった。
+\subsubsection{調査によって判明する情報}
+\paragraph{銅鏡(目星)}
+御神体として祀られていた銅鏡。背面には狼を模した刻印がある。
+
+\paragraph{祭神(図書館)}
+豊穣の化身として狼を祀る。神々の使徒として狼を祀る神社としては三峯神社が有名だが、それと
+は別系統の土着系信仰である可能性が高い。元々は冷害をもたらす悪霊の写し身としてニホンオオカミ
+を祀っていたとが、いつの間にか神格化されて性質が逆転したと考え
+られる。
+
+\paragraph{神隠し(図書館)}
+過去の大地震で祭殿が倒壊した際、同じように神隠しが多発したとい
+う情報がある。
+\section{神隠し}
+\subsection{仕組み}
+銅鏡の近くにある反射面を通して現世と異界を行き来できるようになる。何かの
+弾みによって異界に移動してしまった場合や、「狼」によって異界に連れ去られ
+てしまうことを現世の人間は「神隠し」と呼ぶ。
+
+\subsection{異界に取り込まれる条件}
+反射面の向こうの世界を意識してしまうと異界への扉が繋がる。神隠しの噂を聞
+いた者は「異界へ連れ去られる恐怖」を意識してしまうため取り込まれやすく、
+これが神隠しが「伝染する」所以である。
+
+\section{異界}
+\subsection{地形}
+発現場所の地形に重ねて、強引に神社付近の地形が再現される。時期は11月下旬
+で薄らと雪が積もっている。
+
+\subsection{特性}
+人々の信仰を受け続けて神格化した「狼」が小数生息する。神性が嫌うとされる
+死体などの不浄は現世へと帰される。
+
+\chapter{台本}
+\end{document}
