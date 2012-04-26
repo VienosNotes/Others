@@ -1,0 +1,122 @@
+\documentclass[a4paper,9pt]{jarticle}
+\usepackage{url}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{epsfig}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{times}
+\usepackage{ascmac}
+\usepackage{here}
+\usepackage{txfonts}
+\usepackage{listings}
+
+\renewcommand{\lstlistingname}{リスト}
+\lstset{language=Perl,
+  basicstyle=\ttfamily\scriptsize,
+  commentstyle=\textit,
+  classoffset=1,
+  keywordstyle=\bfseries,
+  frame=tRBl,
+  framesep=5pt,
+  showstringspaces=false,
+  numbers=left,
+  stepnumber=1,
+  numberstyle=\tiny,
+  tabsize=2
+}
+
+ \lstdefinelanguage{CASL2}{
+   morekeywords={C, C++, Ruby},
+   morecomment=[l]{;},
+   morestring=[b]",%"
+ }
+
+\setlength{\oddsidemargin}{-.2in}
+\setlength{\evensidemargin}{-.2in}
+\setlength{\topmargin}{-4em}
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{10in}
+\setlength{\parskip}{0em}
+\setlength{\topsep}{0em}
+\setlength{\columnsep}{3zw}
+
+\title{ソフトウェアサイエンスセミナー 資料 \\{\large{Perl言語概説/前編}}}
+\author{青木大祐}
+
+\begin{document}
+\maketitle
+
+\section{Perlとは}
+
+\subsection{特徴}
+Perlは1987年にLarry Wallによって開発された、動的型付けのオブジェクト指向
+スクリプト言語である。C言語やawkに近い文法を採用し、強力な文字列操作と柔
+軟な記述力を持つ。
+
+コンテキストという独特の型システムを持ち、また定義済みの特殊変数や記号を
+多用することから初心者がコードを読むのは難しいと言われる事も多い。
+
+\subsection{コンセプト}
+\paragraph{TMTOWTDI}
+Perlは何か一つの事を達成するのに複数の手段を用意している事が多い。
+
+\subsection{用途}
+現在においてPerlは以下の用途に用いられる事が多い。
+\paragraph*{テキスト処理}
+Perlは強力な正規表現による置換処理や、多くの文字列処理関数を用いて、テキ
+スト処理の効率化に用いられる。これはPerlプログラムを記述して実行
+するだけでなく、ワンライナーと呼ばれるコマンドラインオプションを用いてシェ
+ルスクリプトを記述する際にも有用である。
+
+\begin{lstlisting}[caption=標準入力のソースに行番号を付けて標準出力へ]
+% ls | perl -ple '$_=sprintf("%4d",$.).":\t".$_'
+   1:	#.ido.last#
+   2:	Desktop
+   3:	Documents
+   4:	Downloads
+   5:	Dropbox
+   6:	IdeaProjects
+...
+\end{lstlisting}　
+
+\paragraph{スタンドアローンアプリケーション}
+CPAN(Complehensive Perl Archive Network)と呼ばれるモジュールアーカイブに
+蓄積されたライブラリ等の資産を用いる事で、非常に少ないコストでアプリケー
+ションを作成する事が出来る。例えば何か複雑な事をやろうとしたとして、まず
+はCPANを探せば目的を達成するためのモジュールが既にある事が多い。
+\begin{itemize}
+ \item データベース処理
+       \begin{itemize}
+	\item DBI::* (DBの種類に関わらず統一的なインターフェースを提供す
+	      る)
+       \end{itemize}
+ \item 画像処理
+       \begin{itemize}
+	\item Image::Magick (ImageMagickのPerlバインド)
+	\item Imager::* (より近代的なAPIを備えた高速なライブラリ)
+       \end{itemize}
+ \item ネットワーク関連
+       \begin{itemize}
+	\item LWP::* (高機能なHTTPクライアント)
+	\item AnyEvent::Twitter (イベント駆動のTwitterライブラリ。ストリー
+	      ムAPIにも対応)
+       \end{itemize}
+ \item GUI関連
+       \begin{itemize}
+	\item WxPerl (WxWidgetのPerlバインド)
+	\item PerlQt (QtのPerlバインド)
+       \end{itemize}
+ \item ジョーク
+       \begin{itemize}
+	\item Acme::AKB48 (某アイドルグループのメンバ情報を検索するAPI)
+	\item Acme::JavaTrace (例外で死んだときのスタックトレースがJava
+	      風になる)
+       \end{itemize}
+\end{itemize}
+
+\paragraph{ウェブアプリケーション}
+古くはCGI、現代では加えてPSGI/PlackやCatalystなどのフレームワークを用い
+てウェブアプリケーションを構築する際にも用いる。また、前述のCPANモジュー
+ルを用いる事で、複雑なシステムも比較的低コストで構築出来る。
+\end{document}
+
