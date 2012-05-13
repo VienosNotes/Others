@@ -1,0 +1,88 @@
+\documentclass[a4paper,12pt]{jreport}
+
+\usepackage{latexsym}
+
+\setlength{\oddsidemargin}{-.2in}
+\setlength{\evensidemargin}{-.2in}
+\setlength{\topmargin}{-4em}
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{10in}
+\setlength{\parskip}{0em}
+\setlength{\topsep}{0em}
+\setlength{\columnsep}{3zw}
+
+%% タイトル生成用パッケージ(重要
+%% q\usepackage{acroom-jp}
+
+%% 
+\title{DB概論I 課題}
+
+\makeatletter
+%\def\section{\@startsection {section}{1}{\z@}{-3.5ex plus -1ex minus % -.2ex}{2.3ex plus .2ex}{\Large\bf}}
+\def\section{\@startsection {section}{1}{\z@}{-3.5ex plus -1ex minus -.2ex}{2.3ex plus .2ex}{\normalsize\bf}}
+\makeatother
+
+%サブセクションのフォントサイズを普通に変更
+\makeatletter
+\def\subsection{\@startsection {subsection}{1}{\z@}{-3.5ex plus -1ex minus -.2ex}{2.3ex plus .2ex}{\normalsize\bf}}
+\makeatother
+%% 著者
+%\advisor{
+%青木大祐
+%% \footnote {学年、五十音順}
+%}
+
+%% 専攻名 と 年月 (提出年月)
+% \heiseiyear{23}  % 平成の年度
+% \majorfield{}
+
+% %% 提出日
+% \year{2011}
+% \month{03}
+% \day{31}
+
+
+\begin{document}
+
+\title{DB概論I 課題}
+\author{200911434 青木大祐}
+\date{2011年5月19日}
+\maketitle
+
+\chapter{演習問題 3.5}
+\section{部門番号1の部門に所属する従業員の氏名と住所の一覧}
+\begin{eqnarray*}
+ \Pi_{目次, 住所}(\sigma_{部門番号 = 1}(従業員))) 
+\end{eqnarray*}
+
+\section{山田一郎という氏名の従業員が所属する部門の部門名}
+\begin{eqnarray*}
+ \Pi_{部門名}(\sigma_{氏名=山田一郎}(従業員 \Join_{従業員.部門番号 = 部
+  門.部門番号} 部門))
+\end{eqnarray*}
+
+\section{年齢が20歳未満の従業員が所属する部門の部門番号と部門名の一覧}
+\begin{eqnarray*}
+ \Pi_{部門, 部門名}(\sigma_{年齢 < 20}(従業員 \Join_{従業員.部門番号 =
+  部門.部門番号} 部門))
+\end{eqnarray*}
+
+\section{業者番号3の業者が部門7に部品5を供給する単価よりも安い単価で,
+  部品5をいずれかの部門に供給している業者の一覧}
+\begin{eqnarray*}
+ \Pi_{業者}(\sigma_{\Pi_{単価}(\sigma_{業者番号 = 3 \wedge 部門 = 7
+  \wedge 部品番号 = 5}(供給)) > 単価}(\sigma_{部品番号 = 5}(供給) \Join_{供給.業者番号 = 業者.業者番号} 業者))
+\end{eqnarray*}
+
+\section{登録されているすべての部品の供給を受けている部門の部門番号の
+  一覧}
+\begin{eqnarray*}
+ \Pi_{部門番号}(供給 \div \Pi_{部品番号}(部品))
+\end{eqnarray*}
+
+\section{全従業員が30歳以上の部門の部門番号と部門名の一覧}
+\begin{eqnarray*}
+ \Pi_{部門番号, 部門名}()
+\end{eqnarray*}
+
+\end{document}
