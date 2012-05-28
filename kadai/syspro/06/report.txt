@@ -1,0 +1,213 @@
+----------------------------------------------------------------------
+学籍番号: 200911434
+名前: 青木大祐
+課題番号：6
+練習問題番号：605
+題名：ネットワーク・プログラミング／クライアント側
+
+以下にJavaで実装したHTTPテキストクライアントを示す。
+
+import java.io.*;
+import java.net.Socket;
+import java.util.ArrayList;
+
+/**
+ * Created with IntelliJ IDEA.
+ * User: d.aoki
+ * Date: 12/05/28
+ * Time: 21:30
+ * Simple HTTP Client for ex. 605
+ */
+public class wcat {
+    public static void main(String args[]) {
+        String host = args[0];
+        int port = Integer.valueOf(args[1]);
+        String file = args[2];
+
+        try {
+            Socket s = new Socket(host, port);
+            BufferedWriter bw = new BufferedWriter((new OutputStreamWriter(s.getOutputStream())));
+            BufferedReader br = new BufferedReader((new InputStreamReader(s.getInputStream())));
+
+            ArrayList<String> response = new ArrayList<String>();
+
+            bw.write("GET /" + file + " HTTP/1.1\r\n");
+            bw.write("Host: " + host + "\r\n\r\n");
+            bw.flush();
+
+            while(true) {
+                String line = br.readLine();
+                if(line == null) {
+                    break;
+                }
+                response.add(line);
+            }
+
+            for(String line : response) {
+                System.out.println(line);
+            }
+
+            br.close();
+            bw.close();
+            s.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+}
+
+このプログラムはSocketクラスを用いて通信を行い、サーバからの応答をBufferedReaderクラスを用いて受信している。
+実行例を以下に示す。
+
+ % java wcat www.coins.tsukuba.ac.jp 80 '~syspro/2012/index.html' 
+HTTP/1.1 200 OK
+Date: Mon, 28 May 2012 13:43:13 GMT
+Server: Apache
+Last-Modified: Tue, 22 May 2012 22:53:36 GMT
+ETag: "1e7650-10f7-4c0a7e3841c00"
+Accept-Ranges: bytes
+Content-Length: 4343
+Content-Type: text/html
+
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="content-type" CONTENT="text/html;charset=iso-2022-jp">
+<TITLE> システムプログラム (2012年)
+</TITLE>
+<STYLE TYPE="text/css"><!--
+@import url(coins-syspro-2012.css);
+--></STYLE>
+</HEAD>
+
+<BODY>
+
+<H1><A NAME="title">システムプログラム (2012年)</A></H1>
+
+</P><P>
+
+このページは、
+<A HREF="http://www.tsukuba.ac.jp/">筑波大学</A>／
+<A HREF="http://www.coins.tsukuba.ac.jp/">情報科学類</A>開設の
+講義、「システムプログラム」の授業のためのページです。
+
+この科目は、
+<A HREF="http://www.cs.tsukuba.ac.jp/~yas/">新城</A> と
+<A HREF="http://www.real.cs.tsukuba.ac.jp/~shui/">追川</A>の２人で
+担当します。
+
+</P><P>
+
+<H2><A NAME="report-announce">■連絡事項</A></H2>
+
+</P><P>
+
+<!--
+<DIV class="announce">
+実習室は、3C205 です。
+</DIV>
+-->
+
+<!--
+<DIV class="announce">
+４月１５日午前中は、情報科学類３年次の健康診断のため休講になります。
+この授業の初回は、４月２２日になります。
+４月１５日午後の実験は、平常通り実施されます。休講ではありません。
+
+レポート提出ページは、７月７日月曜日に閉じます。
+再提出になったものも、それまでに提出してください。
+</DIV>
+-->
+
+</P><P>
+
+<H2><A NAME="present" HREF="https://www.coins.tsukuba.ac.jp/~syspro/2012/present.cgi">■出席</A></H2>
+
+授業時間中に次のボタンを押しなさい。
+
+<form method=post action="https://www.coins.tsukuba.ac.jp/~syspro/2012/present.cgi">
+<input type=submit name="present" value="出席">
+</form>
+
+次のボタンで、過去の出席が確認ができます。
+
+<form method=post action="https://www.coins.tsukuba.ac.jp/~syspro/2012/present.cgi">
+<input type="hidden" name="event" value="show">
+<input type=submit name="present" value="出席状況表示ボタン">
+</form>
+
+</P><P>
+
+いずれも、coins のユーザ名とパスワードが必要です。ユーザ名とパスワード
+を打つ時には、SSL が有効になっていることを確認してください。また、URL 
+が <CODE><B>https://www.coins.tsukuba.ac.jp/</B></CODE> で始まっ
+ていることを目で確認して下さい。
+
+</P><P>
+情報科学類以外の受講生は、コンピュータのログインアカウントの登録が必要です。
+
+
+<H2><A NAME="syllabus" HREF="syllabus/syllabus.html">■シラバス</A></H2>
+
+<H2><A NAME="reports" HREF="reports.html">■レポート</A></H2>
+
+
+<H2><A NAME="texts">■授業内容メモ</H2>
+
+<OL>
+
+<LI><A HREF="shui/1stHalf.html">前半5回分（4月18, 25日, 5月2, 9, 16日）</A></LI>
+
+<LI value="6"><A HREF="2012-05-23/index.html">第6週 (5月23日) ネットワーク・プログラミング／クライアント側</A></LI>
+
+<!--
+<LI><A HREF="2012-06-08/index.html">第7週 (6月8日) ネットワーク・プログラミング／サーバ側(1)</A></LI>
+
+<LI><A HREF="2012-06-15/index.html">第8週 (6月15日) ネットワーク・プログラミング／サーバ側(2)</A></LI>
+
+<LI><A HREF="2012-06-22/index.html">第9週 (6月22日) ＷＷＷプログラミング</A></LI>
+
+<LI><A HREF="2012-06-29/index.html">第10週 (6月29日) スクリプト言語、クロスサイトスクリプティング攻撃</A></LI>
+-->
+
+</OL>
+
+<H2><A NAME="links">■関連ページ</A></H2>
+
+<UL>
+
+<LI> <A HREF="slab/text.html">主専攻実験：システムプログラム(2012年)</A>
+<LI> <A HREF="/~syspro/2011/">去年のシステムプログラムのページ(2011年)</A>
+
+<LI> <A HREF="http://www.tsukuba.ac.jp/">筑波大学</A>
+
+<UL>
+<LI> <A HREF="http://www.coins.tsukuba.ac.jp/">情報科学類/情報学類</A>
+<UL>
+<LI><A HREF="http://www.coins.tsukuba.ac.jp/syllabus/syllabus_index.html">情報科学類授業/情報学類 科目一覧（シラバス）</A>
+</UL>
+<LI> <A HREF="http://www.sie.tsukuba.ac.jp/">システム情報工学研究科</A>
+<LI> <A HREF="http://www.cs.tsukuba.ac.jp/">コンピュータサイエンス専攻</A>
+<UL>
+<LI> <A HREF="http://real.cs.tsukuba.ac.jp/~shui/">追川のホーム・ページ</A>
+<LI> <A HREF="http://www.cs.tsukuba.ac.jp/~yas/">新城のホーム・ページ</A>
+</UL>
+</UL>
+
+</UL>
+
+<HR>
+Last updated: 2010/04/02 12:43:59
+<BR>
+<ADDRESS>
+
+<A HREF="http://www.cs.tsukuba.ac.jp/~yas/">Yasushi Shinjo</A> / &lt;yas@is.tsukuba.ac.jp&gt;  and
+
+<A HREF="http://real.cs.tsukuba.ac.jp/%7Eshui/">Shuichi Oikawa</A> / &lt; shui @ cs.tsukuba.ac.jp &gt;
+
+</ADDRESS>
+</BODY>
+</HTML>
+
+以上、正しく通信が行えていることがわかる。
+----------------------------------------------------------------------
