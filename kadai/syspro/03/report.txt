@@ -1,0 +1,154 @@
+----------------------------------------------------------------------
+学籍番号: 200911434
+名前: 青木大祐
+課題番号：3
+練習問題番号：304
+題名：ファイルアクセス
+
+以下に、utmpxentを読み込み、変更があれば内容を再表示するプログラムを示す。
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <strings.h>
+#include <time.h>
+#include <utmpx.h>
+#include <unistd.h>
+#include <stdbool.h>
+#include <assert.h>
+#define SEC 20
+
+typedef struct utmplist_t {
+  struct utmplist_t *next;
+  struct utmpx     *u;
+} utmplist;
+
+void myprintf (struct utmpx *ulp) {
+    printf("%8.8s|%16.16s|%8.8s|%s", ulp->ut_user,
+	    ulp->ut_host, ulp->ut_line, ctime(&ulp->ut_tv.tv_sec));
+    return;
+}
+
+void free_list (utmplist *list) {
+  utmplist *tmp = NULL;
+  while (list->u != NULL) {
+    free(list->u);
+    tmp = list->next;
+    list = tmp;
+  }
+}
+
+utmplist *
+read_utmp()
+{
+  utmplist *ulp, *head = NULL;
+  struct utmpx *tmp = NULL;
+  ulp = (utmplist*) malloc(sizeof (utmplist*));
+  while (1) {
+    if (ulp == NULL) 
+      {
+	perror("memory allocation failed");
+	exit(-1);
+      }
+
+    tmp = getutxent();
+
+    if (tmp == NULL)
+      {
+	break;
+      }
+    else {
+      ulp->u = malloc(sizeof(struct utmpx));
+      *ulp->u = *tmp;
+    }
+
+    if (head == NULL) {
+      head = ulp;
+    }
+    ulp = ulp->next = (utmplist*) malloc(sizeof (utmplist*));
+  }
+  return head;
+}
+
+
+bool is_same (utmplist *before, utmplist *after) {
+  if (before == NULL) {
+    return false;
+  }
+    while (before->u != NULL || after->u != NULL) {
+      if ((before->u != NULL && after->u == NULL) || (before->u == NULL && after->u != NULL)) {
+	return false;
+      }
+      if (strcmp(ctime(&before->u->ut_tv.tv_sec), ctime(&after->u->ut_tv.tv_sec)) != 0) {
+	return false;
+      }
+      before = before->next;
+      after = after->next;
+  }
+
+  return true;
+}
+
+
+void
+write_utmp(utmplist *list)
+{
+    while (list->u != NULL) {
+      myprintf(list->u);
+      list = list->next;
+  }
+  
+}
+
+int main()
+{
+  utmplist *before = NULL;
+  utmplist *after = NULL;
+
+  while (1) {
+    setutxent();
+    before = after;
+    after = read_utmp();
+    if (!is_same(before, after)) {
+      write_utmp(after);
+    }
+    sleep(SEC);
+  }
+  free_list(before);
+  free_list(after);
+  return 0;
+}
+
+リスト構造を用いてutmpxentのエントリを保持し、以前の状態と比較して更新があれば、新しい情報を出力する。
+
+以下に実行結果を示す。この実行結果は出力間隔(SEC)を2に設定してあるので2秒間隔で出力されている。
+
+        |                |        |Sat Jul  7 05:25:12 2012
+   vieno|                | console|Sat Jul  7 05:32:53 2012
+   vieno|                | ttys000|Sat Jul  7 10:20:13 2012
+   vieno|                | ttys001|Sat Jul  7 10:20:14 2012
+   vieno|                | ttys003|Sat Jul  7 10:20:14 2012
+   vieno|                | ttys002|Sun Jul  8 23:24:57 2012
+   vieno|                | ttys004|Sat Jul  7 10:20:14 2012
+   vieno|                | ttys005|Sun Jul  8 23:39:38 2012
+   vieno|                | ttys007|Sun Jul  8 23:40:10 2012
+   vieno|                | ttys008|Sun Jul  8 23:40:35 2012
+   vieno|                | ttys009|Sun Jul  8 23:40:47 2012
+   vieno|                | ttys010|Sun Jul  8 23:40:47 2012
+   vieno|                | ttys011|Sun Jul  8 23:40:48 2012
+   vieno|                | ttys012|Sun Jul  8 23:42:25 2012
+        |                |        |Sat Jul  7 05:25:12 2012
+   vieno|                | console|Sat Jul  7 05:32:53 2012
+   vieno|                | ttys000|Sat Jul  7 10:20:13 2012
+   vieno|                | ttys001|Sat Jul  7 10:20:14 2012
+   vieno|                | ttys003|Sat Jul  7 10:20:14 2012
+   vieno|                | ttys002|Sun Jul  8 23:24:57 2012
+   vieno|                | ttys004|Sat Jul  7 10:20:14 2012
+   vieno|                | ttys005|Sun Jul  8 23:39:38 2012
+   vieno|                | ttys007|Sun Jul  8 23:40:10 2012
+   vieno|                | ttys008|Sun Jul  8 23:40:35 2012
+   vieno|                | ttys009|Sun Jul  8 23:40:47 2012
+   vieno|                | ttys010|Sun Jul  8 23:40:47 2012
+   vieno|                | ttys011|Sun Jul  8 23:40:48 2012
+   vieno|                | ttys012|Sun Jul  8 23:42:25 2012
+   vieno|                | ttys013|Sun Jul  8 23:45:13 2012
+^C

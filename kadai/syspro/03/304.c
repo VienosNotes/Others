@@ -24,21 +24,17 @@ void free_list (utmplist *list) {
   while (list->u != NULL) {
     free(list->u);
     tmp = list->next;
-    //    free(list);
     list = tmp;
   }
-  printf ("free success\n");
 }
 
 utmplist *
 read_utmp()
 {
-  //  utmplist *orig = head;
   utmplist *ulp, *head = NULL;
   struct utmpx *tmp = NULL;
   ulp = (utmplist*) malloc(sizeof (utmplist*));
   while (1) {
-    //    printf ("loop start\n");
     if (ulp == NULL) 
       {
 	perror("memory allocation failed");
@@ -49,12 +45,9 @@ read_utmp()
 
     if (tmp == NULL)
       {
-	printf ("no entry\n");
 	break;
       }
     else {
-           printf ("found... ");
-           myprintf(tmp);
       ulp->u = malloc(sizeof(struct utmpx));
       *ulp->u = *tmp;
     }
@@ -64,34 +57,25 @@ read_utmp()
     }
     ulp = ulp->next = (utmplist*) malloc(sizeof (utmplist*));
   }
-
-  printf ("read done\n");
-  //  free_list(orig);
   return head;
 }
 
 
 bool is_same (utmplist *before, utmplist *after) {
   if (before == NULL) {
-    printf ("first one\n");
     return false;
   }
     while (before->u != NULL || after->u != NULL) {
-    assert(before->u != NULL && after->u != NULL);
-    //    printf ("comparing now...\n");
-    if ((before->u != NULL && after->u == NULL) || (before->u == NULL && after->u != NULL)) {
-      printf ("  updown\n");
-      return false;
-    }
-    printf ("%s%s\n",ctime(&before->u->ut_tv.tv_sec), ctime(&after->u->ut_tv.tv_sec));
-    if (strcmp(ctime(&before->u->ut_tv.tv_sec), ctime(&after->u->ut_tv.tv_sec)) != 0) {
-      printf ("  diff\n");
-      return false;
-    }
-    before = before->next;
-    after = after->next;
+      if ((before->u != NULL && after->u == NULL) || (before->u == NULL && after->u != NULL)) {
+	return false;
+      }
+      if (strcmp(ctime(&before->u->ut_tv.tv_sec), ctime(&after->u->ut_tv.tv_sec)) != 0) {
+	return false;
+      }
+      before = before->next;
+      after = after->next;
   }
-  printf ("same\n");
+
   return true;
 }
 
@@ -99,11 +83,8 @@ bool is_same (utmplist *before, utmplist *after) {
 void
 write_utmp(utmplist *list)
 {
-    printf ("called\n");
     while (list->u != NULL) {
-      //      printf ("printing\n");
       myprintf(list->u);
-      //      printf ("next print\n");
       list = list->next;
   }
   
@@ -118,13 +99,13 @@ int main()
     setutxent();
     before = after;
     after = read_utmp();
-    assert(after != NULL);
     if (!is_same(before, after)) {
       write_utmp(after);
     }
-    //     free_list(before);
-    printf ("sleeping\n");
     sleep(SEC);
   }
+
+  free_list(before);
+  free_list(after);
   return 0;
 }

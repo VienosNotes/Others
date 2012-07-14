@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <sys/time.h>
 
@@ -15,20 +16,20 @@ main(void)
 	time(&timer);
 	printf("time = %s", ctime(&timer));
 
-	printf("time = %s", ctime(&timer));
-	printf("value = %d\n", mygetchar(5));
-	time(&timer);
-	printf("time = %s", ctime(&timer));
+	/* printf("time = %s", ctime(&timer)); */
+	/* printf("value = %d\n", mygetchar(5)); */
+	/* time(&timer); */
+	/* printf("time = %s", ctime(&timer)); */
 
-	printf("time = %s", ctime(&timer));
-	printf("value = %d\n", mygetchar(5));
-	time(&timer);
-	printf("time = %s", ctime(&timer));
+	/* printf("time = %s", ctime(&timer)); */
+	/* printf("value = %d\n", mygetchar(5)); */
+	/* time(&timer); */
+	/* printf("time = %s", ctime(&timer)); */
 
-	printf("time = %s", ctime(&timer));
-	printf("value = %d\n", mygetchar(5));
-	time(&timer);
-	printf("time = %s", ctime(&timer));
+	/* printf("time = %s", ctime(&timer)); */
+	/* printf("value = %d\n", mygetchar(5)); */
+	/* time(&timer); */
+	/* printf("time = %s", ctime(&timer)); */
 
 	return 0;
 }
@@ -57,20 +58,18 @@ mygetchar(int time)
 	} /* 文字入力があった場合 */
 	else if (n == 1)
 	{
-		int             var;
+		if (feof(stdin) != 0) {
+		  getchar();
+		  return -1;
+                }
+
+                int             var;
 		var = getchar();
-
+		printf("hoge");
 		/* varがEOFでも改行文字でもなければ入力ストリームをクリア */
-		while (var != feof() && var != '\n' && getchar() != '\n');
-
-		if (var == EOF)
-		{ /* varがEOFなら-1を返す */
-			return -1; 
-		}
-		else
-		{ /* 入力された文字を返す */
-			return var;
-		}
+    		while (feof(stdin) == 0) getchar(); 
+		/* 入力された文字を返す */
+                return var;
 
 	}
 	else /* 何かしらで失敗した場合 */

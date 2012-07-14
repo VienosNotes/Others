@@ -1,0 +1,185 @@
+----------------------------------------------------------------------
+学籍番号: 200911434
+名前: 青木大祐
+課題番号：2
+練習問題番号：208
+題名：文字，文字列，標準入出力
+
+以下に演習208の要求を満たすソースコードを提示する。
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int 
+console(void)
+{
+	char           *buf;
+	char           *now;
+	char           *ir, *or, *pipe;
+
+	buf = (char *) malloc(128);
+	if (buf == NULL) {
+		printf("Memory allocation failed\n");
+		exit(1);
+	}
+
+	now = buf;
+
+	if (fgets(buf, 128, stdin) == NULL) {
+		printf("Loading string failed\n");
+		exit(1);
+	}
+
+	if (strchr(buf, '\n') != NULL) {
+		buf[strlen(buf) - 1] = '\0';
+	}
+	else {
+		while (getchar() != '\n');
+	}
+
+	char           *current = malloc(128);
+	char           *current_orig = current;
+	char           *mode = "command: ";
+
+	while (*now != '\0') {
+		if (*now == ' ') {
+			now++;
+			continue;
+		}
+		if (*now != '<' && *now != '>' && *now != '|') {
+			*current = *now;
+			current++;
+		}
+		else {
+			printf("%s", mode);
+			if (*now == '<') {
+				mode = "input: ";
+			}
+			else if (*now == '>') {
+				mode = "output: ";
+			}
+			else {
+				mode = "pipe: ";
+			}
+
+			char           *c = current_orig;
+			while (c < current) {
+				putchar(*c);
+				c++;
+			}
+
+			printf("\n");
+			current = current_orig;
+		}
+
+		now++;
+	}
+
+	printf("%s ", mode);
+	char           *c = current_orig;
+
+	while (c < current) {
+		putchar(*c);
+		c++;
+	}
+	printf("\n");
+	free(buf);
+
+	return 0;
+}
+
+int 
+main(void)
+{
+	while (1) {
+		console();
+	}
+}
+
+なお、このプログラムが入力として受け付けるのは128文字までのASCII文字列であり、それ以外の入力を行った場合の動作については保証しない。
+
+文字列を先頭からスキャンしていき、特定の記号(>, <, |)が出現するまでcurrentにバッファしていく。特定の記号が出現すると、現在のモード(初期状態ではcommand)とcurrentの中身を出力し、出現した記号に応じて次のモードを設定する。
+
+これにより、入力される文字列が128文字以内であれば、何段パイプをつないでも正しく解釈される。
+
+以下に実行例として、取りうるすべての記号の組み合わせについての入力と、それに対する出力を示す。
+% ./a.out
+hoge
+command:  hoge
+hoge > fuga
+command: hoge
+output:  fuga
+hoge < fuga
+command: hoge
+input:  fuga
+hoge | fuga
+command: hoge
+pipe:  fuga
+hoge > fuga < piyo
+command: hoge
+output: fuga
+input:  piyo
+hoge > fuga | piyo
+command: hoge
+output: fuga
+pipe:  piyo
+hoge < fuga > piyo
+command: hoge
+input: fuga
+output:  piyo
+hoge < fuga | piyo
+command: hoge
+input: fuga
+pipe:  piyo
+hoge | fuga > piyo
+command: hoge
+pipe: fuga
+output:  piyo
+hoge | fuga < piyo
+command: hoge
+pipe: fuga
+input:  piyo
+hoge > fuga < piyo | foo        
+command: hoge
+output: fuga
+input: piyo
+pipe:  foo
+hoge < fuga > piyo | foo
+command: hoge
+input: fuga
+output: piyo
+pipe:  foo
+hoge | fuga > piyo < foo
+command: hoge
+pipe: fuga
+output: piyo
+input:  foo
+hoge | fuga < piyo > foo
+command: hoge
+pipe: fuga
+input: piyo
+output:  foo
+hoge < fuga | piyo > foo
+command: hoge
+input: fuga
+pipe: piyo
+output:  foo
+hoge > fuga | piyo > foo
+command: hoge
+output: fuga
+pipe: piyo
+output:  foo
+hoge | fuga | piyo | foo
+command: hoge
+pipe: fuga
+pipe: piyo
+pipe:  foo
+hoge | fuga | piyo | foo | bar | baz
+command: hoge
+pipe: fuga
+pipe: piyo
+pipe: foo
+pipe: bar
+pipe:  baz
+

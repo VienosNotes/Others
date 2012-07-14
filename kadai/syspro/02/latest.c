@@ -1,13 +1,3 @@
-----------------------------------------------------------------------
-学籍番号: 200911434
-名前: 青木大祐
-課題番号：2
-練習問題番号：208
-題名：文字，文字列，標準入出力
-
-以下に演習208の要求を満たすソースコードを提示する。
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -99,34 +89,3 @@ main(void)
 		console();
 	}
 }
-
-
-なお、このプログラムが入力として受け付けるのは128文字までのASCII文字列であり、それ以外の入力を行った場合の動作については保証しない。
-
-実際の処理を行うのはconsole関数であり、main関数は入力に応じてconsole関数を適宜呼び出す。
-console関数の後半で文字列をパースしており、特定の記号(>, <, |)の出現位置を探索して条件分岐している。
-また、to_char関数は文字列のうち、指定した区間のみを出力する関数である。
-
-以下に実行結果を示す。
-$ ./a.out
-hoge
-command name: hoge
-input: console
-hoge < piyo
-command name: hoge 
-input: piyo
-hoge < piyo | fuga
-command name: hoge 
-input: piyo 
-pipe: fuga
-hoge < piyo > fuga
-command name: hoge 
-input: piyo 
-output: fuga
-hoge < piyo > fuga | homhom
-command name: hoge 
-input: piyo 
-output: fuga 
-pipe: homhom
-
-----------------------------------------------------------------------
