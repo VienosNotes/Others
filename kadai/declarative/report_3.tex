@@ -1,0 +1,109 @@
+\documentclass[a4paper,12pt]{jarticle}
+\usepackage{url}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{epsfig}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{times}
+\usepackage{ascmac}
+\usepackage{here}
+\usepackage{txfonts}
+\usepackage{listings}
+
+\renewcommand{\lstlistingname}{リスト}
+\lstset{%language=Ocaml,
+  basicstyle=\ttfamily\scriptsize,
+  commentstyle=\textit,
+  classoffset=1,
+  keywordstyle=\bfseries,
+  frame=tRBl,
+  framesep=5pt,
+  showstringspaces=false,
+  numbers=left,
+  stepnumber=1,
+  numberstyle=\tiny,
+  tabsize=2
+}
+
+ \lstdefinelanguage{CASL2}{
+   morekeywords={C, C++, Ruby},
+   morecomment=[l]{;},
+   morestring=[b]",%"
+ }
+
+\setlength{\oddsidemargin}{-.2in}
+\setlength{\evensidemargin}{-.2in}
+\setlength{\topmargin}{-4em}
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{10in}
+\setlength{\parskip}{0em}
+\setlength{\topsep}{0em}
+\setlength{\columnsep}{3zw}
+
+\title{宣言型プログラム論}
+\author{200911434 青木大祐}
+
+\begin{document}
+\maketitle
+\newpage
+
+\section*{問題4.1}
+\lstinputlisting{./4_1.ml}
+\begin{lstlisting}
+        val inter : 'a list -> 'a list -> 'a list = <fun>
+#   - : int list = [3; 2]
+
+#         val pair : 'a -> 'b list -> ('a * 'b) list = <fun>
+#   - : (int * string) list = [(1, "A"); (1, "B"); (1, "C")]
+
+#             val prod : 'a list -> 'b list -> ('a * 'b) list = <fun>
+#   - : (int * string) list =
+[(1, "A"); (1, "B"); (2, "A"); (2, "B"); (3, "A"); (3, "B")]
+\end{lstlisting}
+
+\section*{問題4.2}
+\lstinputlisting{4_2.ml}
+\begin{lstlisting}
+        val flatten : 'a list list -> 'a list = <fun>
+#   - : int list = [1; 2; 3]
+#     val exists : ('a -> bool) -> 'a list -> bool = <fun>
+#   - : bool = true
+# 
+\end{lstlisting}
+\newpage
+\section*{問題4.3}
+\lstinputlisting{4_3.ml}
+\begin{lstlisting}
+    type 'a btree = Lf | Br of 'a * 'a btree * 'a btree
+#       val add : 'a -> 'a btree -> 'a btree = <fun>
+#       val tr : int btree = Br (2, Br (1, Lf, Lf), Br (3, Lf, Lf))
+#       val min_elt : 'a btree -> 'a = <fun>
+#   - : int = 1
+#       val remove : 'a -> 'a btree -> 'a btree = <fun>
+#   - : int btree = Br (2, Br (1, Lf, Lf), Lf)
+# 
+\end{lstlisting}
+\newpage
+\section*{問題4.4}
+\lstinputlisting{4_4.ml}
+\begin{lstlisting}
+    type 'a ftree = FBr of 'a * 'a ftree list
+#         val fdepth : 'a ftree -> int = <fun>
+#   - : int = 3
+#         val fpreorder : 'a ftree -> 'a list = <fun>
+#   - : int list = [1; 2; 3; 4; 5]
+# 
+\end{lstlisting}
+
+\section*{問題4.5}
+\lstinputlisting{4_5.ml}
+\begin{lstlisting}
+        val split : 'a list -> 'a list * 'a list = <fun>
+#   - : int list * int list = ([1; 3; 5], [2; 4; 6])
+#       val merge : ('a -> 'a -> bool) -> 'a list -> 'a list -> 'a list = <fun>
+#     - : int list = [1; 2; 3; 3; 4; 5]
+#       val msort : ('a -> 'a -> bool) -> 'a list -> 'a list = <fun>
+#   - : int list = [1; 3; 4; 5; 6; 7]
+# 
+\end{lstlisting}
+\end{document}

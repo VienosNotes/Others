@@ -1,0 +1,94 @@
+\documentclass[a4paper,12pt]{jarticle}
+\usepackage{url}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{epsfig}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{times}
+\usepackage{ascmac}
+\usepackage{here}
+\usepackage{txfonts}
+\usepackage{listings}
+
+\renewcommand{\lstlistingname}{リスト}
+\lstset{%language=Ocaml,
+  basicstyle=\ttfamily\scriptsize,
+  commentstyle=\textit,
+  classoffset=1,
+  keywordstyle=\bfseries,
+  frame=tRBl,
+  framesep=5pt,
+  showstringspaces=false,
+  numbers=left,
+  stepnumber=1,
+  numberstyle=\tiny,
+  tabsize=2
+}
+
+ \lstdefinelanguage{CASL2}{
+   morekeywords={C, C++, Ruby},
+   morecomment=[l]{;},
+   morestring=[b]",%"
+ }
+
+\setlength{\oddsidemargin}{-.2in}
+\setlength{\evensidemargin}{-.2in}
+\setlength{\topmargin}{-4em}
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{10in}
+\setlength{\parskip}{0em}
+\setlength{\topsep}{0em}
+\setlength{\columnsep}{3zw}
+
+\title{宣言型プログラム論}
+\author{200911434 青木大祐}
+
+\begin{document}
+\maketitle
+\newpage
+
+\section*{問題3.1}
+\lstinputlisting{./3_1.ml}
+\begin{lstlisting}
+ type figure = Circle of float | Square of float | Rectangle of float * float
+ #             val area : figure -> float = <fun>
+ #   12.56- : unit = ()
+ # 4.- : unit = ()
+ # 6.- : unit = ()
+ # 
+\end{lstlisting}
+
+\section*{問題3.2}
+\lstinputlisting{3_2.ml}
+\begin{lstlisting}
+type 'a tree = Lf | Br of 'a * 'a tree * 'a tree
+#           val depth : 'a tree -> int = <fun>
+#       val comptree : int -> 'a -> 'a tree = <fun>
+#   val sample : int tree = Br (2, Br (4, Br (5, Lf, Lf), Lf), Br (1, Lf, Lf))
+# - : int = 3
+# - : string tree =
+Br ("a",
+ Br ("a",
+  Br ("a", Br ("a", Br ("a", Lf, Lf), Br ("a", Lf, Lf)),
+   Br ("a", Br ("a", Lf, Lf), Br ("a", Lf, Lf))),
+  Br ("a", Br ("a", Br ("a", Lf, Lf), Br ("a", Lf, Lf)),
+   Br ("a", Br ("a", Lf, Lf), Br ("a", Lf, Lf)))),
+ Br ("a",
+  Br ("a", Br ("a", Br ("a", Lf, Lf), Br ("a", Lf, Lf)),
+   Br ("a", Br ("a", Lf, Lf), Br ("a", Lf, Lf))),
+  Br ("a", Br ("a", Br ("a", Lf, Lf), Br ("a", Lf, Lf)),
+   Br ("a", Br ("a", Lf, Lf), Br ("a", Lf, Lf)))))
+\end{lstlisting}
+
+\section*{問題3.3}
+\lstinputlisting{3_3.ml}
+\begin{lstlisting}
+    type 'a tree = Lf | Br of 'a * 'a tree * 'a tree
+#   val sample : int tree = Br (2, Br (4, Br (5, Lf, Lf), Lf), Br (1, Lf, Lf))
+#         val inorder : 'a tree -> 'a list = <fun>
+#         val postorder : 'a tree -> 'a list = <fun>
+#   - : int list = [5; 4; 2; 1]
+# - : int list = [5; 4; 1; 2]
+\end{lstlisting}
+
+\end{document}

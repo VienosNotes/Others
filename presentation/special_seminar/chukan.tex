@@ -1,0 +1,51 @@
+\documentclass[14pt,dvipdfm,trans]{beamer}
+% pdfの栞の字化けを防ぐ
+% テーマ
+\usetheme{CambridgeUS}
+% navi. symbolsは目立たないが，dvipdfmxを使うと機能しないので非表示に
+\setbeamertemplate{navigation symbols}{} 
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+% フォントはお好みで
+\usepackage{txfonts}
+\usepackage{strike}
+\mathversion{bold}
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\setbeamerfont{title}{size=\large,series=\bfseries}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamertemplate{frametitle}[default][center]
+\usefonttheme{professionalfonts} 
+
+\usepackage{listings}
+
+
+\title{TeXサーバの制作}
+\author{青木大祐}
+\institute{情報科学類}
+\date{情報特別演習 中間発表}
+
+\usepackage{color}	% required for `\textcolor' (yatex added)
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}
+ \frametitle{やりたいこと}
+ \begin{itemize}
+  \item WebからTeXを利用できるWebサービスを実装
+        \begin{itemize}
+         \item マシンごとに入ってるライブラリとかが違ってて面倒
+         \item そもそもTeXが大きすぎて入れるのに時間が掛かる
+        \end{itemize}
+        \vspace*{1zh}
+  \item 単純なマークアップ言語でも記述できるように
+        \begin{itemize}
+         \item TeXは難解過ぎる
+         \item 大体の場合はもっと単純な命令だけで充分
+         \item とにかく簡単にレポートの体裁を整えたい
+        \end{itemize}
+ \end{itemize}
+\end{frame}
+
+\end{document}

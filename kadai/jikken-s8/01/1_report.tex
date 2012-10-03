@@ -1,0 +1,82 @@
+\documentclass[a4paper,9pt]{jarticle}
+\usepackage{url}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{epsfig}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{times}
+\usepackage{ascmac}
+\usepackage{here}
+\usepackage{txfonts}
+\usepackage{listings}
+
+\renewcommand{\lstlistingname}{リスト}
+\lstset{%language=Ocaml,
+  basicstyle=\ttfamily\scriptsize,
+  commentstyle=\textit,
+  classoffset=1,
+  keywordstyle=\bfseries,
+  frame=tRBl,
+  framesep=5pt,
+  showstringspaces=false,
+  numbers=left,
+  stepnumber=1,
+  numberstyle=\tiny,
+  tabsize=2
+}
+
+ \lstdefinelanguage{CASL2}{
+   morekeywords={C, C++, Ruby},
+   morecomment=[l]{;},
+   morestring=[b]",%"
+ }
+
+\setlength{\oddsidemargin}{-.2in}
+\setlength{\evensidemargin}{-.2in}
+\setlength{\topmargin}{-4em}
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{10in}
+\setlength{\parskip}{0em}
+\setlength{\topsep}{0em}
+\setlength{\columnsep}{3zw}
+
+\title{ソフトウェアサイエンス実験 S8 課題1-3}
+\author{200911434 青木大祐}
+
+\begin{document}
+\maketitle
+\newpage
+\setcounter{section}{1}
+\setcounter{subsection}{3}
+\subsubsection{最大公約数}
+ユークリッドの互除法を用いて最大公約数を計算する。引数のどちらかが負数だっ
+た場合は絶対値を引数にして計算を行う。
+
+\lstinputlisting{1_1.ml}
+
+\begin{lstlisting}[caption=実行結果]
+ #   - : int = 5
+ # - : int = 22
+\end{lstlisting}
+正しく計算できていることが分かる。
+
+\subsubsection{フィボナッチ数}
+以下の関数はフィボナッチ数列の、引数に指定したn番目の数字を出力する。
+
+\lstinputlisting{1_2.ml}
+
+\begin{lstlisting}[caption=実行結果]
+   #   - : int = 55
+   # - : int = 6765
+\end{lstlisting}
+正しく計算できていることが分かる。
+ 
+\subsubsection{クイックソート}
+再帰を用いてクイックソートを実装した。リストの先頭をpivotに指定したList.partitionで左右に分割し、それぞれに対して再帰的にクイックソートを適用していく。
+
+\lstinputlisting{1_5.ml}
+\begin{lstlisting}[caption=実行結果]
+   #   - : int list = [1; 3; 5; 5; 7; 7; 13; 14; 32; 52]
+\end{lstlisting}
+これより正しくソートされていることがわかる。
+\end{document}

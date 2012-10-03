@@ -19,40 +19,40 @@
 \setlength{\topsep}{0em}
 \setlength{\columnsep}{3zw}
 
-\title{TeX�����Фι���}
-\author{200911434 ������ʹ}
+\title{TeXサーバの構築}
+\author{200911434 青木大祐}
 
 \begin{document}
 \maketitle
-\section{�ط�/��Ū}
-�ֵ��Υ�ݡ��Ȳ������칶�¸����ץ쥼��ơ�����󥹥饤�ɤκ����ʤ�TeX
-���Ѥ��뵡���¿����������TeX��Ƴ���ϥ����Ȥ��⤯��ʣ����η׻������ͭ
-�����ݤ�Ʊ�ͤʴĶ������Ƥ�������Τϼ�֤Ǥ��롣
+\section{背景/目的}
+講義のレポート課題や主専攻実験、プレゼンテーションスライドの作成などTeX
+を用いる機会は多い。しかしTeXの導入はコストが高く、複数台の計算機を所有
+した際に同様な環境を全てに整えるのは手間である。
 
-������褹�뤿��ˡ��ͥåȥ��������֤�������Υ����Ф�TeX�ե�����
-���������������Фǥ���ѥ��뤷��PDF�ե���������������ɤ�����Ȥߤ���
-���뤳�Ȥ���Ū�Ȥ��롣
+これを解決するために、ネットワーク上に設置した１台のサーバにTeXファイル
+を送信し、サーバでコンパイルしたPDFファイルをダウンロードする仕組みを構築
+することを目的とする。
 
-\section{������ɸ}
-\subsection{��¸TeX�ե�����Υ���ѥ���}
-���������ˤ���TeX�ե�����򥵡��Ф����ꡢ����ѥ��뤵���롣
+\section{実装目標}
+\subsection{既存TeXファイルのコンパイル}
+ローカル上にあるTeXファイルをサーバに送り、コンパイルさせる。
 
-\subsection{WebUI��TeX�ե�����򵭽�}
-���ʻȤ�TeX�ե�����Υץꥢ��֥��ͽ��ƥ�ץ졼�ȤȤ����Ѱդ��Ƥ�����WebUI�Υե������
-\textbackslash begin\{document\}�ʲ��򵭽Ҥ��롣
-WebUI���Ѥ��������Ȥ��Ƥϡ������Ѱդ���Ƥ��ʤ�¾�ͤη׻����򥲥��ȥ桼
-���Ȥ������Ѥ�����䡢OS�򥤥󥹥ȡ��뤷���Ф���η׻�����Ȥ��ݤʤɤ����������󤲤��롣
+\subsection{WebUIでTeXファイルを記述}
+普段使うTeXファイルのプリアンブルを予めテンプレートとして用意しておき、WebUIのフォームに
+\textbackslash begin\{document\}以下を記述する。
+WebUIを用いる利点としては、何も用意されていない他人の計算機をゲストユー
+ザとして利用する場合や、OSをインストールしたばかりの計算機を使う際などの利便性が挙げられる。
 
-\subsection{������ץȤˤ��TeX�ե����������}
-TeX�����ñ��Trac Wiki��ˡ���Ѥ��ƹ�¤Ū�ʥƥ����Ȥ򵭽Ҥ���������¦��
-TeX���Ѵ����ƥ���ѥ��뤹�롣
+\subsection{スクリプトによるTeXファイルの生成}
+TeXよりも簡単なTrac Wiki記法を用いて構造的なテキストを記述し、サーバ側で
+TeXに変換してコンパイルする。
 
 
-�ޤ�����Ľ�˱������ɲä�ɬ�פȻפ��뵡ǽ���༡�������Ƥ�����
+また、進捗に応じて追加で必要と思われる機能を逐次実装していく。
 
-\section{��������}
-�����ˤ�Perl��Web Application Framework�Ǥ���Amon2�����Ѥ��롣���Υ�����
-����ʣ���ʥڡ������ܤ�ǡ����١����ޥ͡�����ʤɤ�ɬ��̵�����ᡢ���̥ե졼
-���������������̤����ʤ�Ŭ���Ƥ���ȹͤ����뤿��Ǥ��롣
+\section{実装方針}
+実装にはPerlのWeb Application FrameworkであるAmon2を利用する。このサービ
+スは複雑なページ遷移やデータベースマネージャなどは必要無いため、軽量フレー
+ムワークの方が記述量が少なく適していると考えられるためである。
 
 \end{document}

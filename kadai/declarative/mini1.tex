@@ -1,0 +1,125 @@
+\documentclass[a4paper,8pt]{jarticle}
+\usepackage{url}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{epsfig}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{times}
+\usepackage{ascmac}
+\usepackage{here}
+\usepackage{txfonts}
+\usepackage{listings}
+
+\renewcommand{\lstlistingname}{リスト}
+\lstset{%language=Ocaml,
+  basicstyle=\ttfamily\scriptsize,
+  commentstyle=\textit,
+  classoffset=1,
+  keywordstyle=\bfseries,
+  frame=trbl,
+  framesep=5pt,
+  showstringspaces=false,
+  numbers=left,
+  stepnumber=1,
+  numberstyle=\tiny,
+  tabsize=2
+}
+
+ \lstdefinelanguage{CASL2}{
+   morekeywords={C, C++, Ruby},
+   morecomment=[l]{;},
+   morestring=[b]",%"
+ }
+
+\setlength{\oddsidemargin}{-.2in}
+\setlength{\evensidemargin}{-.2in}
+\setlength{\topmargin}{-4em}
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{9.5in}
+\setlength{\parskip}{0em}
+\setlength{\topsep}{0em}
+\setlength{\columnsep}{3zw}
+
+\title{宣言型プログラム論 ミニプロジェクト1}
+\author{200911434 青木大祐}
+
+\begin{document}
+\maketitle
+\newpage
+以下にミニプロジェクト全体のソースコードを示す。
+\lstinputlisting{mini.ml}
+\newpage
+\section{多倍長整数の加算}
+\begin{quote}
+
+\end{quote}
+\lstinputlisting[firstnumber=23,linerange={23-39}]{mini.ml}
+内部関数として、\tt{List.hd}、\tt{List.tl}に空リストの場合の処理を追加し
+た\tt{myhd}、\tt{mytl}を用いており、各桁の和とcarryを計算しながら、再帰
+的に次の桁へ計算を進めている。\\
+
+
+以下に実行部分とその結果を示す。以降、テスト用の数値は別に作成した検算用プログラム
+で生成したものを用いている。
+
+
+\lstinputlisting[firstnumber=83,linerange={83-96}]{mini.ml}
+\begin{lstlisting}
+ - : int list = [458752885; 726968742; 1]
+\end{lstlisting}
+正しく計算できていることが分かる。
+
+\section{n番目とn+1番目のフィボナッチ数の組を多倍長整数として計算する関
+ 数}
+\lstinputlisting[firstnumber=41,linerange={41-48}]{mini.ml}
+\tt{ni}を1から与えられた\tt{n}まで増やしながら、課題1で作成した
+\tt{buint\_add}関数を用いて、フィボナッチ数を計算している。\\
+
+\newpage
+以下に実行部分とその結果を示す。\\
+
+\lstinputlisting[firstnumber=98,linerange={98-106}]{mini.ml}
+\begin{lstlisting}
+- : int list * int list =
+([1167376323; 1740041551; 76], [277887173; 604790509; 124]) 
+\end{lstlisting}
+正しく計算できていることが分かる。
+
+\section{多倍長整数と整数 ($0$以上$2^{31}-1$以下) の乗算}
+\lstinputlisting[firstnumber=50,linerange={50-60}]{mini.ml}
+各桁に整数を掛けて下位からの繰り上がりを加算した後で、上位への繰り上がり
+を算出し、再帰的に桁を辿っていく。\\
+
+以下に実行部分とその結果を示す。
+\lstinputlisting[firstnumber=108,linerange={108-114}]{mini.ml}
+\begin{lstlisting}
+- : int list = [444755861; 1144662764; 1592882151; 39]
+\end{lstlisting}
+正しく計算できていることが分かる。
+
+\section{一桁分の整数 n に対して n! を多倍長整数として計算する関数}
+\lstinputlisting[firstnumber=62,linerange={62-70}]{mini.ml}
+課題3で作成した\tt{buint\_suint\_multi}関数を用いて、nowを0まで減らしなが
+ら再帰的に乗算していく。\\
+
+以下に実行部分とその結果を示す。
+\lstinputlisting[firstnumber=116,linerange={116-121}]{mini.ml}
+\begin{lstlisting}
+- : int list = [2076180480; 1128227104; 3363457]
+\end{lstlisting}
+正しく計算できていることが分かる。
+
+\section{多倍長整数の乗算}
+\lstinputlisting[firstnumber=72,linerange={72-80}]{mini.ml}
+同じく課題3で作成した\tt{buint\_suint\_multi}関数を用いて計算を行う。計
+算を再帰に適した形にするため、今までは下位の桁から計算していたところを上
+位の桁から計算している。\\
+
+以下に実行部分とその結果を示す。
+\lstinputlisting[firstnumber=123,linerange={123-128}]{mini.ml}
+\begin{lstlisting}
+- : int list = [1069672836; 1984622252; 393424931; 615602474]
+\end{lstlisting}
+正しく計算できていることが分かる。
+
+\end{document}

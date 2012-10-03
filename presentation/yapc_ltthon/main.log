@@ -1,9 +1,9 @@
-This is e-pTeX, Version 3.1415926-p3.2-110415-2.3 (utf8.euc) (TeX Live 2011) (format=platex 2011.7.3)  16 AUG 2012 17:43
+This is e-pTeX, Version 3.1415926-p3.2-110415-2.3 (utf8.euc) (TeX Live 2011) (format=platex 2011.7.3)  29 SEP 2012 00:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**perl6.tex
-(./perl6.tex
+**main.tex
+(./main.tex
 pLaTeX2e <2006/11/10> (based on LaTeX2e <2009/09/24> patch level 0)
 Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, af
 rikaans, arabic, basque, bulgarian, catalan, pinyin, croatian, czech, danish, d
@@ -834,58 +834,59 @@ File: listings.cfg 2007/02/22 1.4 listings configuration
 ))
 Package: listings 2007/02/22 1.4 (Carsten Heinz)
 
-(./perl6.aux)
-\openout1 = `perl6.aux'.
+(./main.aux)
+\openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/txmi/m/it on input line 63.
-LaTeX Font Info:    Try loading font information for OML+txmi on input line 63.
+LaTeX Font Info:    Checking defaults for OML/txmi/m/it on input line 31.
+LaTeX Font Info:    Try loading font information for OML+txmi on input line 31.
 
  (/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/omltxmi.fd
 File: omltxmi.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for OMS/txsy/m/n on input line 63.
-LaTeX Font Info:    Try loading font information for OMS+txsy on input line 63.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OMS/txsy/m/n on input line 31.
+LaTeX Font Info:    Try loading font information for OMS+txsy on input line 31.
+
 
 (/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/omstxsy.fd
 File: omstxsy.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for OMX/txex/m/n on input line 63.
-LaTeX Font Info:    Try loading font information for OMX+txex on input line 63.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OMX/txex/m/n on input line 31.
+LaTeX Font Info:    Try loading font information for OMX+txex on input line 31.
 
 
 (/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/omxtxex.fd
 File: omxtxex.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for U/txexa/m/n on input line 63.
-LaTeX Font Info:    Try loading font information for U+txexa on input line 63.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for U/txexa/m/n on input line 31.
+LaTeX Font Info:    Try loading font information for U+txexa on input line 31.
 
 (/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/utxexa.fd
 File: utxexa.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for JY1/mc/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for JT1/mc/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for JY1/mc/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for JT1/mc/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
 
 (I search kanjifont definition file: . . ) (I search font definition file: . .
 . . . . . . )
-LaTeX Font Info:    Try loading font information for OT1+txss on input line 63.
+LaTeX Font Info:    Try loading font information for OT1+txss on input line 31.
 
  (/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/ot1txss.fd
 File: ot1txss.fd 2000/12/15 v3.1
 )
 LaTeX Font Info:    Font shape `OT1/txss/m/n' will be
-(Font)              scaled to size 13.67995pt on input line 63.
+(Font)              scaled to size 13.67995pt on input line 31.
 *geometry* detected driver: dvipdfm
 *geometry* verbose mode - [ preamble ] result:
 * driver: dvipdfm
@@ -921,7 +922,7 @@ LaTeX Font Info:    Font shape `OT1/txss/m/n' will be
 
 ABD: EveryShipout initializing macros
 \AtBeginShipoutBox=\box71
-Package hyperref Info: Link coloring OFF on input line 63.
+Package hyperref Info: Link coloring OFF on input line 31.
 
 (/usr/local/texlive/2011/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
@@ -931,13 +932,13 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count165
 )
-LaTeX Info: Redefining \ref on input line 63.
-LaTeX Info: Redefining \pageref on input line 63.
-LaTeX Info: Redefining \nameref on input line 63.
+LaTeX Info: Redefining \ref on input line 31.
+LaTeX Info: Redefining \pageref on input line 31.
+LaTeX Info: Redefining \nameref on input line 31.
 
-(./perl6.out) (./perl6.out)
+(./main.out) (./main.out)
 \@outlinefile=\write5
-\openout5 = `perl6.out'.
+\openout5 = `main.out'.
 
 
 (/usr/local/texlive/2011/texmf-dist/tex/latex/beamer/translator/dicts/translato
@@ -965,161 +966,88 @@ r-theorem-dictionary/translator-theorem-dictionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 )
 \c@lstlisting=\count166
- (./perl6.nav)
+ (./main.nav)
 LaTeX Font Info:    Font shape `OT1/txss/m/n' will be
-(Font)              scaled to size 5.69998pt on input line 63.
+(Font)              scaled to size 5.69998pt on input line 31.
 LaTeX Font Info:    Font shape `OT1/txss/m/n' will be
-(Font)              scaled to size 16.41594pt on input line 64.
+(Font)              scaled to size 16.41594pt on input line 32.
 LaTeX Font Info:    Font shape `JT1/gt/bx/n' in size <17.28> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 64.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 32.
 LaTeX Font Info:    Font shape `JY1/gt/bx/n' in size <17.28> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 64.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 32.
 LaTeX Font Info:    Font shape `OT1/txss/bx/n' in size <17.28> not available
-(Font)              Font shape `OT1/txss/b/n' tried instead on input line 64.
+(Font)              Font shape `OT1/txss/b/n' tried instead on input line 32.
 LaTeX Font Info:    Font shape `OT1/txss/b/n' will be
-(Font)              scaled to size 16.41594pt on input line 64.
+(Font)              scaled to size 16.41594pt on input line 32.
 LaTeX Font Info:    Font shape `OT1/txss/m/n' will be
-(Font)              scaled to size 7.59998pt on input line 64.
+(Font)              scaled to size 7.59998pt on input line 32.
 LaTeX Font Info:    Font shape `OT1/txss/m/n' will be
-(Font)              scaled to size 3.79999pt on input line 64.
+(Font)              scaled to size 3.79999pt on input line 32.
 
 [1
 
-]
-LaTeX Font Info:    Font shape `OT1/txss/m/n' will be
-(Font)              scaled to size 11.39996pt on input line 81.
- [2
+] [2
 
 ] [3
 
-]
-LaTeX Font Info:    Font shape `OT1/txss/m/n' will be
-(Font)              scaled to size 19.70294pt on input line 113.
- [4
-
-]
-LaTeX Font Info:    Try loading font information for OT1+txr on input line 134.
-
- (/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/ot1txr.fd
-File: ot1txr.fd 2000/12/15 v3.1
-)
-LaTeX Font Info:    Try loading font information for U+txsya on input line 134.
-
- (/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/utxsya.fd
-File: utxsya.fd 2000/12/15 v3.1
-)
-LaTeX Font Info:    Try loading font information for U+txsyb on input line 134.
-
-
-(/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/utxsyb.fd
-File: utxsyb.fd 2000/12/15 v3.1
-)
-LaTeX Font Info:    Try loading font information for U+txmia on input line 134.
-
-
-(/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/utxmia.fd
-File: utxmia.fd 2000/12/15 v3.1
-)
-LaTeX Font Info:    Try loading font information for U+txsyc on input line 134.
-
-
-(/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/utxsyc.fd
-File: utxsyc.fd 2000/12/15 v3.1
-) [5
+] [4
 
 ]
 LaTeX Font Info:    Font shape `OT1/txss/m/n' will be
-(Font)              scaled to size 28.3669pt on input line 154.
+(Font)              scaled to size 28.3669pt on input line 65.
+ [5
+
+]
+LaTeX Font Info:    Font shape `OT1/txss/m/n' will be
+(Font)              scaled to size 34.03839pt on input line 71.
  [6
 
-]
-[7
-
-] [8
+] [7
 
 ]
-\openout4 = `perl6.vrb'.
+LaTeX Font Info:    Font shape `OT1/txss/m/n' will be
+(Font)              scaled to size 19.70294pt on input line 92.
+ [8
 
- (./perl6.vrb (I search kanjifont definition file: . . )
-(I search font definition file: . . . . . . . . )
-LaTeX Font Info:    Try loading font information for OT1+txtt on input line 2.
+] [9
 
-(/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/ot1txtt.fd
-File: ot1txtt.fd 2000/12/15 v3.1
-)) [9
+] [10
 
 ]
-\openout4 = `perl6.vrb'.
+LaTeX Font Info:    Font shape `OT1/txss/m/n' will be
+(Font)              scaled to size 11.39996pt on input line 124.
+ [11
 
+] [12
 
-(./perl6.vrb) [10
+] [13
 
-] [11
-
-]
-\openout4 = `perl6.vrb'.
-
- (./perl6.vrb) [12
-
-]
-\openout4 = `perl6.vrb'.
-
- (./perl6.vrb) [13
-
-]
-\openout4 = `perl6.vrb'.
-
- (./perl6.vrb)
-[14
-
-]
-\openout4 = `perl6.vrb'.
-
- (./perl6.vrb) [15
-
-]
-\openout4 = `perl6.vrb'.
-
- (./perl6.vrb) [16
-
-] [17
-
-]
-\openout4 = `perl6.vrb'.
-
- (./perl6.vrb) [18
-
-] [19
-
-]
-[20
-
-] [21
+] [14
 
 ]
 \tf@nav=\write6
-\openout6 = `perl6.nav'.
+\openout6 = `main.nav'.
 
 \tf@toc=\write7
-\openout7 = `perl6.toc'.
+\openout7 = `main.toc'.
 
 \tf@snm=\write8
-\openout8 = `perl6.snm'.
+\openout8 = `main.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 869.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 869.
- (./perl6.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 869.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 869.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 869.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 156.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 156.
+ (./main.aux)
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 156.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 156.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 156.
  ) 
 Here is how much of TeX's memory you used:
- 16846 strings out of 494163
- 311599 string characters out of 3160587
- 527610 words of memory out of 3000000
- 19796 multiletter control sequences out of 15000+200000
- 28461 words of font info for 90 fonts, out of 3000000 for 9000
+ 16567 strings out of 494163
+ 307752 string characters out of 3160587
+ 373989 words of memory out of 3000000
+ 19572 multiletter control sequences out of 15000+200000
+ 19023 words of font info for 61 fonts, out of 3000000 for 9000
  745 hyphenation exceptions out of 8191
- 49i,17n,57p,416b,1107s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 49i,17n,57p,415b,659s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on perl6.dvi (21 pages, 98408 bytes).
+Output written on main.dvi (14 pages, 48360 bytes).

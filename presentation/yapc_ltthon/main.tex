@@ -1,0 +1,156 @@
+\documentclass[14pt,dvipdfm,trans]{beamer}
+% pdfの栞の字化けを防ぐ
+% テーマ
+\usetheme{CambridgeUS}
+% navi. symbolsは目立たないが，dvipdfmxを使うと機能しないので非表示に
+\setbeamertemplate{navigation symbols}{} 
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+% フォントはお好みで
+\usepackage{txfonts}
+\usepackage{strike}
+\usepackage{color}
+\mathversion{bold}
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\setbeamerfont{title}{size=\large,series=\bfseries}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamertemplate{frametitle}[default][center]
+\usefonttheme{professionalfonts} 
+
+\usepackage{listings}
+
+
+\title{日本でPerl6を学びたい}
+\author{@VienosNotes/青木大祐}
+\institute{Tsukuba.pm}
+\date{YAPC::Asia Tokyo 2012 LT-thon}
+
+\usepackage{color}	% required for `\textcolor' (yatex added)
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}
+ \frametitle{はじめに}
+ \begin{itemize}
+  \item Perl6を追い始めたのは二年半くらい前
+\vspace{1zh}
+  \item いろんなバグを踏みつつ独学である程度は使えるようになった
+ \end{itemize}
+\vspace{2zh}
+→ 結構\textcolor{red}{苦難}の道だった
+\end{frame}
+
+\begin{frame}
+\frametitle{何が困るって}
+\begin{itemize}
+ \item 日本語のドキュメントが皆無
+ \item 英語のものも古い情報が残ってて騙される
+ \item 誰も使ってないから教えてくれる人が(ほとんど)いない
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{そもそも}
+\begin{center}
+ \large{日本にPerl6のコミュニティとかあんの？}
+\end{center}
+\end{frame}
+
+\begin{frame}
+ \begin{center}
+  \huge{探したけど無いっぽい} 
+ \end{center}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+ \Huge{まぁ作ればいいか} 
+\end{center}
+\end{frame}
+
+\begin{frame}
+ \frametitle{make community}
+\begin{itemize}
+ \item 筑波大学には奇跡的にPerl6を追いかけてる人がもう一人居た！
+       →\textcolor{red}{誘致}
+\vspace{2zh}
+ \item 知り合いにPerlerは結構いる →\textcolor{red}{誘致}
+\end{itemize}
+
+
+\end{frame}
+
+\begin{frame}
+\begin{center}
+ メンバーわずか5人の「仕様書読書会」が発足\\
+\vspace{1zh}
+\Large{→日本で唯一のPerl6勉強会}
+\end{center}
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{その後}
+\begin{itemize}
+ \item 何度かの読書会を経て、読みたかった部分は目を通し終えた
+ \item その後は不定期に開催、新しく入った面白い機能の紹介など
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \begin{center}
+  \Large{去年はPerl6 Advent Calendarを完走！}
+ \end{center}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{今年の新しい試み}
+\begin{itemize}
+ \item ビギナー向けのスタートアップ
+ \begin{itemize}
+        \item Larry Wallの講演で興味を持った人
+        \item 過去にドキュメントが無くて諦めた人
+       \end{itemize}
+\vspace{1zh}
+ \item 11月を目標に開催
+       \begin{itemize}
+        \item そもそもの人数が少ないので、参加したい人の都合にあわせて開
+              催できる！
+       \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+ \begin{center}
+  ただし筑波まで来てもらう必要があります\\
+  \vspace*{3zh}
+  \tiny{参加人数によっては都内での開催も検討するかも…？}
+ \end{center}
+\end{frame}
+
+\begin{frame}
+ \frametitle{最終的な目標というか個人的な野望}
+\begin{center}
+ \Large{日本語ドキュメントの整備}\\
+ \vspace*{1zh}
+ \small{ぶっちゃけて言うと}\\
+ \vspace*{1zh}
+\huge{Perl6の本が書きたい}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\vspace*{1zh}
+ ということで興味を持ってくれた方は\\
+\begin{center}
+ \huge{@VienosNotes}\\
+\vspace*{0.5zh}
+\end{center}
+\begin{flushright}
+ \normalsize{までよろしくお願いします。} 
+\end{flushright}
+\end{frame}
+\end{document}

@@ -1,0 +1,151 @@
+\documentclass[a4paper,9pt]{jarticle}
+\usepackage{url}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{epsfig}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{times}
+\usepackage{ascmac}
+\usepackage{here}
+\usepackage{txfonts}
+\usepackage{listings}
+
+\renewcommand{\lstlistingname}{リスト}
+\lstset{%language=Ocaml,
+  basicstyle=\ttfamily\scriptsize,
+  commentstyle=\textit,
+  classoffset=1,
+  keywordstyle=\bfseries,
+  frame=tRBl,
+  framesep=5pt,
+  showstringspaces=false,
+  numbers=left,
+  stepnumber=1,
+  numberstyle=\tiny,
+  tabsize=2
+}
+
+ \lstdefinelanguage{CASL2}{
+   morekeywords={C, C++, Ruby},
+   morecomment=[l]{;},
+   morestring=[b]",%"
+ }
+
+\setlength{\oddsidemargin}{-.2in}
+\setlength{\evensidemargin}{-.2in}
+\setlength{\topmargin}{-4em}
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{10in}
+\setlength{\parskip}{0em}
+\setlength{\topsep}{0em}
+\setlength{\columnsep}{3zw}
+
+\title{ソフトウェアサイエンス実験 S8 課題2-3}
+\author{200911434 青木大祐}
+
+\begin{document}
+\maketitle
+\setcounter{section}{2}
+\setcounter{subsection}{3}
+
+\newpage
+\subsubsection{eval}
+eval1関数を用いて以下のように式を評価した。
+
+\begin{lstlisting}
+type exp =
+  | IntLit of int         (* リテラル *)
+  | Plus of exp * exp     (* 足し算 *)
+  | Times of exp * exp    (* かけ算 *)
+  | Sub of exp * exp      (* 引き算 *)
+  | Div of exp * exp      (* 割り算 *);;
+
+let rec eval1 e =
+  match e with
+  | IntLit(n)    -> n
+  | Plus(e1,e2)  -> (eval1 e1) + (eval1 e2)
+  | Times(e1,e2) -> (eval1 e1) * (eval1 e2)
+  | _ -> failwith "unknown expression";;
+
+(* 以下の式に対してテストを行った *)
+let easy:exp = Plus(Times(IntLit 2, IntLit 2), Plus(IntLit 3, IntLit (-4)));;
+let sample:exp =  Div(Plus(IntLit 1, Times(IntLit (-2), IntLit 5)), Sub(IntLit 4, IntLit (-3)));;
+
+eval1 easy;;
+eval1 sample;;
+\end{lstlisting}
+
+\begin{lstlisting}[caption=実行結果]
+   # val sample : exp =
+     Div (Plus (IntLit 1, Times (IntLit (-2), IntLit 5)),
+     Sub (IntLit 4, IntLit (-3)))
+   #   - : int = 3
+   # Exception: Failure "unknown expression".
+   # 
+\end{lstlisting}
+正しく解釈できており、また解釈できない場合においては例外が発生している。
+
+\subsubsection{matchの順序}
+以下の様なソースコードを用いて、matchの順序について検証した。
+\begin{lstlisting}
+type exp =
+  | IntLit of int         (* リテラル *)
+  | Plus of exp * exp     (* 足し算 *)
+  | Times of exp * exp    (* かけ算 *)
+  | Sub of exp * exp      (* 引き算 *)
+  | Div of exp * exp      (* 割り算 *);;
+
+let rec eval1 e =
+  match e with
+  | IntLit(n)    -> n
+  | Plus(e1,e2)  -> (eval1 e1) + (eval1 e2)
+  | _ -> failwith "unknown expression"
+  | Times(e1,e2) -> (eval1 e1) * (eval1 e2);;
+
+let test:exp = Times(IntLit 1, IntLit 1);;
+eval1 test;;
+\end{lstlisting}
+\begin{lstlisting}[caption=実行結果]
+ # Exception: Failure "unknown expression".
+\end{lstlisting}
+Timesは末尾のパターンにマッチして欲しいところだが、先に\_にマッチするの
+でTimesの解釈で例外が発生している。
+\newpage
+\subsubsection{引き算と割り算の追加}
+以下のように定義を修正し、引き算と割り算についても計算できるようにした。
+また、ゼロ除算については解釈できなかった場合と同様に例外を発生させるよう
+にした。
+
+\begin{lstlisting}
+type exp =
+  | IntLit of int         (* リテラル *)
+  | Plus of exp * exp     (* 足し算 *)
+  | Times of exp * exp    (* かけ算 *)
+  | Sub of exp * exp      (* 引き算 *)
+  | Div of exp * exp      (* 割り算 *);;
+
+let rec eval1 e =
+  match e with
+  | IntLit(n)    -> n
+  | Plus(e1,e2)  -> (eval1 e1) + (eval1 e2)
+  | Times(e1,e2) -> (eval1 e1) * (eval1 e2)
+  | Sub(e1, e2)  -> (eval1 e1) - (eval1 e2)
+  | Div(e1, IntLit 0) -> failwith "divide by zero"
+  | Div(e1, e2) -> (eval1 e1) / (eval1 e2)
+  | _ -> failwith "unknown expression";;
+
+let easy:exp = Plus(Times(IntLit 2, IntLit 2), Plus(IntLit 3, IntLit (-4)));;
+let sample:exp =  Div(Plus(IntLit 1, Times(IntLit (-2), IntLit 5)), Sub(IntLit 4, IntLit (-3)));;
+
+eval1 easy;;
+eval1 sample;;
+\end{lstlisting}
+
+\begin{lstlisting}[caption=実行結果]
+#   - : int = 3
+# - : int = -1
+# Exception: Failure "divide by zero".
+\end{lstlisting}
+正しく計算できている事がわかる。また、ゼロ除算についても例外が発生してい
+る。
+\end{document}
