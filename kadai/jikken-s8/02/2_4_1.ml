@@ -52,19 +52,27 @@ let rec eval2 e =
       end
   | _ -> failwith "unknown expression e";;
 
+print_string "2.4.1 テスト";;
+let _ = eval2 (IntLit 1);;
+let _ = eval2 (IntLit 11);;
+let _ = eval2 (Plus (IntLit 1, Plus (IntLit 2, IntLit 11)));;
+let _ = eval2 (Times (IntLit 1, Plus (IntLit 2, IntLit 11)));;
+let _ = eval2 (If (Eq(IntLit 2, IntLit 11),
+                   Times(IntLit 1, IntLit 2),
+                   Times(IntLit 1, Plus(IntLit 2,IntLit 3))));;
+let _ = eval2 (Eq (IntLit 1, IntLit 1));;
+let _ = eval2 (Eq (IntLit 1, IntLit 2));;
+let _ = eval2 (Eq (BoolLit true, BoolLit true));;
+let _ = eval2 (Eq (BoolLit true, BoolLit false));;
 
-(* let _ = eval2 (IntLit 1) *)
-(* let _ = eval2 (IntLit 11) *)
-(* let _ = eval2 (Plus (IntLit 1, Plus (IntLit 2, IntLit 11))) *)
-(* let _ = eval2 (Times (IntLit 1, Plus (IntLit 2, IntLit 11))) *)
-(* let _ = eval2 (If (Eq(IntLit 2, IntLit 11), *)
-(*                    Times(IntLit 1, IntLit 2), *)
-(*                    Times(IntLit 1, Plus(IntLit 2,IntLit 3)))) *)
-(* let _ = eval2 (Eq (IntLit 1, IntLit 1)) *)
-(* let _ = eval2 (Eq (IntLit 1, IntLit 2)) *)
-(* let _ = eval2 (Eq (BoolLit true, BoolLit true)) *)
-(* let _ = eval2 (Eq (BoolLit true, BoolLit false)) *)
+print_string "2.4.2 適当な例でエラーを起こす";;
+eval2 (Plus (IntLit 10, BoolLit(true)));;
+eval2 (If ((IntLit 1), (IntLit 2), (IntLit 3)));;
 
+print_string "2.4.3 整数と真理値をeqで比較する";;
+eval2( Eq(IntLit 1, BoolLit true));;
+
+print_string "2.4.5 Greaterを実装する";;
 eval2 (Greater (IntLit 10, IntLit 50));;
 eval2 (Greater (IntLit 10, IntLit 5));;
 

@@ -1,0 +1,90 @@
+\documentclass[a4paper,9pt]{jarticle}
+\usepackage{url}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{epsfig}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{times}
+\usepackage{ascmac}
+\usepackage{here}
+\usepackage{txfonts}
+\usepackage{listings, jlisting}
+
+\renewcommand{\lstlistingname}{リスト}
+\lstset{%language=Ocaml,
+  basicstyle=\ttfamily\scriptsize,
+  commentstyle=\textit,
+  classoffset=1,
+  keywordstyle=\bfseries,
+  frame=tRBl,
+  framesep=5pt,
+  showstringspaces=false,
+  numbers=left,
+  stepnumber=1,
+  numberstyle=\tiny,
+  tabsize=2
+}
+
+ \lstdefinelanguage{CASL2}{
+   morekeywords={C, C++, Ruby},
+   morecomment=[l]{;},
+   morestring=[b]",%"
+ }
+
+\setlength{\oddsidemargin}{-.2in}
+\setlength{\evensidemargin}{-.2in}
+\setlength{\topmargin}{-4em}
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{10in}
+\setlength{\parskip}{0em}
+\setlength{\topsep}{0em}
+\setlength{\columnsep}{3zw}
+
+\title{ソフトウェアサイエンス実験 S8 課題2-4}
+\author{200911434 青木大祐}
+
+\begin{document}
+\maketitle
+\setcounter{section}{2}
+\setcounter{subsection}{4}
+
+\newpage
+以下に課題2-4のソースコードを示す。
+\lstinputlisting{./2_4_1.ml}
+\newpage
+
+\subsubsection{テスト}
+\begin{lstlisting}
+print_string "2.4.1 テスト";;
+let _ = eval2 (IntLit 1);;
+let _ = eval2 (IntLit 11);;
+let _ = eval2 (Plus (IntLit 1, Plus (IntLit 2, IntLit 11)));;
+let _ = eval2 (Times (IntLit 1, Plus (IntLit 2, IntLit 11)));;
+let _ = eval2 (If (Eq(IntLit 2, IntLit 11),
+                   Times(IntLit 1, IntLit 2),
+                   Times(IntLit 1, Plus(IntLit 2,IntLit 3))));;
+let _ = eval2 (Eq (IntLit 1, IntLit 1));;
+let _ = eval2 (Eq (IntLit 1, IntLit 2));;
+let _ = eval2 (Eq (BoolLit true, BoolLit true));;
+let _ = eval2 (Eq (BoolLit true, BoolLit false));;
+\end{lstlisting}
+
+以下にテストコードと、その実行結果を示す。\\
+\begin{lstlisting}
+#     2.4.1 テスト- : unit = ()
+# - : value = IntVal 1
+# - : value = IntVal 11
+# - : value = IntVal 14
+# - : value = IntVal 13
+# - : value = IntVal 5
+# - : value = BoolVal true
+# - : value = BoolVal false
+# - : value = BoolVal true
+# - : value = BoolVal false
+\end{lstlisting}
+正しく計算できていることがわかる。
+
+\subsubsection{エラーを起こす適当な例}
+
+
+\end{document}
