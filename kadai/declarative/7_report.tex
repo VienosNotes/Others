@@ -1,0 +1,39 @@
+\documentclass[a4paper,7pt]{jarticle}
+\usepackage{stdrep}
+
+\author{青木大祐}
+\title{宣言型プログラム論 課題7}
+\usepackage{amsmath}	% required for `\equation*' (yatex added)
+\begin{document}
+\maketitle
+\newpage
+\section{任意のリストxs,ys, 任意の関数fに対して, 以下の性質が成り立つこ
+ とを証明せよ.}
+\begin{lstlisting}
+map f (xs@ys) = (map f xs)@(map f ys)
+let rec map f l =
+  match l with
+    [] -> []
+  | x::rest -> f x :: map f rest 
+\end{lstlisting}
+
+\subsection{$xs=[]について$}
+appendの定義より、$[]@ys=ys$となる。また、mapの定義より$map\ f\ [] = []$
+となる。したがって、
+\begin{equation*}
+map\ f\ ([]@ys) = map\ f\ ys = (map\ f\ []) @ (map\ f\ ys) 
+\end{equation*}
+
+となるため、$xs=[]$について成り立つ。
+
+\subsection{$xsについて成立することを仮定$}
+appendの定義より$map\ f\ ((x::xs)@ys)  = map\ f\ (x::(xs@ys))$となり、ま
+たmapの定義より$f\ x::map\ f\ (xs@ys)$と等しい。\\
+ここでxsの時成立すると仮定しているので、
+\begin{equation*}
+                         = f\ x::((map\ f\ xs) @ (map\ f\ ys) )\\
+                        = ( f\ x::(map\ f\ xs) ) @ (map\ f\ ys)\\
+                        = (map\ f\ x::xs) @ (map\ f\ ys) \\
+\end{equation*}
+となり、$x::xs$についても成立すると言える。
+\end{document}

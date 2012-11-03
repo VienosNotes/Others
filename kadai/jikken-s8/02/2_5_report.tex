@@ -1,0 +1,159 @@
+\documentclass[a4paper,9pt]{jarticle}
+\usepackage{url}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{epsfig}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{times}
+\usepackage{ascmac}
+\usepackage{here}
+\usepackage{txfonts}
+\usepackage{listings, jlisting}
+
+\renewcommand{\lstlistingname}{リスト}
+\lstset{%language=Ocaml,
+  basicstyle=\ttfamily\scriptsize,
+  commentstyle=\textit,
+  classoffset=1,
+  keywordstyle=\bfseries,
+  frame=tRBl,
+  framesep=5pt,
+  showstringspaces=false,
+  numbers=left,
+  stepnumber=1,
+  numberstyle=\tiny,
+  tabsize=2
+}
+
+ \lstdefinelanguage{CASL2}{
+   morekeywords={C, C++, Ruby},
+   morecomment=[l]{;},
+   morestring=[b]",%"
+ }
+
+\setlength{\oddsidemargin}{-.2in}
+\setlength{\evensidemargin}{-.2in}
+\setlength{\topmargin}{-4em}
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{10in}
+\setlength{\parskip}{0em}
+\setlength{\topsep}{0em}
+\setlength{\columnsep}{3zw}
+
+\title{ソフトウェアサイエンス実験 S8 課題2-5}
+\author{200911434 青木大祐}
+
+\begin{document}
+\maketitle
+\setcounter{section}{2}
+\setcounter{subsection}{5}
+
+\newpage
+
+\subsubsection{内部の関数が呼べないことを確かめる}
+以下にソースコードを示す。
+\begin{lstlisting}
+type exp =
+  | IntLit of int
+  | Plus of exp * exp 
+  | Times of exp * exp
+  | BoolLit of bool        (* 追加分; 真理値リテラル, つまり trueや false  *)
+  | If of exp * exp * exp  (* 追加分; if-then-else式 *)
+  | Eq of exp * exp        (* 追加分; e1 = e2 *)
+  | Greater of exp * exp ;;
+
+(* 値の型 *)
+type value =
+  | IntVal  of int          (* 整数の値 *)
+  | BoolVal of bool         (* 真理値の値 *);;
+
+let rec eval2b e =
+  let binop f e1 e2 =
+    match (eval2b e1, eval2b e2) with
+      | (IntVal(n1),IntVal(n2)) -> IntVal(f n1 n2)
+      | _ -> failwith "integer values expected"
+  in 
+  match e with
+    | IntLit(n)    -> IntVal(n)
+    | Plus(e1,e2)  -> binoop (+) e1 e2
+    | Times(e1,e2) -> binop ( * ) e1 e2
+    | _ -> failwith "unknown expression";;
+
+binop (+) (IntLit 10) (IntLit 20);;
+\end{lstlisting}
+
+これを実行すると、以下のようなエラーが出力され、binop関数が呼び出せないことが分かる。
+\begin{lstlisting}
+#         type value = IntVal of int | BoolVal of bool
+#                       val eval2b : exp -> value = <fun>
+#   Characters 1-6:
+  binop (+) (IntLit 10) (IntLit 20);;
+  ^^^^^
+Error: Unbound value binop
+# 
+\end{lstlisting}
+
+\subsubsection{外から使えない理由}
+内部で定義した関数が外から呼び出せない利点として、名前を汚染しないことが
+考えられる。例えばこのプログラムを外部から参照して利用するとして、偶然
+binopという関数を定義してしまうと、名前が衝突してしまいコンパイルできず、
+これを解消するために別の(最適でない)名前を考える必要が生じる。しかし、内
+部で定義した関数の名前が外にもれないことで、この問題は解決することが出来
+る。
+
+
+\subsubsection{binopの型}
+binopを外に出した形のソースコードは以下のとおり。
+\begin{lstlisting}
+(* eval2b : exp -> value *)
+
+type exp =
+  | IntLit of int
+  | Plus of exp * exp 
+  | Times of exp * exp
+  | BoolLit of bool        (* 追加分; 真理値リテラル, つまり trueや false  *)
+  | If of exp * exp * exp  (* 追加分; if-then-else式 *)
+  | Eq of exp * exp        (* 追加分; e1 = e2 *)
+  | Greater of exp * exp ;;
+
+(* 値の型 *)
+type value =
+  | IntVal  of int          (* 整数の値 *)
+  | BoolVal of bool         (* 真理値の値 *);;
+
+let rec eval2b e =
+  let binop f e1 e2 =
+    match (eval2b e1, eval2b e2) with
+      | (IntVal(n1),IntVal(n2)) -> IntVal(f n1 n2)
+      | _ -> failwith "integer values expected"
+  in 
+  match e with
+    | IntLit(n)    -> IntVal(n)
+    | Plus(e1,e2)  -> binop (+) e1 e2
+    | Times(e1,e2) -> binop ( * ) e1 e2
+    | _ -> failwith "unknown expression";;
+
+eval2b (Plus ((IntLit 10), (IntLit 20)));;
+
+let binop f e1 e2 =
+  match (eval2b e1, eval2b e2) with
+    | (IntVal(n1),IntVal(n2)) -> IntVal(f n1 n2)
+    | _ -> failwith "integer values expected";;
+        
+binop (+) (IntLit 10) (IntLit 20);;
+\end{lstlisting}
+これを実行すると、以下の様な結果が得られる。
+
+\begin{lstlisting}
+#         type value = IntVal of int | BoolVal of bool
+#                       val eval2b : exp -> value = <fun>
+#   - : value = IntVal 30
+#         val binop : (int -> int -> int) -> exp -> exp -> value = <fun>
+#   - : value = IntVal 30
+# 
+\end{lstlisting}
+
+これより、binopの型は$(int -> int -> int) -> exp -> exp -> value =
+<fun>$であることが分かる。
+\end{document}
+

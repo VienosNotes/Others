@@ -1,9 +1,9 @@
-This is e-pTeX, Version 3.1415926-p3.2-110415-2.3 (utf8.euc) (TeX Live 2011) (format=platex 2011.7.3)  18 OCT 2012 22:35
+This is e-pTeX, Version 3.1415926-p3.2-110415-2.3 (utf8.euc) (TeX Live 2011) (format=platex 2011.7.3)  19 OCT 2012 01:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**2_4_report.tex
-(./2_4_report.tex
+**2_5_report.tex
+(./2_5_report.tex
 pLaTeX2e <2006/11/10> (based on LaTeX2e <2009/09/24> patch level 0)
 Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, af
 rikaans, arabic, basque, bulgarian, catalan, pinyin, croatian, czech, danish, d
@@ -287,8 +287,8 @@ Package: jlisting 2006/02/20 0.2 (Thor)
 LaTeX Warning: Unused global option(s):
     [9pt].
 
-(./2_4_report.aux)
-\openout1 = `2_4_report.aux'.
+(./2_5_report.aux)
+\openout1 = `2_5_report.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/txmi/m/it on input line 46.
 LaTeX Font Info:    Try loading font information for OML+txmi on input line 46.
@@ -359,26 +359,26 @@ File: utxsyc.fd 2000/12/15 v3.1
 ) [1
 
 ]
+LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 53.
+LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 53.
+
 (I search kanjifont definition file: . . ) (I search font definition file: . .
 . . . . . )
-LaTeX Font Info:    Try loading font information for OT1+txtt on input line 53.
+LaTeX Font Info:    Try loading font information for OT1+txtt on input line 55.
 
  (/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/ot1txtt.fd
 File: ot1txtt.fd 2000/12/15 v3.1
 )
-[2]
-LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 56.
-LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 56.
- [3] [4] (./2_4_report.aux) ) 
+[2] [3] (./2_5_report.aux) ) 
 Here is how much of TeX's memory you used:
- 3435 strings out of 494163
- 44747 string characters out of 3160587
- 140287 words of memory out of 3000000
- 6761 multiletter control sequences out of 15000+200000
- 22009 words of font info for 73 fonts, out of 3000000 for 9000
+ 3461 strings out of 494163
+ 45144 string characters out of 3160587
+ 135287 words of memory out of 3000000
+ 6789 multiletter control sequences out of 15000+200000
+ 30202 words of font info for 100 fonts, out of 3000000 for 9000
  745 hyphenation exceptions out of 8191
- 29i,6n,32p,226b,988s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,6n,32p,226b,1543s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on 2_4_report.dvi (4 pages, 26656 bytes).
+Output written on 2_5_report.dvi (3 pages, 17180 bytes).

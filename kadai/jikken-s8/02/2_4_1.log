@@ -1,0 +1,54 @@
+
+print_string "2.4.1 テスト";;
+let _ = eval2 (IntLit 1);;
+let _ = eval2 (IntLit 11);;
+let _ = eval2 (Plus (IntLit 1, Plus (IntLit 2, IntLit 11)));;
+let _ = eval2 (Times (IntLit 1, Plus (IntLit 2, IntLit 11)));;
+let _ = eval2 (If (Eq(IntLit 2, IntLit 11),
+                   Times(IntLit 1, IntLit 2),
+                   Times(IntLit 1, Plus(IntLit 2,IntLit 3))));;
+let _ = eval2 (Eq (IntLit 1, IntLit 1));;
+let _ = eval2 (Eq (IntLit 1, IntLit 2));;
+let _ = eval2 (Eq (BoolLit true, BoolLit true));;
+let _ = eval2 (Eq (BoolLit true, BoolLit false));;
+
+print_string "2.4.2 適当な例でエラーを起こす";;
+eval2 (Plus (IntLit 10, BoolLit(true)));;
+eval2 (If ((IntLit 1), (IntLit 2), (IntLit 3)));;
+
+print_string "2.4.3 整数と真理値をeqで比較する";;
+eval2( Eq(IntLit 1, BoolLit true));;
+
+print_string "2.4.5 Greaterを実装する";;
+eval2 (Greater (IntLit 10, IntLit 50));;
+eval2 (Greater (IntLit 10, IntLit 5));;
+              type exp =
+    IntLit of int
+  | Plus of exp * exp
+  | Times of exp * exp
+  | BoolLit of bool
+  | If of exp * exp * exp
+  | Eq of exp * exp
+  | Greater of exp * exp
+#         type value = IntVal of int | BoolVal of bool
+#                                                                             Characters 1029-1030:
+Warning 11: this match case is unused.
+val eval2 : exp -> value = <fun>
+#   2.4.1 テスト- : unit = ()
+# - : value = IntVal 1
+# - : value = IntVal 11
+# - : value = IntVal 14
+# - : value = IntVal 13
+#     - : value = IntVal 5
+# - : value = BoolVal true
+# - : value = BoolVal false
+# - : value = BoolVal true
+# - : value = BoolVal false
+#   2.4.2 適当な例でエラーを起こす- : unit = ()
+# Exception: Failure "integer values expected".
+# Exception: Failure "wrong value".
+#   2.4.3 整数と真理値をeqで比較する- : unit = ()
+# Exception: Failure "wrong value".
+#   2.4.5 Greaterを実装する- : unit = ()
+# - : value = BoolVal false
+# - : value = BoolVal true

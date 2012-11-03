@@ -1,0 +1,8 @@
+hoge
+piyo
+fuga
+hogera
+foo
+bar
+baz
+qux

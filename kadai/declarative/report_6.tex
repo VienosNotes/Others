@@ -1,0 +1,46 @@
+\documentclass[a4paper,8pt]{jarticle}
+\usepackage{stdrep}
+
+\title{宣言型プログラム論 課題6}
+\author{200911434 青木大祐}
+
+\begin{document}
+\maketitle
+\newpage
+\section*{6-1}
+\lstinputlisting{6_1.ml}
+
+\subsection*{実行結果}
+\begin{lstlisting}
+# val enqlist : 'a Queue3.t -> 'a list -> 'a Queue3.t = <fun>
+# val print_int_queue : int Queue3.t -> unit = <fun>
+# val q : int Queue3.t = <abstr>
+# val x : int = 1
+# val q : int Queue3.t = <abstr>
+# val x : int = 2
+# val q : int Queue3.t = <abstr>
+# val x : int = 3
+# val q : int Queue3.t = <abstr>
+# val q : int Queue3.t = <abstr>
+# 1
+2
+3
+- : unit = ()
+\end{lstlisting}
+
+\subsection*{6-2}
+\lstinputlisting{6_2.ml}
+\subsubsection*{実行結果}
+\begin{lstlisting}
+# val enqlist : 'a Queue3.t -> 'a list -> 'a Queue3.t = <fun>
+# val print_int_queue : int Queue3.t -> unit = <fun>
+# val graph1 : (string * string) list =
+# [("a", "b"); ("a", "c"); ("a", "d"); ("b", "e"); ("c", "f"); ("d", "e");
+   ("e", "f"); ("e", "g"); ("f", "d")]
+# val nexts : 'a -> ('a * 'b) list -> 'b list = <fun>
+# - : string list = ["b"; "c"; "d"]
+# val mem : 'a -> 'a list -> bool = <fun>
+# val search : ('a * 'a) list -> 'a -> 'a list = <fun>
+# - : string list = ["g"; "f"; "e"; "d"; "c"; "b"; "a"]
+\end{lstlisting}
+\end{document}

@@ -72,7 +72,7 @@ eval2 (If ((IntLit 1), (IntLit 2), (IntLit 3)));;
 print_string "2.4.3 整数と真理値をeqで比較する";;
 eval2( Eq(IntLit 1, BoolLit true));;
 
-print_string "2.4.5 Greaterを実装する";;
+print_string "2.4.4 Greaterを実装する";;
 eval2 (Greater (IntLit 10, IntLit 50));;
 eval2 (Greater (IntLit 10, IntLit 5));;
 

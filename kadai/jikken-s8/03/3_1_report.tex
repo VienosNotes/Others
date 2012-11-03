@@ -1,0 +1,52 @@
+\documentclass[a4paper,9pt]{jarticle}
+\usepackage{stdrep}
+
+\title{ソフトウェアサイエンス実験 S8 課題3-1}
+\author{200911434 青木大祐}
+
+\begin{document}
+\maketitle
+\setcounter{section}{3}
+\setcounter{subsection}{1}
+
+\newpage
+\subsubsection{環境を作る}
+以下のソースコードを用いて環境を作った。
+\begin{lstlisting}
+let env = emptyenv();;
+let env = ext env "x" (IntVal 1);;
+let env = ext env "y" (BoolVal true);;
+let env = ext env "z" (IntVal 5);;
+\end{lstlisting}
+
+出力は以下のとおり。正しく環境が作られている。
+\begin{lstlisting}
+#     val env : 'a list = []
+# val env : (string * value) list = [("x", IntVal 1)]
+# val env : (string * value) list = [("y", BoolVal true); ("x", IntVal 1)]
+# val env : (string * value) list =
+  [("z", IntVal 5); ("y", BoolVal true); ("x", IntVal 1)]
+\end{lstlisting}
+
+
+\subsubsection{変数を調べる}
+以下のソースコードのとおり、$env$を検索した。
+\begin{lstlisting}
+let y = lookup "y" env;;
+let w = lookup "w" env;;
+\end{lstlisting}
+
+出力は以下のとおり。$y$は登録されており$BoolVal\:true$が返る。また、$w$は
+登録されていないため、例外が発生しているのが分かる。
+\begin{lstlisting}
+#   val y : value = BoolVal true
+# Exception: Failure "unbound variable: w".
+\end{lstlisting}
+
+\subsubsection{変数の追加順}
+$ext$関数では$(x,v) :: env$のようにリストの先頭に要素を追加している。ま
+た、$lookup$関数は先頭から探索を行うため、後から追加した同名の変数が優先
+的にヒットする。\\
+よって、新しい値が生き残るといえる。
+\end{document}
+

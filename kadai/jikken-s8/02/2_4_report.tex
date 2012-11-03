@@ -54,6 +54,8 @@
 \newpage
 
 \subsubsection{テスト}
+
+以下にテストコードと、その実行結果を示す。\\
 \begin{lstlisting}
 print_string "2.4.1 テスト";;
 let _ = eval2 (IntLit 1);;
@@ -69,7 +71,6 @@ let _ = eval2 (Eq (BoolLit true, BoolLit true));;
 let _ = eval2 (Eq (BoolLit true, BoolLit false));;
 \end{lstlisting}
 
-以下にテストコードと、その実行結果を示す。\\
 \begin{lstlisting}
 #     2.4.1 テスト- : unit = ()
 # - : value = IntVal 1
@@ -86,5 +87,48 @@ let _ = eval2 (Eq (BoolLit true, BoolLit false));;
 
 \subsubsection{エラーを起こす適当な例}
 
+\begin{lstlisting}
+print_string "2.4.2 適当な例でエラーを起こす";;
+eval2 (Plus (IntLit 10, BoolLit(true)));;
+eval2 (If ((IntLit 1), (IntLit 2), (IntLit 3)));;
+\end{lstlisting}
+このコードを実行すると、以下のように例外が発生する。
+
+\begin{lstlisting}
+#   2.4.2 適当な例でエラーを起こす- : unit = ()
+# Exception: Failure "integer values expected".
+# Exception: Failure "wrong value".
+\end{lstlisting}
+どちらも引数として適合しない型の値を渡しているため、パターンマッチに用意
+されている例外が発生する。
+
+\subsubsection{整数と真理値の比較}
+\begin{lstlisting}
+print_string "2.4.3 整数と真理値をeqで比較する";;
+eval2( Eq(IntLit 1, BoolLit true));;
+\end{lstlisting}
+実行結果は以下のとおり。
+\begin{lstlisting}
+#   2.4.3 整数と真理値をeqで比較する- : unit = ()
+# Exception: Failure "wrong value".
+\end{lstlisting}
+35行目、36行目のどちらにもマッチしないので、45行目の例外が発生する。
+
+\newpage
+
+\subsubsection{Greaterの実装}
+
+\begin{lstlisting}
+print_string "2.4.4 Greaterを実装する";;
+eval2 (Greater (IntLit 10, IntLit 50));;
+eval2 (Greater (IntLit 10, IntLit 5));;
+\end{lstlisting}
+実行結果は以下のとおり。
+\begin{lstlisting}
+#   2.4.4 Greaterを実装する- : unit = ()
+# - : value = BoolVal false
+# - : value = BoolVal true
+\end{lstlisting}
+正しく計算できている。
 
 \end{document}

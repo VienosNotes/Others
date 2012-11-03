@@ -1,0 +1,57 @@
+\documentclass[a4paper,8pt]{jarticle}
+\usepackage{url}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{epsfig}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{times}
+\usepackage{ascmac}
+\usepackage{here}
+\usepackage{txfonts}
+\usepackage{listings}
+
+\renewcommand{\lstlistingname}{リスト}
+\lstset{%language=Ocaml,
+  basicstyle=\ttfamily\scriptsize,
+  commentstyle=\textit,
+  classoffset=1,
+  keywordstyle=\bfseries,
+  frame=trbl,
+  framesep=5pt,
+  showstringspaces=false,
+  numbers=left,
+  stepnumber=1,
+  numberstyle=\tiny,
+  tabsize=2
+}
+
+ \lstdefinelanguage{CASL2}{
+   morekeywords={C, C++, Ruby},
+   morecomment=[l]{;},
+   morestring=[b]",%"
+ }
+
+\setlength{\oddsidemargin}{-.2in}
+\setlength{\evensidemargin}{-.2in}
+\setlength{\topmargin}{-4em}
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{9.5in}
+\setlength{\parskip}{0em}
+\setlength{\topsep}{0em}
+\setlength{\columnsep}{3zw}
+
+\title{宣言型プログラム論 課題5}
+\author{200911434 青木大祐}
+
+\begin{document}
+\maketitle
+\newpage
+\section*{5-1}
+\lstinputlisting{5_1.ml}
+\section*{5-2}
+\lstinputlisting{5_2.ml}
+\section*{5-3}
+\lstinputlisting{5_3.ml}
+\subsection*{test.txt}
+\lstinputlisting{test.txt}
+\end{document}

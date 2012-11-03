@@ -1,9 +1,9 @@
-This is e-pTeX, Version 3.1415926-p3.2-110415-2.3 (utf8.euc) (TeX Live 2011) (format=platex 2011.7.3)  18 OCT 2012 22:35
+This is e-pTeX, Version 3.1415926-p3.2-110415-2.3 (utf8.euc) (TeX Live 2011) (format=platex 2011.7.3)  16 OCT 2012 13:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**2_4_report.tex
-(./2_4_report.tex
+**5_report.tex
+(./5_report.tex
 pLaTeX2e <2006/11/10> (based on LaTeX2e <2009/09/24> patch level 0)
 Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, af
 rikaans, arabic, basque, bulgarian, catalan, pinyin, croatian, czech, danish, d
@@ -278,17 +278,12 @@ File: listings.cfg 2007/02/22 1.4 listings configuration
 ))
 Package: listings 2007/02/22 1.4 (Carsten Heinz)
 
-(/Users/vieno/Library/texmf/tex/latex/jlisting.sty
-Package: jlisting 2006/02/20 0.2 (Thor)
-\lst@nextchar=\count113
-\lst@inputfile=\read1
-)
 
 LaTeX Warning: Unused global option(s):
-    [9pt].
+    [8pt].
 
-(./2_4_report.aux)
-\openout1 = `2_4_report.aux'.
+(./5_report.aux)
+\openout1 = `5_report.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/txmi/m/it on input line 46.
 LaTeX Font Info:    Try loading font information for OML+txmi on input line 46.
@@ -336,7 +331,7 @@ LaTeX Font Info:    Try loading font information for OT1+txr on input line 46.
  (/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/ot1txr.fd
 File: ot1txr.fd 2000/12/15 v3.1
 )
-\c@lstlisting=\count114
+\c@lstlisting=\count113
 LaTeX Font Info:    Try loading font information for U+txsya on input line 47.
 
 (/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/utxsya.fd
@@ -359,26 +354,31 @@ File: utxsyc.fd 2000/12/15 v3.1
 ) [1
 
 ]
+LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <14.4> not available
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 49.
+LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <14.4> not available
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 49.
+
 (I search kanjifont definition file: . . ) (I search font definition file: . .
 . . . . . )
-LaTeX Font Info:    Try loading font information for OT1+txtt on input line 53.
+LaTeX Font Info:    Try loading font information for OT1+txtt on input line 50.
 
  (/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/ot1txtt.fd
 File: ot1txtt.fd 2000/12/15 v3.1
 )
-[2]
-LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 56.
-LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 56.
- [3] [4] (./2_4_report.aux) ) 
+(./5_1.ml) (./5_2.ml [2]) (./5_3.ml)
+LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <12> not available
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 55.
+LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <12> not available
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 55.
+ (./test.txt) [3] (./5_report.aux) ) 
 Here is how much of TeX's memory you used:
- 3435 strings out of 494163
- 44747 string characters out of 3160587
- 140287 words of memory out of 3000000
- 6761 multiletter control sequences out of 15000+200000
- 22009 words of font info for 73 fonts, out of 3000000 for 9000
+ 3430 strings out of 494163
+ 44424 string characters out of 3160587
+ 130063 words of memory out of 3000000
+ 6748 multiletter control sequences out of 15000+200000
+ 24104 words of font info for 79 fonts, out of 3000000 for 9000
  745 hyphenation exceptions out of 8191
- 29i,6n,32p,226b,988s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 28i,6n,32p,224b,1523s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on 2_4_report.dvi (4 pages, 26656 bytes).
+Output written on 5_report.dvi (3 pages, 14192 bytes).
