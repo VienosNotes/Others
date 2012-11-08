@@ -24,6 +24,7 @@ rule token = parse
   | '<'       { LESS }
   | '>'       { GREATER }
   | "::"      { COLCOL }
+  | "<>"      { NOTEQUAL }
 
   (* 括弧類 *)
   | '('       { LPAREN }

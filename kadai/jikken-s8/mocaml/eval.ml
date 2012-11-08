@@ -62,4 +62,11 @@ let rec eval3 ?(mode=0) e env =           (* env を引数に追加 *)
   | Let(x,e1,e2) -> 
       let env1 = ext env x (eval3 e1 env ~mode)
       in eval3 e2 env1 ~mode
+  | Noteq(e1, e2) ->
+      begin
+	match (eval3 e1 env ~mode, eval3 e2 env ~mode) with
+	  | (IntVal(n1),IntVal(n2)) -> BoolVal(n1!=n2)
+	  | (BoolVal(b1),BoolVal(b2)) -> BoolVal(b1!=b2)
+	  | _ -> failwith "wrong value"
+      end
   | _ -> failwith "unknown expression";;

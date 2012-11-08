@@ -11,6 +11,7 @@ type exp =
   | Fun of string * exp   (* fun x -> e *)
   | App of exp * exp      (* function application i.e. e e *)
   | Eq of exp * exp       (* e = e *)
+  | Noteq of exp * exp (* e <> e *)
   | Greater of exp * exp  (* e > e *)
   | Less of exp * exp     (* e < e *)
   | Plus of exp * exp     (* e + e *)
@@ -22,6 +23,7 @@ type exp =
   | Cons of exp * exp     (* e :: e *)
   | Head of exp           (* List.hd e *)
   | Tail of exp           (* List.tl e *)
+
 
 (* 値の型 *)
 type value = 

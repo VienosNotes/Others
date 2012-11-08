@@ -17,6 +17,7 @@ open Syntax
 %token LESS     // '<'
 %token GREATER  // '>'
 %token COLCOL   // "::"
+%token NOTEQUAL // "<>"
 
 // 括弧類
 %token LPAREN   // '('
@@ -49,7 +50,7 @@ open Syntax
 // 演算子優先順位 (優先度の低いものほど先)
 %nonassoc VBAR
 %nonassoc IN ELSE ARROW WITH
-%left EQUAL GREATER LESS
+%left EQUAL GREATER LESS NOTEQUAL
 %right COLCOL
 %left PLUS MINUS
 %left ASTERISK SLASH
@@ -135,6 +136,10 @@ exp:
   // e1 :: e2
   | exp COLCOL exp
     { Cons ($1, $3) }
+
+  // e1 <> e2
+  | exp NOTEQUAL exp
+    { Noteq ($1, $3) }
     
   // List.hd e
   | HEAD arg_exp
