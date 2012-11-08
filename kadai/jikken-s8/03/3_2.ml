@@ -1,4 +1,5 @@
 (* eval2b : exp -> value *)
+let debug = false;
 
 type exp =
   | IntLit of int
@@ -32,7 +33,6 @@ let string_of_env env =
       | IntVal n -> string_of_int n
       | BoolVal true ->  "true"
       | BoolVal false ->  "false"
-      | _ -> "unsupported type"
   in
   let rec internal (env:(string * value) list) =
     match env with
@@ -43,10 +43,14 @@ let string_of_env env =
 
 (* eval3 : exp -> (string * value) list -> value *)
 (* let と変数、環境の導入 *)
-let rec eval3 e env =           (* env を引数に追加 *)
-  print_env env;
+let print_env (env: (string * value) list) =
+  print_string( string_of_env env);;
+
+let rec eval3 ?(mode=0) e env =           (* env を引数に追加 *)
+  if mode != 0 then print_env env;
+
   let binop f e1 e2 env =       (* binop の中でも eval3 を呼ぶので env を追加 *)
-    match (eval3 e1 env, eval3 e2 env) with
+    match (eval3 e1 env ~mode, eval3 e2 env ~mode) with
     | (IntVal(n1),IntVal(n2)) -> IntVal(f n1 n2)
     | _ -> failwith "integer value expected"
   in 
@@ -58,22 +62,23 @@ let rec eval3 e env =           (* env を引数に追加 *)
   | Times(e1,e2) -> binop ( * ) e1 e2 env   (* env を追加 *)
   | Eq(e1,e2) ->
       begin
-	match (eval3 e1 env, eval3 e2 env) with
+	match (eval3 e1 env ~mode, eval3 e2 env ~mode) with
 	  | (IntVal(n1),IntVal(n2)) -> BoolVal(n1=n2)
 	  | (BoolVal(b1),BoolVal(b2)) -> BoolVal(b1=b2)
 	  | _ -> failwith "wrong value"
       end
   | If(e1,e2,e3) ->
       begin
-        match (eval3 e1 env) with          (* env を追加 *)
+        match (eval3 e1 env ~mode) with          (* env を追加 *)
           | BoolVal(true)  -> eval3 e2 env   (* env を追加 *)
           | BoolVal(false) -> eval3 e3 env   (* env を追加 *)
           | _ -> failwith "wrong value"
       end
   | Let(x,e1,e2) -> 
-      let env1 = ext env x (eval3 e1 env)
-      in eval3 e2 env1
+      let env1 = ext env x (eval3 e1 env ~mode)
+      in eval3 e2 env1 ~mode
   | _ -> failwith "unknown expression";;
+
 
 (* 3.2.1 *)
 eval3 (Let ("x", IntLit 1, (Plus (IntLit 2, Var "x")))) [];;
@@ -82,7 +87,7 @@ eval3 (Let ("x", BoolLit true, If(Eq(Var "x", BoolLit true), IntLit 1, IntLit 2)
 (* 3.2.2 *)
 eval3 (Let ("x", IntLit 1, (Let ("x", IntLit 2, Var "x")))) [];;
 (* 3.2.3 *)
-eval3 (Let ("x", IntLit 1, (Let ("y", Plus(Var "x", IntLit 1), Plus(Var "x", Var "y"))))) [];;
+eval3 ~mode:1  (Let ("x", IntLit 1, (Let ("y", Plus(Var "x", IntLit 1), Plus(Var "x", Var "y"))))) [];;
 (* 3.2.4 *)
 eval3 (Let ("x", IntLit 1, Plus(Let("x", IntLit 2, Plus(Var "x", IntLit 1)), Times(Var "x", IntLit 2)))) [];;
 
