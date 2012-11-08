@@ -5,5 +5,6 @@ let run src =
 
 run "1+2*3";;
 
-run "let x = 1 in let y = 2 in x <> y";
-
+run "true <> false";;
+run "(1+1) <> 2";;
+run "let x = 1 in let y = 2 in x <> y";;
