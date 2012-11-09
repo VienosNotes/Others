@@ -1,0 +1,102 @@
+\documentclass[a4paper,9pt]{jarticle}
+\usepackage{stdrep}
+
+\title{ソフトウェアサイエンス実験 S8 課題5-2}
+\author{200911434 青木大祐}
+
+\begin{document}
+\maketitle
+\setcounter{section}{5}
+\setcounter{subsection}{2}
+
+\newpage
+\subsubsection{eval4の実装}
+\begin{lstlisting}
+let x = 1 in
+  let f = fun y -> x + y in
+    let x = 2 in
+      f (x + 3)
+\end{lstlisting}
+上記のプログラムを、ミニOcamlのプログラムとして実行した。結果を以下に示
+す。
+
+\begin{lstlisting}
+- : Syntax.value = Syntax.IntVal 6
+\end{lstlisting}
+
+\subsubsection{APPの変更}
+上記のプログラムについて、$eval4$内の$env1$を$env$に変更した際の実行結果
+を示す。
+
+\begin{lstlisting}
+- : Syntax.value = Syntax.IntVal 7
+\end{lstlisting}
+
+$env$はクロージャに保持されている環境ではなく、関数適用が行われた時点での
+環境なので、これは動的束縛だといえる。
+
+\subsubsection{factorialの定義}
+ある数の階乗を求めるには、ループもしくは再帰の構造が必要になる。ミニ
+OCamlではループ構文がまだ用意されていないので、再帰を使うことを考える。
+\\
+しかしミニOCamlでは、関数抽象を行う時点での環境にその関数自体は含まれ
+ていないため、$"unbound variable: fact"$のように未定義の変数であるという
+ふうにエラーが出てしまう。\\
+よって、ここまでの段階ではfactorialを定義することは不可能だと考えられる。
+
+\subsubsection{評価順序}
+$(e1+e2)$について、実際に評価される部分は以下の二行目である。
+
+\begin{lstlisting}
+  let binop f e1 e2 env =       (* binop の中でも eval4 を呼ぶので env を追加 *)
+    match (eval4 e1 env ~mode, eval4 e2 env ~mode) with
+    | (IntVal(n1),IntVal(n2)) -> IntVal(f n1 n2)
+    | _ -> failwith "integer value expected"
+  in 
+\end{lstlisting}
+また、Ocamlで以下のプログラムを実行すると次のような結果が得られる。
+\begin{lstlisting}
+#   (print_string "1"; 10) + (print_string "2"; 20);;
+21- : int = 30
+
+# (print_int 1, print_int 2);;
+21- : unit * unit = ((), ())
+\end{lstlisting}
+この結果から、カンマ区切りの式は後者が先に評価されるので、
+$(e1+e2)$についてはOCamlとミニOCamlで違いは無いと考えられる。\\
+
+$(e1 e2)$という形の関数適用について、例として提示されたプログラムを実行
+すると、以下の様な結果が得られた。
+
+\begin{lstlisting}
+#   (print_string "1"; (fun x -> x)) (print_string "2"; 20) ;;
+21- : int = 20
+\end{lstlisting}
+これは、適用する関数本体より先に引数を評価していることを表している。しか
+し、現時点でのミニOCamlの実装は以下のとおりである。
+
+\begin{lstlisting}
+  | App(e1,e2) ->
+     begin
+      match (eval4 e1 env) with
+        | FunVal(x,body,env1) ->
+            let arg = (eval4 e2 env) 
+	    in eval4 body (ext env1 x arg)
+        | _ -> failwith "function value expected"
+     end
+\end{lstlisting}
+これを次のように変更することで、OCamlと同じ評価順序になるeval4関数が得ら
+れる。
+
+\begin{lstlisting}
+  | App(e1,e2) ->
+     begin
+      let arg = (eval4 e2 env) in
+      match (eval4 e1 env) with
+        | FunVal(x,body,env1) ->
+	    eval4 body (ext env1 x arg)
+        | _ -> failwith "function value expected"
+     end
+\end{lstlisting}
+\end{document}
+
