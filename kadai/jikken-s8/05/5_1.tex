@@ -1,0 +1,57 @@
+\documentclass[a4paper,9pt]{jarticle}
+\usepackage{stdrep}
+
+\title{ソフトウェアサイエンス実験 S8 課題5-1}
+\author{200911434 青木大祐}
+
+\begin{document}
+\maketitle
+\setcounter{section}{5}
+\setcounter{subsection}{1}
+
+\newpage
+
+\subsubsection{静的束縛と動的束縛}
+以下のプログラムについて、静的束縛と動的束縛の場合についての計算過程を示
+す。
+
+\begin{lstlisting}
+ let x = 10 in
+  let f = fun y -> x + y in
+    let y = f x in 
+     let x = 20 in 
+       f (x * y)
+\end{lstlisting}
+
+\paragraph{静的束縛の場合}
+
+\begin{enumerate}
+ \item 一番外側のスコープにおいて、x=10という束縛を有効にする
+ \item 関数fの定義について、xは一番外側の束縛が有効になるので、f=10+yという束縛が有効になる
+ \item 変数yについて、関数fの引数xに一番外側のxの束縛が適用されるので、y=20という束縛が有効になる
+ \item 変数xについて、一番外側のxの束縛を上書きしてx=20という束縛が有効になる
+ \item f=(x * y)について、内側のxの束縛とyの束縛が適用されるので、f(20
+       * 20) = f(400)という適用になる
+       \begin{enumerate}
+        \item f=x+yについて、xは関数が定義された時点の10が有効
+        \item yについては引数に渡されたy=400の束縛が有効になる
+       \end{enumerate}
+ \item fを適用した結果として410が返る
+\end{enumerate}
+
+\paragraph{動的束縛の場合}
+\begin{enumerate}
+ \item x=10という束縛を有効にする
+ \item 関数fの定義について、f=x+yという束縛を有効にする
+ \item 変数yについて、関数fにxを適用する、つまりx=10より10+10なのでy=20という束縛が有効になる
+ \item 変数xについて、一番外側のxの束縛を上書きしてx=20という束縛が有効になる
+ \item f(x * y)について、f(20 * 20) = f(400)という適用になる
+       \begin{enumerate}
+        \item f=x+yについて、xは最新の束縛である20が有効になる
+        \item yについて、引数に渡されたy=400という束縛が有効になる
+       \end{enumerate}
+
+ \item fを適用した結果として420が返る
+\end{enumerate}
+\end{document}
+
