@@ -1,0 +1,45 @@
+\documentclass[a4paper,9pt]{jarticle}
+\usepackage{stdrep}
+
+\title{ソフトウェアサイエンス実験 S8 課題5-3}
+\author{200911434 青木大祐}
+
+\begin{document}
+\maketitle
+\setcounter{section}{5}
+\setcounter{subsection}{3}
+
+\newpage
+\subsubsection{テストプログラムの実行}
+作成した$eval6$関数の動作を確認するため、次のような入力を与えた。また、
+このプログラムを動作させるために、$Minus$に関するパターンを$binop$を用い
+て実装した。これは$Plus$と変わらないため省略する。
+
+\begin{lstlisting}
+run "let rec f x = x in 0";;
+run "let rec f x = x in f 0";;
+run "let rec f x = if x = 0 then 1 else 2 + f (x + (-1)) in f 1";;
+run "let rec f x = if x = 0 then 1 else x * f (x + (-1)) in f 3";;
+run "let rec f x = if x = 0 then 1 else x * f (x + (-1)) in f 5";;
+\end{lstlisting}
+
+実行結果を以下に示す。
+
+\begin{lstlisting}
+- : Syntax.value = Syntax.IntVal 0
+- : Syntax.value = Syntax.IntVal 0
+- : Syntax.value = Syntax.IntVal 3
+- : Syntax.value = Syntax.IntVal 6
+- : Syntax.value = Syntax.IntVal 120
+\end{lstlisting}
+正しく計算できていることが分かる。
+
+\subsubsection{再帰関数の定義}
+$n$番目のフィボナッチ数を求める$fib$関数をミニOCamlで実装した。
+
+\begin{lstlisting}
+run "let rec fib x = if x = 0 then 0 else x + fib(x - 1) in fib 10";;
+# - : Syntax.value = Syntax.IntVal 55
+\end{lstlisting}
+\end{document}
+
