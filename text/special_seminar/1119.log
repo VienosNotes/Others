@@ -1,9 +1,9 @@
-This is e-pTeX, Version 3.1415926-p3.2-110415-2.3 (utf8.euc) (TeX Live 2011) (format=platex 2011.7.3)  25 OCT 2012 16:38
+This is e-pTeX, Version 3.1415926-p3.2-110415-2.3 (utf8.euc) (TeX Live 2011) (format=platex 2011.7.3)  8 NOV 2012 16:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**summer.tex
-(./summer.tex
+**1119.tex
+(./1119.tex
 pLaTeX2e <2006/11/10> (based on LaTeX2e <2009/09/24> patch level 0)
 Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, af
 rikaans, arabic, basque, bulgarian, catalan, pinyin, croatian, czech, danish, d
@@ -151,8 +151,8 @@ LaTeX Info: Redefining \not on input line 1043.
 LaTeX Warning: Unused global option(s):
     [min].
 
-(./summer.aux)
-\openout1 = `summer.aux'.
+(./1119.aux)
+\openout1 = `1119.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/txmi/m/it on input line 15.
 LaTeX Font Info:    Try loading font information for OML+txmi on input line 15.
@@ -168,7 +168,8 @@ LaTeX Font Info:    ... okay on input line 15.
 LaTeX Font Info:    Checking defaults for OMS/txsy/m/n on input line 15.
 LaTeX Font Info:    Try loading font information for OMS+txsy on input line 15.
 
- (/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/omstxsy.fd
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/omstxsy.fd
 File: omstxsy.fd 2000/12/15 v3.1
 )
 LaTeX Font Info:    ... okay on input line 15.
@@ -258,14 +259,14 @@ LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
  [1
 
 ]
-(./summer.aux) ) 
+(./1119.aux) ) 
 Here is how much of TeX's memory you used:
- 1497 strings out of 494163
- 17640 string characters out of 3160587
+ 1498 strings out of 494163
+ 17646 string characters out of 3160587
  61338 words of memory out of 3000000
- 4893 multiletter control sequences out of 15000+200000
+ 4894 multiletter control sequences out of 15000+200000
  22240 words of font info for 80 fonts, out of 3000000 for 9000
  750 hyphenation exceptions out of 8191
- 25i,6n,22p,206b,256s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 25i,6n,22p,204b,256s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on summer.dvi (1 page, 972 bytes).
+Output written on 1119.dvi (1 page, 1196 bytes).

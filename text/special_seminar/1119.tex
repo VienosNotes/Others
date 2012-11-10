@@ -1,0 +1,37 @@
+\documentclass[a4paper,8pt,min]{jsarticle}
+% \usepackage{url}
+\usepackage[dvipdfmx]{graphicx}
+% \usepackage{epsfig}
+% \usepackage{amsmath}
+% \usepackage{amssymb}
+% \usepackage{times}
+% \usepackage{ascmac}
+\usepackage{txfonts}
+%\usepackage{listings}
+
+\title{TeXサーバの制作 進捗}
+\author{200911434 青木大祐}
+
+\begin{document}
+\maketitle
+
+\subsection*{進捗}
+\begin{itemize}
+ \item コンパイルが終わったPDFをどうやって提示するか検討
+ \begin{itemize}
+  \item 即座にダウンロード開始
+  \item プレビューする
+        \begin{itemize}
+         \item FirefoxのJSを使ったPDFビューア
+         \item 画像に変換
+        \end{itemize}
+ \end{itemize}
+\vspace{1zh}
+ \item デザインの不具合
+       \begin{itemize}
+        \item spanの中に直接formを入れると破滅する
+        \item おそらくガイドラインに沿ってないので近いうちに修正
+       \end{itemize}
+
+\end{itemize}
+\end{document}
