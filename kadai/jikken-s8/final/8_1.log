@@ -1,9 +1,9 @@
-This is e-pTeX, Version 3.1415926-p3.2-110415-2.3 (utf8.euc) (TeX Live 2011) (format=platex 2011.7.3)  11 NOV 2012 11:33
+This is e-pTeX, Version 3.1415926-p3.2-110415-2.3 (utf8.euc) (TeX Live 2011) (format=platex 2011.7.3)  10 NOV 2012 14:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**1_report.tex
-(./1_report.tex
+**8_1.tex
+(./8_1.tex
 pLaTeX2e <2006/11/10> (based on LaTeX2e <2009/09/24> patch level 0)
 Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, af
 rikaans, arabic, basque, bulgarian, catalan, pinyin, croatian, czech, danish, d
@@ -37,6 +37,7 @@ LaTeX Font Info:    Overwriting symbol font `mincho' in version `bold'
 \bibindent=\dimen120
 \heisei=\count90
 )
+(/Users/vieno/Library/texmf/tex/latex/stdrep.sty
 (/usr/local/texlive/2011/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip10
 Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
@@ -278,76 +279,77 @@ File: listings.cfg 2007/02/22 1.4 listings configuration
 ))
 Package: listings 2007/02/22 1.4 (Carsten Heinz)
 
+(/Users/vieno/Library/texmf/tex/latex/jlisting.sty
+Package: jlisting 2006/02/20 0.2 (Thor)
+\lst@nextchar=\count113
+\lst@inputfile=\read1
+))
 
 LaTeX Warning: Unused global option(s):
     [9pt].
 
-(./1_report.aux)
-\openout1 = `1_report.aux'.
+(./8_1.aux)
+\openout1 = `8_1.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/txmi/m/it on input line 46.
-LaTeX Font Info:    Try loading font information for OML+txmi on input line 46.
-
-
-(/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/omltxmi.fd
+LaTeX Font Info:    Checking defaults for OML/txmi/m/it on input line 7.
+LaTeX Font Info:    Try loading font information for OML+txmi on input line 7.
+ (/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/omltxmi.fd
 File: omltxmi.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for OMS/txsy/m/n on input line 46.
-LaTeX Font Info:    Try loading font information for OMS+txsy on input line 46.
-
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OMS/txsy/m/n on input line 7.
+LaTeX Font Info:    Try loading font information for OMS+txsy on input line 7.
 
 (/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/omstxsy.fd
 File: omstxsy.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for OMX/txex/m/n on input line 46.
-LaTeX Font Info:    Try loading font information for OMX+txex on input line 46.
-
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OMX/txex/m/n on input line 7.
+LaTeX Font Info:    Try loading font information for OMX+txex on input line 7.
 
 (/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/omxtxex.fd
 File: omxtxex.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for U/txexa/m/n on input line 46.
-LaTeX Font Info:    Try loading font information for U+txexa on input line 46.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for U/txexa/m/n on input line 7.
+LaTeX Font Info:    Try loading font information for U+txexa on input line 7.
 
 (/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/utxexa.fd
 File: utxexa.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for JY1/mc/m/n on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for JT1/mc/m/n on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for JY1/mc/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for JT1/mc/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
 
 (I search kanjifont definition file: . . ) (I search font definition file: . .
 . . . . . )
-LaTeX Font Info:    Try loading font information for OT1+txr on input line 46.
+LaTeX Font Info:    Try loading font information for OT1+txr on input line 7.
  (/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/ot1txr.fd
 File: ot1txr.fd 2000/12/15 v3.1
 )
-\c@lstlisting=\count113
-LaTeX Font Info:    Try loading font information for U+txsya on input line 47.
+\c@lstlisting=\count114
+LaTeX Font Info:    Try loading font information for U+txsya on input line 8.
 
 (/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/utxsya.fd
 File: utxsya.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    Try loading font information for U+txsyb on input line 47.
+LaTeX Font Info:    Try loading font information for U+txsyb on input line 8.
 
 (/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/utxsyb.fd
 File: utxsyb.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    Try loading font information for U+txmia on input line 47.
+LaTeX Font Info:    Try loading font information for U+txmia on input line 8.
 
 (/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/utxmia.fd
 File: utxmia.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    Try loading font information for U+txsyc on input line 47.
+LaTeX Font Info:    Try loading font information for U+txsyc on input line 8.
 
 (/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/utxsyc.fd
 File: utxsyc.fd 2000/12/15 v3.1
@@ -355,25 +357,25 @@ File: utxsyc.fd 2000/12/15 v3.1
 
 ]
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 51.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 13.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 51.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 13.
 
 (I search kanjifont definition file: . . ) (I search font definition file: . .
 . . . . . )
-LaTeX Font Info:    Try loading font information for OT1+txtt on input line 55.
+LaTeX Font Info:    Try loading font information for OT1+txtt on input line 15.
 
  (/usr/local/texlive/2011/texmf-dist/tex/latex/txfonts/ot1txtt.fd
 File: ot1txtt.fd 2000/12/15 v3.1
 )
-(./1_1.ml) (./1_2.ml) (./1_5.ml) [2] (./1_report.aux) ) 
+[2] [3] [4] (./8_1.aux) ) 
 Here is how much of TeX's memory you used:
- 3421 strings out of 494163
- 44292 string characters out of 3160587
- 114078 words of memory out of 3000000
- 6743 multiletter control sequences out of 15000+200000
- 22009 words of font info for 73 fonts, out of 3000000 for 9000
+ 3465 strings out of 494163
+ 45191 string characters out of 3160587
+ 144536 words of memory out of 3000000
+ 6790 multiletter control sequences out of 15000+200000
+ 30202 words of font info for 100 fonts, out of 3000000 for 9000
  745 hyphenation exceptions out of 8191
- 28i,6n,32p,224b,1000s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 34i,6n,34p,220b,1539s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on 1_report.dvi (2 pages, 7708 bytes).
+Output written on 8_1.dvi (4 pages, 25028 bytes).

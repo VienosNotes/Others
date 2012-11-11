@@ -56,10 +56,23 @@ and
   | I_Add                   (* Accumulatorにある値にスタックトップの値
 			     * を加えて結果をAccumulator にいれる
 			     *)
+  | I_Sub                   (* Accumulatorにある値にスタックトップの値
+                               を引いて結果をAccumulatorにいれる *)
+  | I_Mult                  (* Accumulatorにある値にスタックトップの値
+                               を掛けて結果をAccumulatorにいれる *)
+  | I_Div                   (* Accumulatorにある値にスタックトップの値
+                               で割って結果をAccumulatorにいれる *)
+  | I_Greater               (* Accumulatorにある値がスタックトップの値
+                               より大きいかどうかを比較して、結果をAccumulatorにいれる *)
   | I_Eq                    (* Accumulatorにある値とスタックトップの値
 			     * が同じ整数であるかどうかをテストして、結
 			     * 果をAccumulator にいれる
 			     *)
+  | I_Noteq                  (* Accumulatorにある値とスタックトップの値
+			     * が違う整数であるかどうかをテストして、結
+			     * 果をAccumulator にいれる
+			     *)
+
 
 (* ASEC machine における「値」を表す型 *)
 type am_value =  
@@ -99,7 +112,12 @@ let rec trans (a:am_value) (s:am_stack) (e:am_env) (c:code) : am_value =
     begin
       match (f,      a,            s               ) with
 	|   (I_Add,  AM_IntVal(n), AM_IntVal(m)::s1) -> (AM_IntVal (n+m), s1)
+	|   (I_Sub,  AM_IntVal(n), AM_IntVal(m)::s1) -> (AM_IntVal (n-m), s1)
+	|   (I_Mult,  AM_IntVal(n), AM_IntVal(m)::s1) -> (AM_IntVal (n*m), s1)
+	|   (I_Div,  AM_IntVal(n), AM_IntVal(m)::s1) -> (AM_IntVal (n/m), s1)
+	|   (I_Greater,  AM_IntVal(n), AM_IntVal(m)::s1) -> (AM_BoolVal (n>m), s1)
 	|   (I_Eq ,  AM_IntVal(n), AM_IntVal(m)::s1) -> (AM_BoolVal(n=m), s1)
+	|   (I_Noteq ,  AM_IntVal(n), AM_IntVal(m)::s1) -> (AM_BoolVal(n!=m), s1)
 	| _ -> failwith "unexpected type of argument(s) for binary operation"
     end
   in 
@@ -124,7 +142,7 @@ let rec trans (a:am_value) (s:am_stack) (e:am_env) (c:code) : am_value =
     | (AM_BoolVal(false),_,_,I_Test(_ ,c3)::c1) -> trans a s e (c3 @ c1)
     | (_,                _,_,I_Test(_ ,_ )::_ ) -> failwith "boolean expected for if-test"
     | (_,_,_,i       ::c1) 
-	when List.mem i [I_Add; I_Eq] 
+	when List.mem i [I_Add; I_Sub; I_Mult; I_Div; I_Greater; I_Eq; I_Noteq] 
 	-> 
 	let (v,s1) = binop a s i
 	in trans v s1 e c1
@@ -171,3 +189,27 @@ let code2 =
 
 let _ = am_eval code2 ;;
 
+let code3 =
+  [I_Ldi 4; I_Push; I_Ldi 10; I_Sub];;
+
+let _ = am_eval code3;;
+
+let code4 =
+  [I_Ldi 2; I_Push; I_Ldi 3; I_Mult];;
+
+let _ = am_eval code4;;
+
+let code5 =
+  [I_Ldi 4; I_Push; I_Ldi 8; I_Div];;
+
+let _ = am_eval code5;;
+
+let code6 =
+  [I_Ldi 4; I_Push; I_Ldi 3; I_Greater];;
+
+let _ = am_eval code6;;
+
+let code7 =
+  [I_Ldi 4; I_Push; I_Ldi 1; I_Noteq];;
+
+let _ = am_eval code7;;
