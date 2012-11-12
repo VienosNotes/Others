@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.1415926-p3.2-110415-2.3 (utf8.euc) (TeX Live 2011) (format=platex 2011.7.3)  11 NOV 2012 18:49
+This is e-pTeX, Version 3.1415926-p3.2-110415-2.3 (utf8.euc) (TeX Live 2011) (format=platex 2011.7.3)  12 NOV 2012 18:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -412,6 +412,14 @@ LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
 (Font)              scaled to size 4.805pt on input line 22.
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
 (Font)              scaled to size 5.76599pt on input line 37.
+LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 59.
+LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
+(Font)              scaled to size 9.60999pt on input line 59.
+LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 59.
+LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
+(Font)              scaled to size 9.60999pt on input line 59.
  [2]
 LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
 (Font)              scaled to size 11.53198pt on input line 95.
@@ -431,14 +439,17 @@ it/10 ; Plus\OT1/txr/m/n/10 (\OML/txmi/m/it/10 IntLit \OT1/txr/m/n/10 3\OML/txm
 i/m/it/10 ; IntLit \OT1/txr/m/n/10 (\OMS/txsy/m/n/10 ^^@\OT1/txr/m/n/10 4)))$
  []
 
-[3] [4] (./final_report.aux) ) 
+[3]
+LaTeX Font Info:    Font shape `OT1/txss/m/n' will be
+(Font)              scaled to size 9.49997pt on input line 215.
+ [4] [5] [6] [7] [8] [9] (./final_report.aux) ) 
 Here is how much of TeX's memory you used:
- 3610 strings out of 494163
- 46941 string characters out of 3160587
- 137109 words of memory out of 3000000
- 6938 multiletter control sequences out of 15000+200000
- 34206 words of font info for 123 fonts, out of 3000000 for 9000
+ 3618 strings out of 494163
+ 47053 string characters out of 3160587
+ 148109 words of memory out of 3000000
+ 6945 multiletter control sequences out of 15000+200000
+ 35474 words of font info for 125 fonts, out of 3000000 for 9000
  750 hyphenation exceptions out of 8191
- 34i,8n,34p,229b,1549s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 34i,8n,34p,229b,1551s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on final_report.dvi (4 pages, 27188 bytes).
+Output written on final_report.dvi (9 pages, 91576 bytes).

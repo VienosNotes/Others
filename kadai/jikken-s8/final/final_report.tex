@@ -56,7 +56,7 @@ e ::= x                   変数
   | e < e                 大小比較(整数)
 \end{lstlisting}
 このミニOcamlを実装するにあたって、入力されるプログラムを扱う内部的な表
-現として式($exp$)という構造を考える。プログラムは式からなり、また式は一つ
+現として{\bf{式}}($exp$)という構造を考える。プログラムは式からなり、また式は一つ
 ないしは複数の部分的な式から成り立っている。この再帰的な構造を表現するた
 め、Ocamlのヴァリアント型を用いて代数的データ構造を実現することにする。\\
 
@@ -107,7 +107,7 @@ let rec eval1 e =
   | _ -> failwith "unknown expression"
 \end{lstlisting}
 
-もし与えられた式が整数リテラル($IntLit$)だった場合は、その数値が式を評価
+もし与えられた式が{\bf{整数リテラル}}($IntLit$)だった場合は、その数値が式を評価
 した値となる。また、与えられた式が足し算($Plus$)だった場合は、2つの引数
 として与えられた式を再帰的に評価し、その2値を合計し、評価した値として返
 す。掛け算についても同様である。\\
@@ -128,7 +128,7 @@ val easy : exp =
 \subsection{値と型}
 $eval1$では評価した値はOcamlの$integer$型であるが、ミニOcamlのデータ型と
 してはまず$Int$型と$Bool$型を扱いたいため、このままでは不十分である。複数のデー
-タ型を扱えるようにするため、値($value$)というデータ構造を導入する。
+タ型を扱えるようにするため、{\bf{値}}($value$)というデータ構造を導入する。
 
 \begin{lstlisting}
 type value = 
@@ -185,6 +185,433 @@ let rec eval2 e =
   | _ -> failwith "unknown expression e";;
 \end{lstlisting}
 
+このままでは$Plus$や$Times$の定義の大部分が重複しており、また後から二項
+の整数演算を追加する際に煩雑になってしまう。これを回避するため、実際の計
+算を$binop$関数に切り分けることにする。$binop$関数の定義は以下のとおり。
 
+\begin{lstlisting}
+  let binop f e1 e2 =
+    match (eval2b e1, eval2b e2) with
+    | (IntVal(n1),IntVal(n2)) -> IntVal(f n1 n2)
+    | _ -> failwith "integer values expected"
+\end{lstlisting}
+
+これに伴って、$Plus,Times$の定義を以下のように変更する。
+
+\begin{lstlisting}
+...
+    | Plus(e1,e2)  -> binop (+) e1 e2
+    | Times(e1,e2) -> binop ( * ) e1 e2
+...
+\end{lstlisting}
+
+\subsection{変数と環境}
+ミニOcamlにおいて{\bf{変数}}を実現するため、$let$文の導入を試みる。変数を束ねて
+おく{\bf{環境}}として、名前と値のタプルをリストにした$(string *
+value)\ list$を考える。変数を宣言し
+た際にはこの環境に名前と値を追加し、式の中に変数が出現した際にはこの環境
+から名前を探しだして値を取り出すことが出来る。
+
+\subsubsection{変数の定義・参照}
+環境に変数を追加する操作として、環境の拡張$ext$という関数を実装する。こ
+の関数は、引数に変数名と値、そして現在の環境を受け取り、先頭に追加したも
+のを返す。
+
+\begin{lstlisting}
+let ext env x v = (x,v) :: env
+\end{lstlisting}
+
+また、現在の環境から変数を参照する関数として$lookup$を実装する。これは変
+数名と現在の環境を受け取り、対応する値を返す。
+
+\begin{lstlisting}
+let rec lookup x env =
+   match env with
+   | [] -> failwith ("unbound variable: " ^ x)
+   | (y,v)::tl -> if x=y then v 
+                  else lookup x tl 
+\end{lstlisting}
+
+想定どおりの環境が作られているか、以下のようなテストプログラムを実行して
+確認してみる。なお、$emptyenv$は空の環境を返す関数である。
+
+\begin{lstlisting}
+let env = emptyenv();;
+let env = ext env "x" (IntVal 1);;
+let env = ext env "y" (BoolVal true);;
+let env = ext env "z" (IntVal 5);;
+
+(* 実行結果 *)
+val env : 'a list = []
+val env : (string * value) list = [("x", IntVal 1)]
+val env : (string * value) list = [("y", BoolVal true); ("x", IntVal 1)]
+val env : (string * value) list =
+  [("z", IntVal 5); ("y", BoolVal true); ("x", IntVal 1)]
+\end{lstlisting}
+正しく環境が作られていることが分かったので、変数名を参照してみる。
+
+\begin{lstlisting}
+let y = lookup "y" env;; (*存在する変数*)
+let w = lookup "w" env;; (*存在しない変数*)
+
+(*実行結果*)
+val y : value = BoolVal true
+Exception: Failure "unbound variable: w".
+\end{lstlisting}
+存在する変数は正しく参照できており、また未定義の変数は例外になっている。\\
+
+なお、この環境は定義される度に先頭に追加されていく。$lookup$は先頭から順
+に変数名の探索を行うため、同名の変数が存在する場合は最新の物が参照される
+ため、変数名の上書きが可能になる。
+
+\subsubsection{ミニOcamlへの組み込み}
+実装した$ext,lookup$をミニOcamlインタプリタに組みこむことを考える。\\
+まず、動作の理解を深めるため、環境の変化を順に表示するデバッグ関数
+$string\_of\_env, print\_env$を実装した。
+
+\begin{lstlisting}
+let string_of_env env =
+  let string_of_val (e:value) : string =
+    match e with
+      | IntVal n -> string_of_int n
+      | BoolVal true ->  "true"
+      | BoolVal false ->  "false"
+  in
+  let rec internal (env:(string * value) list) =
+    match env with
+      | [] -> ""
+      | (name, v)::rest -> name ^ " = " ^ (string_of_val v) ^ ";" ^ (internal rest)
+  in
+  "[" ^ (internal env) ^ "]";;
+
+let print_env (env: (string * value) list) =
+  print_string( string_of_env env);;
+\end{lstlisting}
+
+これを踏まえて、変数を定義する式$Let$と変数を参照する式$Var$を追加した
+$eval3$を以下に示す。デバッグモードを有効にするには、オプショナル引数と
+して$\sim mode:1$を指定すると、環境の変化が逐一出力される。
+
+\begin{lstlisting}
+let rec eval3 ?(mode=0) e env =           (* env を引数に追加 *)
+  if mode != 0 then print_env env;
+
+  let binop f e1 e2 env =       (* binop の中でも eval3 を呼ぶので env を追加 *)
+    match (eval3 e1 env ~mode, eval3 e2 env ~mode) with
+    | (IntVal(n1),IntVal(n2)) -> IntVal(f n1 n2)
+    | _ -> failwith "integer value expected"
+  in 
+  match e with
+  | Var(x)       -> lookup x env
+  | IntLit(n)    -> IntVal(n)
+  | BoolLit(b) -> BoolVal(b)
+  | Plus(e1,e2)  -> binop (+) e1 e2 env     (* env を追加 *)
+  | Times(e1,e2) -> binop ( * ) e1 e2 env   (* env を追加 *)
+  | Eq(e1,e2) ->
+      begin
+	match (eval3 e1 env ~mode, eval3 e2 env ~mode) with
+	  | (IntVal(n1),IntVal(n2)) -> BoolVal(n1=n2)
+	  | (BoolVal(b1),BoolVal(b2)) -> BoolVal(b1=b2)
+	  | _ -> failwith "wrong value"
+      end
+  | If(e1,e2,e3) ->
+      begin
+        match (eval3 e1 env ~mode) with          (* env を追加 *)
+          | BoolVal(true)  -> eval3 e2 env   (* env を追加 *)
+          | BoolVal(false) -> eval3 e3 env   (* env を追加 *)
+          | _ -> failwith "wrong value"
+      end
+  | Let(x,e1,e2) -> 
+      let env1 = ext env x (eval3 e1 env ~mode)
+      in eval3 e2 env1 ~mode
+  | _ -> failwith "unknown expression";; 
+\end{lstlisting}
+テストとして、幾つかの入力を与えてみる。
+
+\begin{lstlisting}
+(* let x = 1 in 2 + x *)
+eval3 (Let ("x", IntLit 1, (Plus (IntLit 2, Var "x")))) [];; 
+
+(* let x = 1 in let y = 3 in x + y *)
+eval3 (Let ("x", IntLit 1, Let("y", IntLit 3, (Plus (Var "y", Var "x"))))) [];;
+
+(* let x = true in if x = true then 1 else 2 *)
+eval3 (Let ("x", BoolLit true, If(Eq(Var "x", BoolLit true), IntLit 1, IntLit 2))) [];;
+
+(* 実行結果 *)
+- : value = IntVal 3
+- : value = IntVal 4
+- : value = IntVal 1
+\end{lstlisting}
+
+また、デバッグモードを用いて環境の遷移を表示してみる。
+
+\begin{lstlisting}
+(* let x = 1 in let y = x + 1 in x + y *)
+eval3 ~mode:1 (Let ("x", IntLit 1, (Let ("y", Plus(Var "x", IntLit 1), Plus(Var "x", Var "y"))))) [];;
+
+[][][x = 1;][x = 1;][x = 1;][x = 1;][y = 2;x = 1;][y = 2;x = 1;][y = 2;x = 1;]
+- : value = IntVal 3
+\end{lstlisting}
+まず最初に$x$が定義され、次に$y$が定義されていく過程がわかる。
+
+\section{構文解析}
+今までは$exp$型の式を自分で作成していたが、$ocamllex$と$ocamlyacc$を用い
+て、ミニOcaml言語の構文を解析して$exp$型の式を作り出すパーザを生成する。
+parserとlexerは実験にあたって与えられた$parser.mly$と$lexer.mll$を用いる。
+また、実行ファイルの生成にあたって必要となる他のファイル
+($main.ml,syntax.ml$)も、与えられたものを用いることにする。
+
+\subsection{構文の拡張}
+lexerとparserを拡張して、新たに演算子を定義してみる。例として、
+二数が等しくないと真を返す演算子$<>$を定義する。\\
+
+$lexer.mll$に新しいトークンとして$<>$を$NOTEQUAL$という名前で追加する。
+
+\begin{lstlisting}
+ ...
+
+  (* 演算子 *)
+  | '+'       { PLUS }
+  | '-'       { MINUS }
+  | '*'       { ASTERISK }
+  | '/'       { SLASH }
+  | '='       { EQUAL }
+  | '<'       { LESS }
+  | '>'       { GREATER }
+  | "::"      { COLCOL }
+  | "<>"      { NOTEQUAL }
+
+...
+\end{lstlisting}
+また、$parser.mly$を以下のように変更し、$NOTEQUAL$が出現した場合の処理として
+$Noteq$という$exp$を出力するように定義する。
+\begin{lstlisting}
+...
+
+// 演算子
+%token PLUS     // '+'
+%token MINUS    // '-'
+%token ASTERISK // '*'
+%token SLASH    // '/'
+%token EQUAL    // '='
+%token LESS     // '<'
+%token GREATER  // '>'
+%token COLCOL   // "::"
+%token NOTEQUAL // "<>"
+
+...
+
+%left EQUAL GREATER LESS NOTEQUAL
+
+...
+
+  // e1 <> e2
+  | exp NOTEQUAL exp
+    { Noteq ($1, $3) }
+    
+...
+\end{lstlisting}
+最後に、$syntax.ml$に$Noteq$という$exp$を追加する。
+\begin{lstlisting}
+...
+
+(* 式の型 *)
+type exp = 
+  | Var of string         (* variable e.g. x *)
+  | IntLit of int         (* integer literal e.g. 17 *)
+  | BoolLit of bool       (* boolean literal e.g. true *)
+  | If of exp * exp * exp (* if e then e else e *)
+  | Let of string * exp * exp   (* let x=e in e *)
+  | LetRec of string * string * exp * exp   (* letrec f x=e in e *)
+  | Fun of string * exp   (* fun x -> e *)
+  | App of exp * exp      (* function application i.e. e e *)
+  | Eq of exp * exp       (* e = e *)
+  | Noteq of exp * exp (* e <> e *)
+  | Greater of exp * exp  (* e > e *)
+  | Less of exp * exp     (* e < e *)
+  | Plus of exp * exp     (* e + e *)
+  | Minus of exp * exp    (* e - e *)
+  | Times of exp * exp    (* e * e *)
+  | Div of exp * exp      (* e / e *)
+  | Empty                 (* [ ] *)
+  | Match of exp * ((exp * exp) list)    (* match e with e->e | ... *)
+  | Cons of exp * exp     (* e :: e *)
+  | Head of exp           (* List.hd e *)
+  | Tail of exp           (* List.tl e *)
+
+...
+\end{lstlisting}
+
+これらを踏まえて、$eval$に$Noteq$の処理を記述する。
+
+\begin{lstlisting}
+  | Noteq(e1, e2) ->
+      begin
+	match (eval3 e1 env ~mode, eval3 e2 env ~mode) with
+	  | (IntVal(n1),IntVal(n2)) -> BoolVal(n1!=n2)
+	  | (BoolVal(b1),BoolVal(b2)) -> BoolVal(b1!=b2)
+	  | _ -> failwith "wrong value"
+      end
+\end{lstlisting}
+
+以下のような入力を与えて動作を確認してみる。
+
+\begin{lstlisting}
+run "true <> false";;
+run "(1+1) <> 2";;
+run "let x = 1 in let y = 2 in x <> y";;
+
+- : Syntax.value = Syntax.BoolVal true
+- : Syntax.value = Syntax.BoolVal false
+- : Syntax.value = Syntax.BoolVal true
+\end{lstlisting}
+
+正しく動いていることが分かる。
+
+\subsection{関数と束縛}
+ミニOcamlにおいて関数を実現するために、関数型という値を導入する。関数は
+静的束縛を実現するため、名前と関数本体に加えて関数抽象が行われた時点での
+環境を同時に保持する。\\
+
+これに伴って、$value$型の定義を以下のように拡張する。
+\begin{lstlisting}
+type value = 
+  | IntVal  of int        
+  | BoolVal of bool       
+  | FunVal  of string * exp * ((string * value) list) 
+\end{lstlisting}
+
+また、関数抽象を行う式$Fun$と関数適用を行う式$App$の処理を以下のように定
+義する。
+
+\begin{lstlisting}
+...
+
+  | Fun(x,e1) -> FunVal(x, e1, env)
+  | App(e1,e2) ->
+     begin
+      match (eval4 e1 env) with
+        | FunVal(x,body,env1) ->
+            let arg = (eval4 e2 env) 
+	    in eval4 body (ext env1 x arg)
+        | _ -> failwith "function value expected"
+     end
+
+...
+\end{lstlisting}
+
+\subsection{再帰関数}
+関数の再帰を実現するため、「再帰しない関数」とは別に再帰関数という型を用
+意する。型の定義は以下のとおり。
+
+\begin{lstlisting}
+ | RecFunVal  of string * string * exp * ((string * value) list)
+\end{lstlisting}
+
+再帰関数を定義する式$LetRec$と、関数適用$App$に再帰関数を受け取った場合
+の処理を追加し、$eval6$を作成する。これで、ミニOcamlインタプリタの基本的
+な機能の実装は終了とする。\\
+
+以下に、完成した$eval6$を含むミニOcamlインタプリタの全体を示す。
+
+\begin{lstlisting}
+open Syntax;;
+
+let emptyenv () = [];;
+
+let ext env x v = (x,v) :: env;;
+
+let rec lookup x env =
+   match env with
+   | [] -> failwith ("unbound variable: " ^ x)
+   | (y,v)::tl -> if x=y then v 
+                  else lookup x tl;;
+
+let string_of_env env =
+  let string_of_val e =
+    match e with
+      | IntVal n -> string_of_int n
+      | BoolVal true ->  "true"
+      | BoolVal false ->  "false"
+  in
+  let rec internal env = 
+    match env with
+      | [] -> ""
+      | (name, v)::rest -> name ^ " = " ^ (string_of_val v) ^ ";" ^ (internal rest)
+  in
+  "[" ^ (internal env) ^ "]";;
+
+(* eval3 : exp -> (string * value) list -> value *)
+(* let と変数、環境の導入 *)
+let print_env env =
+  print_string(string_of_env env);;
+
+let rec eval6 e env =           (* env を引数に追加 *)
+  let binop f e1 e2 env =       (* binop の中でも eval6 を呼ぶので env を追加 *)
+    match (eval6 e1 env , eval6 e2 env ) with
+    | (IntVal(n1),IntVal(n2)) -> IntVal(f n1 n2)
+    | _ -> failwith "integer value expected"
+  in 
+  match e with
+  | Var(x)       -> lookup x env
+  | IntLit(n)    -> IntVal(n)
+  | BoolLit(b) -> BoolVal(b)
+  | Plus(e1,e2)  -> binop (+) e1 e2 env     (* env を追加 *)
+  | Times(e1,e2) -> binop ( * ) e1 e2 env   (* env を追加 *)
+  | Minus(e1, e2) -> binop (-) e1 e2 env
+  | Eq(e1,e2) ->
+      begin
+	match (eval6 e1 env , eval6 e2 env ) with
+	  | (IntVal(n1),IntVal(n2)) -> BoolVal(n1=n2)
+	  | (BoolVal(b1),BoolVal(b2)) -> BoolVal(b1=b2)
+	  | _ -> failwith "wrong value"
+      end
+  | If(e1,e2,e3) ->
+      begin
+        match (eval6 e1 env ) with          (* env を追加 *)
+          | BoolVal(true)  -> eval6 e2 env   (* env を追加 *)
+          | BoolVal(false) -> eval6 e3 env   (* env を追加 *)
+          | _ -> failwith "wrong value"
+      end
+  | Let(x,e1,e2) -> 
+      let env1 = ext env x (eval6 e1 env )
+      in eval6 e2 env1 
+ | LetRec(f,x,e1,e2) ->
+      let env1 = ext env f (RecFunVal (f, x, e1, env))
+      in eval6 e2 env1
+  | Noteq(e1, e2) ->
+      begin
+	match (eval6 e1 env , eval6 e2 env ) with
+	  | (IntVal(n1),IntVal(n2)) -> BoolVal(n1!=n2)
+	  | (BoolVal(b1),BoolVal(b2)) -> BoolVal(b1!=b2)
+	  | _ -> failwith "wrong value"
+      end
+  | Fun(x,e1) -> FunVal(x, e1, env)
+  | App(e1,e2) ->
+      let funpart = (eval6 e1 env) in
+      let arg = (eval6 e2 env) in
+        begin
+         match funpart with
+         | FunVal(x,body,env1) ->
+            let env2 = (ext env1 x arg) in
+            eval6 body env2
+         | RecFunVal(f,x,body,env1) ->
+            let env2 = (ext (ext env1 x arg) f funpart) in
+            eval6 body env2
+         | _ -> failwith "wrong value in App"
+        end
+  | Greater(e1, e2) -> 
+      begin
+        match (eval6 e1 env , eval6 e2 env ) with
+          | (IntVal(n1), IntVal(n2)) -> BoolVal(n1 > n2)
+          | _ -> failwith "wrong value"
+      end
+  | _ -> failwith "unknown expression";;
+\end{lstlisting}
+
+\section{ミニOcamlコンパイラの作成}
+ここまで作成したミニOcamlインタプリタをもとに、仮想機械ASECの命令列を吐
+き出すコンパイラを作成する。
 
 \end{document}
