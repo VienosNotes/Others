@@ -1,0 +1,74 @@
+\documentclass[a4paper]{jsarticle}
+\usepackage{stdrep}
+
+\author{青木大祐}
+\title{宣言型プログラム論 レポート}
+
+\begin{document}
+\maketitle
+\newpage
+\subsection*{9-1}
+\begin{lstlisting}
+listsum [] = 0
+listsum (x:xs) = x + listsum xs
+\end{lstlisting}
+
+\begin{lstlisting}
+% ghci 9-1.hs 
+GHCi, version 7.4.2: http://www.haskell.org/ghc/  :? for help
+Loading package ghc-prim ... linking ... done.
+Loading package integer-gmp ... linking ... done.
+Loading package base ... linking ... done.
+[1 of 1] Compiling Main             ( 9-1.hs, interpreted )
+Ok, modules loaded: Main.
+*Main> listsum [1,1,2,2,3,3]
+12
+*Main> listsum [1.5, 1.6, 1.7]
+4.8
+\end{lstlisting}
+
+\subsection*{9-2}
+\begin{lstlisting}
+pyth (x, y, z) = x * x + y * y == z * z
+triads n = [(x, y, z) | z <- [1..n], y <- [1..z], x <- [1..y], pyth (x, y, z)]
+\end{lstlisting}
+
+\begin{lstlisting}
+ % ghci 9-2.hs
+GHCi, version 7.4.2: http://www.haskell.org/ghc/  :? for help
+Loading package ghc-prim ... linking ... done.
+Loading package integer-gmp ... linking ... done.
+Loading package base ... linking ... done.
+[1 of 1] Compiling Main             ( 9-2.hs, interpreted )
+Ok, modules loaded: Main.
+*Main> pyth (3,4,5)
+True
+*Main> pyth (1,1,1)
+False
+*Main> pyth (7, 12, 13)
+False
+*Main> pyth (5, 12, 13)
+True
+*Main> triads 10
+[(3,4,5),(6,8,10)]
+*Main> triads 20
+[(3,4,5),(6,8,10),(5,12,13),(9,12,15),(8,15,17),(12,16,20)]
+*Main> triads 5
+[(3,4,5)]
+\end{lstlisting}
+
+\subsection*{9-3}
+\begin{lstlisting}
+suml [] [] = []
+suml (x:xs) (y:ys) = [x + y] ++ (suml xs ys)
+
+fiblist = 1:1:(suml fiblist (tail fiblist))
+\end{lstlisting}
+\begin{lstlisting}
+ *Main> take 10 (suml [1..] [2..])
+[3,5,7,9,11,13,15,17,19,21]
+*Main> take 10 fiblist
+[1,1,2,3,5,8,13,21,34,55]
+
+\end{lstlisting}
+\end{document}
