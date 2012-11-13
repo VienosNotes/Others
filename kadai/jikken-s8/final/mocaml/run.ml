@@ -3,6 +3,6 @@ let run src =
 ;;
 
 
-let instr = run "4/2-1+1+3*true";;
+let instr = run "let rec foo x = if x = 0 then 1 else x * foo (x + (-1)) in foo 5";;
 
-(* Am.am_eval instr;; *)
+Am.am_eval instr;;

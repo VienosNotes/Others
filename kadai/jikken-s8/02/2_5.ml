@@ -24,6 +24,7 @@ let rec eval2b e =
     | IntLit(n)    -> IntVal(n)
     | Plus(e1,e2)  -> binop (+) e1 e2
     | Times(e1,e2) -> binop ( * ) e1 e2
+
     | _ -> failwith "unknown expression";;
 
 eval2b (Plus ((IntLit 10), (IntLit 20)));;
