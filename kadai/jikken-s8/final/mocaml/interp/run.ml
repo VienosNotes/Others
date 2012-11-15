@@ -1,10 +1,13 @@
 let run src =
-  Eval.eval3 (Main.parse(src)) (Eval.emptyenv())
+  Eval.eval6 (Main.parse(src)) (Eval.emptyenv())
 ;;
 
 
-run "1+2*3";;
 
-run "true <> false";;
-run "(1+1) <> 2";;
-run "let x = 1 in let y = 2 in x <> y";;
+run "let rec f x = x in 0";;
+run "let rec f x = x in f 0";;
+run "let rec f x = if x = 0 then 1 else 2 + f (x + (-1)) in f 1";;
+run "let rec f x = if x = 0 then 1 else x * f (x + (-1)) in f 3";;
+run "let rec f x = if x = 0 then 1 else x * f (x + (-1)) in f 5";;
+
+run "let rec fib x = if x = 0 then 0 else x + fib(x - 1) in fib 100";;
