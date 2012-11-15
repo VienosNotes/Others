@@ -21,6 +21,7 @@ let rec eval e env =           (* env を引数に追加 *)
   | Times(e1,e2) -> binop I_Mult e1 e2 env
   | Div(e1,e2) -> binop I_Div e1 e2 env
   | Eq(e1,e2) -> binop I_Eq e1 e2 env
+  | Noteq(e1,e2) -> binop I_Noteq e1 e2 env
   | If(e1,e2,e3) -> (eval e1 env) @ [I_Test ((eval e2 env), (eval e3 env))]
   | Let(x,e1,e2) -> 
       let env1 = x::env in
@@ -30,7 +31,7 @@ let rec eval e env =           (* env を引数に追加 *)
       [I_Pushenv] @ [I_Mkclos (eval e1 (x::env1))] @ [I_Extend] @ (eval e2 env1) @ [I_Popenv]
   | Fun(x,e1) -> [I_Mkclos (eval e1 (x::("_"::env)))]
   | App(e1,e2) -> [I_Pushenv] @ (eval e2 env) @ [I_Push] @ (eval e1 env) @ [I_Apply; I_Popenv] 
-  | Greater(e1, e2) -> binop I_Noteq e1 e2 env
+  | Greater(e1, e2) -> binop I_Greater e1 e2 env
   | _ -> failwith "unknown expression";;
 
 
