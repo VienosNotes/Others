@@ -91,4 +91,22 @@ let rec eval6 e env =           (* env を引数に追加 *)
           | (IntVal(n1), IntVal(n2)) -> BoolVal(n1 > n2)
           | _ -> failwith "wrong value"
       end
+  | Cons(e1,e2) ->
+     begin
+      match (eval6 e1 env, eval6 e2 env) with
+      | (v1,ListVal(v2)) -> ListVal(v1 :: v2)
+     end
+  | Head e1 ->
+      begin
+        match (eval6 e1 env) with
+          |  ListVal(v1::_) -> v1
+          | _ -> failwith "argument is not a list."
+      end     
+  | Tail e1 ->
+      begin
+        match (eval6 e1 env) with
+          | (ListVal (_::v1)) -> ListVal v1
+          | _ -> failwith "argument is not a list."
+      end
+  | Empty -> ListVal([])
   | _ -> failwith "unknown expression";;
