@@ -94,7 +94,11 @@ let rec eval6 e env =           (* env を引数に追加 *)
   | Cons(e1,e2) ->
      begin
       match (eval6 e1 env, eval6 e2 env) with
-      | (v1,ListVal(v2)) -> ListVal(v1 :: v2)
+        | (v1, ListVal([])) -> ListVal([v1])
+        | (IntVal(v1),ListVal(IntVal(v2)::v3)) -> ListVal(IntVal(v1)::(IntVal(v2)::v3))
+        | (BoolVal(v1),ListVal(BoolVal(v2)::v3)) -> ListVal(BoolVal(v1)::(BoolVal(v2)::v3))
+        | (ListVal(v1),ListVal(ListVal(v2)::v3)) -> ListVal(ListVal(v1)::(ListVal(v2)::v3))
+        | _ -> failwith "mismatch type of elements";;
      end
   | Head e1 ->
       begin
