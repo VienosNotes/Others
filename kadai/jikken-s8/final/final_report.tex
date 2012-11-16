@@ -621,11 +621,139 @@ let run src =
 
 run "let rec fact x = if x = 0 then 1 else x * fact (x-1) in fact 10";;
 \end{lstlisting}
-
 \begin{lstlisting}
 # val run : string -> Syntax.value = <fun>
 - : Syntax.value = Syntax.IntVal 3628800
 \end{lstlisting}
+
+
+\subsection{機能拡張}
+作成したインタプリタの機能拡張として、リスト型の実装を行った。具体的な操
+作としては「リストを生成する($Cons$)」、「リストの先頭の要素を返す
+($Head$)」、「リストの先頭を除いた残りを返す($Tail$)」の3つである。また、
+リスト同士の同値性を比較するため、$Eq$に関しても比較の操作を追加した。
+
+以下に$eval$関数に追加したパターンを示す。
+
+\begin{lstlisting}
+  | Eq(e1,e2) ->
+      begin
+	match (eval6 e1 env , eval6 e2 env ) with
+	  | (IntVal(n1),IntVal(n2)) -> BoolVal(n1=n2)
+	  | (BoolVal(b1),BoolVal(b2)) -> BoolVal(b1=b2)
+	  | (ListVal(l1),ListVal(l2)) -> BoolVal(l1=l2)
+	  | _ -> failwith "wrong value"
+      end
+...
+  | Cons(e1,e2) ->
+     begin
+      match (eval6 e1 env, eval6 e2 env) with
+      | (v1,ListVal(v2)) -> ListVal(v1 :: v2)
+     end
+  | Head e1 ->
+      begin
+        match (eval6 e1 env) with
+          |  ListVal(v1::_) -> v1
+          | _ -> failwith "argument is not a list."
+      end     
+  | Tail e1 ->
+      begin
+        match (eval6 e1 env) with
+          | (ListVal (_::v1)) -> ListVal v1
+          | _ -> failwith "argument is not a list."
+      end
+\end{lstlisting}
+
+例として、以下の様な入力を与え、実行結果を確認する。
+
+\begin{lstlisting}
+run "1::2::[]";;
+run "true::false::[]";;
+run "List.hd (1::2::3::[])";;
+run "List.tl (1::2::3::[])";;
+run "((3::true::1::[])::((2::1::[])::(1::2::3::[])::[]))";;
+\end{lstlisting}
+
+\begin{lstlisting}
+- : Syntax.value = ListVal [IntVal 1; IntVal 2]
+- : Syntax.value = ListVal [BoolVal true; BoolVal false]
+- : Syntax.value = IntVal 1
+- : Syntax.value = ListVal [IntVal 2; IntVal 3]
+- : Syntax.value =
+ListVal
+ [ListVal [IntVal 3; BoolVal true; IntVal 1]; ListVal [IntVal 2; IntVal 1];
+  ListVal [IntVal 1; IntVal 2; IntVal 3]]
+\end{lstlisting}
+
+この例では正しく動作している。しかし、このリストはOcamlのリストとは異な
+り、複数の型の値を要素として含むことが出来る。以下は、Ocamlのリストとし
+て正しくない例であるが、現在のミニOcamlの実装では正しいリストとして解釈
+してしまう。
+
+\begin{lstlisting}
+run "1::true::[]";;
+run "((3::true::1::[])::((true::false::(1::[])::[])::(1::2::3::[])::[]))";;
+\end{lstlisting}
+\begin{lstlisting}
+- : Syntax.value = ListVal [IntVal 1; BoolVal true]
+- : Syntax.value =
+ListVal
+ [ListVal [IntVal 3; BoolVal true; IntVal 1];
+  ListVal [BoolVal true; BoolVal false; ListVal [IntVal 1]];
+  ListVal [IntVal 1; IntVal 2; IntVal 3]]
+# 
+\end{lstlisting}
+
+これを防ぐため、$Cons$に以下のような修正を行った。このパターンは、リストの生成時に、連結
+されるリストの先頭の要素が、連結する要素と同じ型であることを強制している。
+ただし、連結されるリストが空リストである場合は検査の必要がないためそのま
+ま連結している。
+
+\begin{lstlisting}
+  | Cons(e1,e2) ->
+     begin
+      match (eval6 e1 env, eval6 e2 env) with
+        | (v1, ListVal([])) -> ListVal([v1])
+        | (IntVal(v1),ListVal(IntVal(v2)::v3)) -> ListVal(IntVal(v1)::(IntVal(v2)::v3))
+        | (BoolVal(v1),ListVal(BoolVal(v2)::v3)) -> ListVal(BoolVal(v1)::(BoolVal(v2)::v3))
+        | (ListVal(v1),ListVal(ListVal(v2)::v3)) -> ListVal(ListVal(v1)::(ListVal(v2)::v3))
+        | _ -> failwith "mismatch type of elements";;
+     end
+\end{lstlisting}
+これにより、$[IntVal;BooVal]$や$[IntVal;ListVal]$のようなリストは生成できなくなった。しかし
+リストをネストした場合、リストの型を取得する方法がわからなかったため、こ
+の型検査が有効なのは単一の値を要素とするリストについてのみである。\\
+
+以下に、修正後の実行結果を示す。
+
+\begin{lstlisting}
+run "((3::2::1::[])::((true::false::[])::(1::2::3::[])::[]))";;
+run "1::true::[]";;
+\end{lstlisting}
+
+\begin{lstlisting}
+- : Syntax.value =
+ListVal
+ [ListVal [IntVal 3; IntVal 2; IntVal 1];
+  ListVal [BoolVal true; BoolVal false];
+  ListVal [IntVal 1; IntVal 2; IntVal 3]]
+Exception: Failure "mismatch type of elements".
+\end{lstlisting}
+
+これを踏まえて、整数リストの要素の総和を求める$sum$関数を実装する。
+
+\begin{lstlisting}
+run "let rec sum x = if x = [] then 0 else (List.hd x) + sum(List.tl x) in sum (1::2::3::[])";;
+\end{lstlisting}
+
+実行結果は以下のとおり。
+
+\begin{lstlisting}
+- : Syntax.value = IntVal 6
+\end{lstlisting}
+
+正しく計算できていることが分かる。
+
 \section{ミニOcamlコンパイラの作成}
 ここまで作成したミニOcamlインタプリタをもとに、仮想機械ASECの命令列を出
 力するコンパイラを作成する。
@@ -668,7 +796,7 @@ let rec eval e env =           (* env を引数に追加 *)
   | Let(x,e1,e2) -> 
       let env1 = x::env in
       [I_Pushenv] @ (eval e1 env) @ [I_Extend] @ (eval e2 env1) @ [I_Popenv]      
- | LetRec(f,x,e1,e2) -> 
+  | LetRec(f,x,e1,e2) -> 
      let env1 = f::env in
       [I_Pushenv] @ [I_Mkclos (eval e1 (x::env1))] @ [I_Extend] @ (eval e2 env1) @ [I_Popenv]
   | Fun(x,e1) -> [I_Mkclos (eval e1 (x::("_"::env)))]
