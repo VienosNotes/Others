@@ -3,8 +3,17 @@ let run src =
 ;;
 
 
-let instr = run "let rec fact x = if x = 0 then 1 else x * fact (x-1) in fact 10";;
-
-(* let instr = run "let rec fib x = if x > 1 then (fib (x-1)) + (fib (x-2)) else 1 in fib 25";; *)
+(* let instr = run "let rec fib n = if n > 1 then fib(n-1) + fib(n-2) else 1 in fib 50";; *)
+let instr = run "if 1 then 1 else 0";;
 
 Am.am_eval instr;;
+
+
+
+
+
+
+
+
+
+

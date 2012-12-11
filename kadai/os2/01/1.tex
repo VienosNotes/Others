@@ -1,0 +1,68 @@
+\documentclass[a4j,9pt]{jsarticle}
+\usepackage{stdrep}
+\usepackage{ascmac}	% required for `\screen' (yatex added)
+\usepackage{fancybox}
+
+\title{情報科学類 オペレーティングシステムII 課題1}
+\author{学籍番号 200911434 \\ 名前 青木大祐}
+
+
+\begin{document}
+\maketitle
+\section{システムコールとLinuxカーネルのソース}
+\setcounter{subsection}{100}
+\subsection{システム・コールとライブラリ関数の共通点}
+
+\begin{screen}
+C言語でプログラムを作成する場合、システム・コールとライブラリ関数の共通点を述べなさい。
+\end{screen}
+
+両方ともC言語からは関数呼び出しの形で利用できること。
+
+\subsection{システム・コールとライブラリ関数の相違点}
+
+\begin{screen}
+システム・コールとライブラリ関数の相違点を述べなさい。
+\end{screen}
+
+\begin{itemize}
+ \item システムコール
+       \begin{itemize}
+        \item カーネルのプログラムを直接的に利用する
+        \item 最小を目指して設計する
+        \item プロセスの外に働きかける
+       \end{itemize}
+ \item ライブラリ
+       \begin{itemize}
+        \item カーネルの機能を使わない
+        \item 便利さを目指す
+        \item システムコールの助けがなければメモリの内容を書き換えるだけ
+       \end{itemize}
+\end{itemize}
+
+\subsection{chdir()システムコールの引数と結果}
+
+\begin{screen}
+このシステム・コールを処理する関数がカーネルの中でどのように定義されているか、その概略(引数と結果の宣言)を示しなさい。関数の内容は空でよい。マクロを利用しても利用しなくてもどちらでもよい。
+\end{screen}
+
+\subsubsection*{実装}
+\begin{lstlisting}
+asmlinkage long sys_chdir(const char __user * filename) {
+ 省略
+}
+\end{lstlisting}
+
+\subsubsection*{引数と結果}
+\begin{itemize}
+ \item 引数 
+       \begin{description}
+        \item[const char \_\_user * filename] 移動するパス名
+       \end{description}
+ \item 返り値
+       \begin{description}
+        \item[long] 成功した場合は0, 失敗した場合はエラーコードを返す
+       \end{description}
+\end{itemize}
+\end{document}
+

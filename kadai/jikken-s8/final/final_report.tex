@@ -626,6 +626,22 @@ run "let rec fact x = if x = 0 then 1 else x * fact (x-1) in fact 10";;
 - : Syntax.value = Syntax.IntVal 3628800
 \end{lstlisting}
 
+また別の例として、正しくない式の評価を考える。定義されていない演算子や、
+式中の位置に相応しくない型のデータが出現した場合は、エラーとして失敗する
+必要がある。
+
+\begin{lstlisting}
+run "1++1";;
+Exception: Failure "parse error near characters 2-3".
+
+run "1+true";;
+Exception: Failure "integer value expected".
+
+run "if 1 then 1 else 0";;
+Exception: Failure "wrong value".
+\end{lstlisting}
+
+不正な式は正しく弾くことができている。
 
 \subsection{機能拡張}
 作成したインタプリタの機能拡張として、リスト型の実装を行った。具体的な操
@@ -706,7 +722,7 @@ ListVal
 
 これを防ぐため、$Cons$に以下のような修正を行った。このパターンは、リストの生成時に、連結
 されるリストの先頭の要素が、連結する要素と同じ型であることを強制している。
-ただし、連結されるリストが空リストである場合は検査の必要がないためそのま
+ただし、連結されるリストが空リストである場合は検査の必要がないため、そのま
 ま連結している。
 
 \begin{lstlisting}
@@ -895,6 +911,8 @@ let rec trans (a:am_value) (s:am_stack) (e:am_env) (c:code) : am_value =
 ...
 \end{lstlisting}
 
+インタプリタと同様に、整数の階乗を求める$fact$関数を実行してみる。
+
 \begin{lstlisting}
 let run src =
   Eval.eval (Main.parse(src)) (Eval.emptyenv())
@@ -920,7 +938,78 @@ val instr : Am.code =
 - : Am.am_value = Am.AM_IntVal 3628800
 \end{lstlisting}
 
-正しく計算できていることが分かる。
+正しく計算できていることが分かる。\\
+
+また、インタプリタと同様に正しくない式についても実行してみる。
+
+\begin{lstlisting}
+run "1++1";;
+Exception: Failure "parse error near characters 2-3".
+
+run "1+true";;
+val instr : Am.code = [Am.I_Ldb true; Am.I_Push; Am.I_Ldi 1; Am.I_Add]
+Exception: Failure "unexpected type of argument(s) for binary operation".
+
+run "if 1 then 1 else 0";;
+val instr : Am.code = [Am.I_Ldi 1; Am.I_Test ([Am.I_Ldi 1], [Am.I_Ldi 0])]
+Exception: Failure "boolean expected for if-test".
+\end{lstlisting}
+
+正しくない構文についてはインタプリタ同様パース時にエラーが出ているが、型
+エラーについてはコンパイルは成功し、実行時にエラーになっている。
 
 
+\subsection{ベンチマーク}
+fibonacci数を求めるプログラムを作成し、「標準のOcaml」「ミニOcamlインタ
+プリタ」「ミニOcamlコンパイラ」のそれぞれで100回ずつ実行し、結果を比較した。\\
+
+実行したソースコードは以下のとおり。末尾の$N$の数を変えて、幾つかの計測
+を行う\footnote{計測を行ったプロセッサはIntel Core i7 2.3GHz}。
+\begin{lstlisting}
+let rec fib n = if n > 1 then fib(n-1) + fib(n-2) else 1 in fib N;;
+\end{lstlisting}
+\paragraph{10番目のfibonacci数}
+\mbox{}
+\begin{lstlisting}
+               Rate mini_compile  mini_interp        ocaml
+mini_compile 40.7/s           --          -8%         -18%
+mini_interp  44.2/s           9%           --         -11%
+ocaml        49.5/s          22%          12%           --
+perl benchmark.pl 100  5.77s user 1.06s system 95% cpu 7.173 total
+\end{lstlisting}
+
+\paragraph{20番目のfibonacci数}
+\mbox{}
+\begin{lstlisting}
+               Rate mini_compile  mini_interp        ocaml
+mini_compile 2.88/s           --         -67%         -93%
+mini_interp  8.68/s         202%           --         -80%
+ocaml        44.1/s        1431%         407%           --
+perl benchmark.pl 100  47.43s user 1.22s system 99% cpu 49.041 total
+\end{lstlisting}
+
+\paragraph{50番目のfibonacci数}
+\mbox{}\\
+一時間半以上たっても計算が終わらなかったため省略。
+
+
+\subsection{考察}
+結果は常に「コンパイラ」「インタプリタ」「標準」の順に時間が掛かっている。
+また、計算回数が多ければ多いほど、大きく差が広がるのがわかる。\\
+インタプリタは式をパースして評価するだけであるが、コンパイラは表現を変換
+してから評価するという手順を踏むため、より長い時間が掛かっていると考えら
+れる。
+
+\section{実験の感想}
+私がOcamlを触ったのは本実験が初めてであるが、この実験を通して、Ocamlの強
+力さの一端に触れられたと思う。\\
+普段はRubyのような動的型付けの言語やPerlのように型システムを殆ど持ってい
+ない言語を触っていたため、最初は強い型付けに戸惑うことも多かった。しかし、
+パターンマッチングとヴァリアント型を使った時に、型があることの優位性に気
+付かされた。型のゆるい言語では、データ構造からパターンに値を束縛する
+ことや、パターンの網羅性チェックなどは難しい。\\
+また、関数プログラミングの利点としては、再帰的なデータ構造に対するアプロー
+チが自然な方法で記述できることがあげられる。今までは関数の再帰呼び出しは
+難解なものというイメージを持っていたが、この実験でそのイメージは払拭され
+たように思う。
 \end{document}
