@@ -49,6 +49,7 @@ let rec eval6 e env =           (* env を引数に追加 *)
 	match (eval6 e1 env , eval6 e2 env ) with
 	  | (IntVal(n1),IntVal(n2)) -> BoolVal(n1=n2)
 	  | (BoolVal(b1),BoolVal(b2)) -> BoolVal(b1=b2)
+	  | (ListVal(l1),ListVal(l2)) -> BoolVal(l1=l2)
 	  | _ -> failwith "wrong value"
       end
   | If(e1,e2,e3) ->
@@ -91,4 +92,26 @@ let rec eval6 e env =           (* env を引数に追加 *)
           | (IntVal(n1), IntVal(n2)) -> BoolVal(n1 > n2)
           | _ -> failwith "wrong value"
       end
+  | Cons(e1,e2) ->
+     begin
+      match (eval6 e1 env, eval6 e2 env) with
+        | (v1, ListVal([])) -> ListVal([v1])
+        | (IntVal(v1),ListVal(IntVal(v2)::v3)) -> ListVal(IntVal(v1)::(IntVal(v2)::v3))
+        | (BoolVal(v1),ListVal(BoolVal(v2)::v3)) -> ListVal(BoolVal(v1)::(BoolVal(v2)::v3))
+        | (ListVal(v1),ListVal(ListVal(v2)::v3)) -> ListVal(ListVal(v1)::(ListVal(v2)::v3))
+        | _ -> failwith "mismatch type of elements"
+     end
+  | Head e1 ->
+      begin
+        match (eval6 e1 env) with
+          |  ListVal(v1::_) -> v1
+          | _ -> failwith "argument is not a list."
+      end     
+  | Tail e1 ->
+      begin
+        match (eval6 e1 env) with
+          | (ListVal (_::v1)) -> ListVal v1
+          | _ -> failwith "argument is not a list."
+      end
+  | Empty -> ListVal([])
   | _ -> failwith "unknown expression";;

@@ -85,7 +85,7 @@ arg_exp:
   
   // 空リスト
   | LBRA RBRA
-    { Empty }
+    { Empty } 
   
   // 括弧で囲まれた式
   | LPAREN exp RPAREN
