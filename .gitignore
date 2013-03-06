@@ -6,3 +6,6 @@
 *.nav
 *.vrb
 *.snm
+
+**/resource/*
+**/documents/*

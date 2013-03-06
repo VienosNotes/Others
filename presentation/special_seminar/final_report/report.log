@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.1415926-p3.2-110415-2.3 (utf8.euc) (TeX Live 2011) (format=platex 2011.7.3)  18 JAN 2013 15:45
+This is e-pTeX, Version 3.1415926-p3.2-110415-2.3 (utf8.euc) (TeX Live 2011) (format=platex 2011.7.3)  22 JAN 2013 11:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -476,27 +476,34 @@ LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
 (Font)              scaled to size 6.72699pt on input line 23.
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
 (Font)              scaled to size 5.76599pt on input line 23.
+File: integrate.eps Graphic file (type eps)
+
+<integrate.eps>
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 55.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 61.
 LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 55.
+(Font)              scaled to size 9.60999pt on input line 61.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 55.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 61.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 55.
+(Font)              scaled to size 9.60999pt on input line 61.
+ [1]
+File: system.eps Graphic file (type eps)
+ <system.eps>
 LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 11.53198pt on input line 65.
+(Font)              scaled to size 11.53198pt on input line 74.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 11.53198pt on input line 65.
- [1] [2]
-[3] (./report.aux) ) 
+(Font)              scaled to size 11.53198pt on input line 74.
+ [2] [3]
+File: ss.png Graphic file (type bmp)
+ <ss.png> [4] [5] (./report.aux) ) 
 Here is how much of TeX's memory you used:
- 4248 strings out of 494163
- 56152 string characters out of 3160587
+ 4257 strings out of 494163
+ 56230 string characters out of 3160587
  118779 words of memory out of 3000000
- 7557 multiletter control sequences out of 15000+200000
+ 7561 multiletter control sequences out of 15000+200000
  32394 words of font info for 120 fonts, out of 3000000 for 9000
  750 hyphenation exceptions out of 8191
- 34i,8n,34p,281b,246s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 34i,8n,34p,281b,319s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on report.dvi (4 pages, 13588 bytes).
+Output written on report.dvi (6 pages, 18396 bytes).
