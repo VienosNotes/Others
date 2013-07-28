@@ -1,0 +1,106 @@
+\documentclass[a4j,9pt]{jsarticle}
+\usepackage{stdrep}
+\usepackage{ascmac}	% required for `\screen' (yatex added)
+\usepackage{fancybox}
+\usepackage{geometry}
+\usepackage{setspace}
+
+%\setstretch{0.8}
+\geometry{top=10mm,bottom=5mm}
+
+
+\renewcommand{\thepage}{}
+
+\title{情報科学類 オペレーティングシステムII 課題9}
+\author{学籍番号 200911434 \\ 名前 青木大祐}
+
+\lstset{
+  language=C,
+  basicstyle=\ttfamily\scriptsize,
+  commentstyle=\textit,
+  classoffset=1,
+  keywordstyle=\bfseries,
+  frame=trbl,
+  framesep=5pt,
+  showstringspaces=false,
+  numbers=none,
+  stepnumber=1,
+  numberstyle=\tiny,
+  tabsize=2,
+  breaklines = true
+}
+\begin{document}
+\maketitle
+\setcounter{section}{8}
+\section{時刻と時間の管理}
+\setcounter{subsection}{900}
+\subsection{PIT}
+\begin{screen}
+PIT ({\itshape Programmable Interval Timer})では、 発振器の周波数は、
+1193182Hzである。再設定用のレジスタを11931に設定したら、何秒に1回、割り
+込みが発生するか。
+\end{screen}
+$11931/1193182*1000 = 9.99931 \simeq 10(ms)$
+
+\subsection{モノトニック時刻の利用}
+\begin{screen}
+カーネルの中で、カレンダ時刻ではなくてモノトニック時刻が使われている場所
+ がある。その理由を簡単に説明しなさい。その場所をカレンダ時刻を使うよう
+ にすると、「ある操作をした場合」に「ある不都合」が生じる。このことを、
+ 例を使って説明しなさい。
+\end{screen}
+
+例えばsleep()の実装などでモノトニック時刻が使われている。ある時点から一
+定の時間だけ待ちたいときに、カレンダ時刻ではシステムコール経由で時刻が変
+更されてしまう恐れがあり、そのような場合に正しい時間待てなくなってしまう。
+
+\subsection{struct timer\_listの利用}
+\begin{screen}
+関数{\ttfamily f()}を実行している時に、次の関数{\ttfamily h()}を、50ミリ
+ 秒後に実行したいとする。
+
+\begin{lstlisting}
+ 
+ void h(int a,int b, int c) {
+   ....
+ }
+\end{lstlisting}
+これを実現するために、どのようなコードを書けばよいか。以下の空欄を埋めなさい。
+\begin{lstlisting}
+ struct timer_list my_timer;
+
+ int my_arg_a,my_arg_b,my_arg_c;
+
+ void f(unsigned long data) {
+    init_timer( /*空欄(a)*/ );
+    my_timer.expires  = /*空欄(b)*/;
+    my_timer.data     = 0;
+    my_timer.function = /*空欄(c)*/;
+    /*空欄(d)*/;
+ }
+
+ void my_timer_func(unsigned long data) {
+     h( my_arg_a,my_arg_b,my_arg_c );
+ }
+\end{lstlisting}
+\end{screen}
+
+\begin{lstlisting}
+struct timer_list my_timer_list;
+
+int my_arg_a,my_arg_b,my_arg_c;
+
+void f(unsigned long data) {
+    init_timer( my_timer );
+    my_timer.expires  = jiffies + HZ / 20;
+    my_timer.data     = 0;
+    my_timer.function = my_timer_func;
+    add_timer( &my_timer );
+}
+
+void my_timer_func(unsigned long data) {
+     h( my_arg_a,my_arg_b,my_arg_c );
+}
+\end{lstlisting}
+\end{document}
+

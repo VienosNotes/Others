@@ -1,0 +1,103 @@
+\documentclass[a4j,9pt]{jsarticle}
+\usepackage{stdrep}
+\usepackage{ascmac}	% required for `\screen' (yatex added)
+\usepackage{fancybox}
+\usepackage{geometry}
+\usepackage{setspace}
+
+%\setstretch{0.8}
+\geometry{top=10mm,bottom=5mm}
+
+
+\renewcommand{\thepage}{}
+
+\title{情報科学類 オペレーティングシステムII 課題8}
+\author{学籍番号 200911434 \\ 名前 青木大祐}
+
+\lstset{
+  language=C,
+  basicstyle=\ttfamily\scriptsize,
+  commentstyle=\textit,
+  classoffset=1,
+  keywordstyle=\bfseries,
+  frame=trbl,
+  framesep=5pt,
+  showstringspaces=false,
+  numbers=none,
+  stepnumber=1,
+  numberstyle=\tiny,
+  tabsize=2,
+  breaklines = true
+}
+\begin{document}
+\maketitle
+\setcounter{section}{7}
+\section{割り込みの後半部、Softirq、Tasklet、Work Queue}
+\setcounter{subsection}{800}
+\subsection{割り込み後半の処理}
+\begin{screen}
+ 割り込み処理を、前半(top half)と後半(bottom half)に分ける理由を簡単に説明しなさい。
+\end{screen}
+即座にデバイスに応答を返したいなど、割り込み処理中に他の割り込みを受
+け入れたくない場合がある。しかし、その処理が全て終わるまで他のデバイ
+スを待たせる訳にも行かないので、時間的制約のある処理だけを切り出して割り
+込み禁止の前半部として処理を行い、そうでない部分は他の割り込みを受け入れ
+ながら時間のあるときに後半部として処理する。
+
+\subsection{Taskletの初期化}
+\begin{screen}
+{\itshape Tasklet}を使って次の関数{\ttfamily f()}を、割り込み処理の後半で呼び出したい。
+\begin{lstlisting}
+ void f(int arg1, int arg2) {
+   省略;
+ }
+\end{lstlisting}
+これを実現するために、どのような{\itshape Tasklet}のハンドラと初期化コードを書けばよいか。以下の空欄を埋めなさい。
+\begin{lstlisting}
+ void tasklet_handler(unsigned long data) { /* Tasklet ハンドラ */
+    int arg1, arg2;
+    arg1 = 省略;
+    arg2 = 省略;
+    /*空欄(a)*/
+    その他の仕事;
+ }
+
+DECLARE\_TASKLET(/*空欄(b)*/, /*空欄(c)*/, 0); /* 構造体の初期化 */
+\end{lstlisting}
+注意: 構造体の名前は、次の問題の解答で利用する。それらしいものを付けなさい。
+\end{screen}
+
+\begin{lstlisting}
+ void tasklet_handler(unsigned long data) { /* Tasklet ハンドラ */
+    int arg1, arg2;
+    arg1 = 省略;
+    arg2 = 省略;
+    h();)
+    その他の仕事;
+ }
+
+DECLARE\_TASKLET(tasklet_h, tasklet_handler, 0); /* 構造体の初期化 */
+\end{lstlisting}
+
+\subsection{ハンドラの実行}
+\begin{screen}
+次のコードは、割り込みの前半部分(ハードウェアの割り込み)の一部である。割
+ り込み処理の後半で、問題(802)で定義した{\itshape Tasklet}のハンドラを呼
+ ぶように、空欄を埋めなさい。
+\begin{lstlisting}
+ 
+ irqreturn_t irq_handler(int irq, void *dev) {
+    /*空欄(d)*/
+    return IRQ_HANDLED;
+ }
+\end{lstlisting}
+\end{screen}
+
+\begin{lstlisting}
+irqreturn_t irq_handler(int irq, void *dev) {
+    tasklet_schedule( &tasklet_h );
+    return IRQ_HANDLED;
+}
+\end{lstlisting}
+\end{document}
+

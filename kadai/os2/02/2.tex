@@ -1,0 +1,101 @@
+\documentclass[a4j,9pt]{jsarticle}
+\usepackage{stdrep}
+\usepackage{ascmac}	% required for `\screen' (yatex added)
+\usepackage{fancybox}
+
+\title{情報科学類 オペレーティングシステムII 課題2}
+\author{学籍番号 200911434 \\ 名前 青木大祐}
+
+\lstset{
+  language=C,
+  basicstyle=\ttfamily\scriptsize,
+  commentstyle=\textit,
+  classoffset=1,
+  keywordstyle=\bfseries,
+  frame=trbl,
+  framesep=5pt,
+  showstringspaces=false,
+  numbers=none,
+  stepnumber=1,
+  numberstyle=\tiny,
+  tabsize=2,
+  breaklines = true
+}
+
+\begin{document}
+\maketitle
+\setcounter{section}{1}
+\section{プロセスとtask\_struct構造体}
+\setcounter{subsection}{200}
+\subsection{Ready状態のプロセス}
+\begin{screen}
+オペレーティング・システムでは、「一般に」プロセスは、 実行待ち(Ready)、
+ 実行中(Running)、 待機中(Waiting、Blocked)という３つの 状態を持つ。
+ Linux において、プロセスが Ready 状態であることを 示すために、task
+ struct のフィールド state に、何という値を設定しているか。
+
+\end{screen}
+
+{\tt{TASK\_RUNNING}}
+
+\subsection{pidとppid}
+\begin{screen}
+ 次のプログラムをシェルから実行したとする。
+\begin{lstlisting}
+#include <stdio.h>
+#include <unistd.h>
+
+main() {
+    pid_t pid, ppid;
+    fork();
+    pid = getpid();
+    ppid = getppid();
+    printf("hello: (pid=%d,ppid=%d)\n",pid, ppid);
+}
+\end{lstlisting}
+
+以下の空欄（空欄Ａ、空欄Ｂ、空欄Ｃ、空欄Ｄ）を埋めて、起こり得る結果を 1
+ つ作りなさい。
+
+\begin{lstlisting}
+$ echo $$ 
+1001
+$ ./fork-printf  
+hello: (pid=空欄Ａ,ppid=空欄Ｂ)
+hello: (pid=空欄Ｃ,ppid=空欄Ｄ)
+$ 
+\end{lstlisting}
+ただし、PID としては、1001,1002,1003,1004 の中から選びなさい。 なお、答えは１通りではない。\\
+上のプログラムをコンパイルして実行した結果を参考にして、回答してもよい。 ただし、PID としては、実行結果のものをそのまま使うのではなく、指定され たものを使いなさい。
+\end{screen}
+実際にviolaで動かした結果は以下のとおり。
+\begin{lstlisting}
+ % echo $$
+4856
+ % ./a.out   
+hello: (pid=5415,ppid=5411)
+hello: (pid=5411,ppid=4856)
+\end{lstlisting}
+これを踏まえて考えると、答えは次のようになると考えられる。
+
+\begin{lstlisting}
+hello: (pid=1003,ppid=1002)
+hello: (pid=1002,ppid=1001)
+\end{lstlisting}
+
+\subsection{getuid()システムコール}
+
+\begin{screen}
+getuid() システム・コールを実装の概略を、今日の授業の範囲内で答えなさい。 利用する重要な変数、マクロ、構造体を列挙しなさい。そして、どのようにポ インタをたどっていくかを示しなさい。概略を記述するためには、簡易的なＣ 言語、日本語、または、英語を使いなさい。
+なお、実際の getuid() システム・コールの実装は、名前空間の導入により複
+ 雑になっており、今日の授業の範囲を超えている。この課題では、実際のコー
+ ドではなく、この授業の範囲内で答えなさい。（実際のコードをそのまま回答
+ しても、得点を与えない。）
+\end{screen}
+
+\begin{itemize}
+ \item  current\_uid()マクロを呼び出す
+ \item その中で変数currentからフィールドcredを取り出し、その中のフィールドuidを返す
+\end{itemize}
+\end{document}
+

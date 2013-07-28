@@ -1,0 +1,116 @@
+\documentclass[a4j,9pt]{jsarticle}
+\usepackage{stdrep}
+\usepackage{ascmac}	% required for `\screen' (yatex added)
+\usepackage{fancybox}
+\usepackage{geometry}
+\usepackage{setspace}
+
+%\setstretch{0.8}
+\geometry{top=10mm,bottom=5mm}
+
+
+\renewcommand{\thepage}{}
+
+\title{情報科学類 オペレーティングシステムII 課題10}
+\author{学籍番号 200911434 \\ 名前 青木大祐}
+
+\lstset{
+  language=C,
+  basicstyle=\ttfamily\scriptsize,
+  commentstyle=\textit,
+  classoffset=1,
+  keywordstyle=\bfseries,
+  frame=trbl,
+  framesep=5pt,
+  showstringspaces=false,
+  numbers=none,
+  stepnumber=1,
+  numberstyle=\tiny,
+  tabsize=2,
+  breaklines = true
+}
+\begin{document}
+\maketitle
+\setcounter{section}{9}
+\section{ファイルシステム}
+\setcounter{subsection}{1000}
+\subsection{オブジェクト指向}
+\begin{screen}
+Linux におけるファイルシステムの実装では、C言語であるが、オブジェクト指
+ 向的な考え方が取り入れられている。どの部分で取り入れられているか、一例
+ を示しなさい。次の項目を埋めなさい。
+\begin{itemize}
+ \item カーネル内の構造体の名前:
+ \item 内部の変数(インスタンス変数)の例:
+ \item その変数の役割:
+ \item 内部の変数を操作するための公開された手続き（インスタンス・メソッド）の例:
+ \item その手続きの役割:
+\end{itemize}
+\end{screen}
+\begin{itemize}
+ \item カーネル内の構造体の名前:
+       \begin{lstlisting}
+        struct inode
+       \end{lstlisting}
+ 
+ \item 内部の変数(インスタンス変数)の例:
+       \begin{lstlisting}
+        inode->i_count
+       \end{lstlisting}
+ \item その変数の役割:
+       \begin{itemize}
+        \item 参照カウンタ
+       \end{itemize}
+ \item 内部の変数を操作するための公開された手続き（インスタンス・メソッ
+       ド）の例:
+       \begin{lstlisting}
+        inode->i_op->create
+       \end{lstlisting}
+ \item その手続きの役割:
+       \begin{itemize}
+        \item inodeと結び付けられたファイルを新しく作る
+       \end{itemize}
+\end{itemize}
+
+\subsection{struct fileの役割}
+\begin{screen}
+Linux カーネルの中で、ファイルを表現するためのオブジェクトとしてstruct
+ inodeとstruct fileがある。struct inodeだけでも、ファイルの操作(読
+ み、書き、属性変更)では十分と思えるが、struct file も使われている。
+ struct file の役割を1つ選んで簡単に説明しなさい。
+\end{screen}
+ディスクへの書き込みを効率化するために、ファイルの内容をメモリ上にマップ
+する際に使われる。
+
+\subsection{write()システムコール}
+\begin{screen}
+ 
+ 次の関数は、write() システム・コールを実装している vfs\_write() の一部で ある。空欄を埋めなさい。
+\begin{lstlisting}
+  ssize_t vfs_write(struct file *file, const char __user *buf, size_t count, loff_t *pos)
+ {
+ ....
+        ret = rw_verify_area(WRITE, file, pos, count);
+                if (file->f_op->/*空欄(a)*/)
+                        ret = file->f_op->/*空欄(b)*/(/*空欄(c)*/, buf, count, pos);
+ ...
+        }
+        return ret;
+ }
+\end{lstlisting}
+\end{screen}
+\newpage
+\begin{lstlisting}
+  ssize_t vfs_write(struct file *file, const char __user *buf, size_t count, loff_t *pos)
+ {
+ ....
+        ret = rw_verify_area(WRITE, file, pos, count);
+                if (file->f_op->write)
+                        ret = file->f_op->write(file, buf, count, pos);
+ ...
+        }
+        return ret;
+ }
+\end{lstlisting}
+\end{document}
+

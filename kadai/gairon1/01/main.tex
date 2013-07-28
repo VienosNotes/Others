@@ -1,0 +1,157 @@
+\documentclass[a4j,9pt]{jsarticle}
+\usepackage{stdrep}
+\usepackage{ascmac}	% required for `\screen' (yatex added)
+\usepackage{fancybox}
+
+\title{情報科学概論I レポート}
+\author{学籍番号 200911434 \\ 名前 青木大祐}
+
+
+\begin{document}
+\maketitle
+
+\section{課題1}
+\begin{screen}
+ 今、6bitで示される2進数を考えるとする。
+\begin{enumerate}
+ \item 十進数11は6bitの2進数でどのように表現されるか示せ。
+ \item 1で示した数の2の補数を示せ。
+ \item 2で示した2の補数を用い、加算によって十進数6から十進数11を減じるこ
+       とができることを示せ。
+\end{enumerate}
+\end{screen}
+
+\subsection{}
+$11_{10} \Rightarrow 001011_{2}$
+
+\subsection{}
+$001011_{2} \Rightarrow 110101_{2}$
+
+\subsection{}
+$000110_{2} + 110101_{2} = 111011_{2} = -5_{10}$
+
+\section{課題2}
+\begin{screen}
+ \begin{enumerate}
+  \item アスキーコード表を参考に、``\texttt{Computer!}''の11文字を16進数
+        のアスキーコードで示せ。ただし、最上位bitを常に0であるとして、一
+        文字1バイトで表すとする。
+  \item アスキーコード中\texttt{ESC, CR, BS}等通常の文字に相当しない記述
+        は何を意味するか述べよ。また、これらのコードのうち\texttt{ESC,
+        CR, BS}はそれぞれ何を意味するかを述べよ。
+ \end{enumerate}
+\end{screen}
+\subsection{}
+文字列から16進数への変換は、次のプログラムで実現できる。``\texttt{Computer!}''
+を与えて実行した結果を以下に示す。
+
+\begin{lstlisting}
+$perl -e 'print join(" ", map {sprintf("%02X", ord $_)} split //, shift)'  '"Computer!"'
+22 43 6F 6D 70 75 74 65 72 21 22
+\end{lstlisting}
+よって、``\texttt{Computer!}''を16進数アスキーコードに変換すると
+\texttt{22 43 6F 6D 70 75 74 65 72 21 22}である。
+
+\subsection{}
+\texttt{ESC, CR, BR}などの表示されない文字を制御文字と呼び、通常の文
+字では表現できない画面表示の制御を行う役割を持つ。例に挙げられた3つの制
+御文字のもつ効果は以下のとおり。
+
+\begin{description}
+ \item[ESC] 文字色の変更やカーソルの移動などの制御文字列を開始するという
+            宣言。
+ \item[CR] キャリッジリターン（復帰）。キャリッジを先頭に戻す命令であり、
+            改行文字と併用することで改行を意味する。
+ \item[BS] バックスペース（後退）。カーソルの直前の文字を削除するととも
+            に、カーソルとそれ以降の文字列を一文字分後退させる。
+\end{description}
+
+\section{課題3}
+\begin{screen}
+ $k$（キロ）を$2^{10}=1024$倍、$M$（メガ）をさらにその$2^{10}$倍、
+ $G$（ギガ）をさらにその$2^{10}$倍で表すものとする。
+ \begin{enumerate}
+  \item $16Mbit$のメモリがある。これは何$Mbyte$か？
+  \item $32Gbyte$のメモリを1byte毎にアクセスするのに何$bit$のアドレスが
+        必要か？
+\end{enumerate}
+\end{screen}
+
+\subsection{}
+$16Mbit = 2Mbyte$
+\subsection{}
+$32Gbyte$のメモリを1byte毎にアクセスするためには、$32G = 2^{35}$個のメモリアドレ
+スが必要になる。これを表現するために必要な$bit$長は$35bit$である。
+\setcounter{section}{4}
+\section{課題5}
+\begin{screen}
+バベジの解析機関において、各構成要素（スライド39中で青字で示した部分）が
+ 今日の計算機では何に当たるか考えて、対応を示せ。
+\end{screen}
+
+\subsection{}
+\begin{description}
+ \item[パンチカードを読み取る入力装置] キーボードやマウスなどの入力イン
+            ターフェース
+ \item[演算結果を印刷する出力装置] ディスプレイ等の出力インターフェース
+ \item[演算装置(mill)] CPU、GPUなどの演算処理装置
+ \item[記憶装置(10進50桁、1000個)] RAMなどの主記憶装置
+\end{description}
+
+\section{課題6}
+\begin{screen}
+ 半導体のスケーリング則は素子内の電界強度を一定に保ったまま阻止を縮小す
+ ることを前提としている。近年これが成り立たなくなりつつある。どのような
+ 要因で電界強度を一定に保つことが難しくなっているのか調べてまとめよ。
+\end{screen}
+\subsection{}
+横方向への縮小と同時に縦方向への縮小も同時に行われる。それに伴い絶縁体であるゲート
+酸化膜の厚さも縮小し、電子が漏れ出るトンネル電流が発生してしまい絶縁
+体として機能しなくなくなってしまうため。
+\begin{thebibliography}{99}
+ \item 半導体入門講座 第24回 半導体産業の将来と他産業への波及効果\\ \url{http://www.semiconductorjapan.net/serial/lesson/24.html}
+\end{thebibliography}
+
+\section{課題7}
+\begin{screen}
+ 昔は基盤に穴を開け、そこへ端子を通してハンダ付けする方式が多かったが、近
+年は基盤の表面にハンダで部品を貼り付ける表面実装方式が大半を占めている。
+表面実装方式の利点と欠点を調べてみよ。また、現在でも表面実装しにくい部品
+にはどんなものがあるか考えてみよ。
+\end{screen}
+\subsection*{表面実装方式の利点}
+部品を固定するためのスルーホールが必要なくなるため、実装密度が上がること。
+結果的に基盤の強度が上がり、また小型化が可能になる。
+\subsection*{表面実装方式の欠点}
+小型化の結果、部品と基盤の接点が小さくなるため、微細なゴミなどによる接触
+不良の可能性が高くなる。
+\subsection*{表面実装しにくい部品}
+モーターなどの大きな電流、電圧がかかる部品は発熱が大きくなるため小型化し
+づらく、表面実装するには適さない。
+
+\section{課題8}
+\begin{screen}
+ TSV(Through-Silicon Via)の方式の一つとして、インターポーザー
+ (interposer)を用いるものが有る。この場合のinterposerとは何かを調べてみ
+ よ。Interposerを用いる方式の得失を考えてみよ。
+\end{screen}
+TSVはダイに予め穴を開けておき、それを貫通するように細い柱がダイを通り抜
+けるという方式である。これにより従来の方式では難しかったパッケージの小型
+化や、1万ピンを越える接続が小さな面積で実現できるようになった。
+
+TSVは多くの利点を持っているが、生産するには難易度が高く、多くの課題が残っ
+ているのも事実である。そこで、TSVと従来の方式の折衷案としてインターポー
+ザを利用する方式がある。これは積層するDRAMなどの部品はTSVを用いてスタッ
+クし、最下部はインターポーザという板を挟んで基盤に接続するという方式である。
+
+\subsection*{インターポーザの利点}
+基盤と部品側（のインターポーザ）との接続は従来の方式で済むため、基盤に穴
+を開ける必要がなく、またTSVで作られた部品を従来の基盤に乗せやすくなる。
+
+\subsection*{インターポーザの欠点}
+インターポーザを使うことで、TSVだけで完結していた場合に比べてパッケージ
+の面積が大きくなってしまう点。
+\end{document}
+
+
+

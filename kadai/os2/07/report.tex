@@ -1,0 +1,76 @@
+\documentclass[a4j,9pt]{jsarticle}
+\usepackage{stdrep}
+\usepackage{ascmac}	% required for `\screen' (yatex added)
+\usepackage{fancybox}
+\usepackage{geometry}
+\usepackage{setspace}
+
+%\setstretch{0.8}
+\geometry{top=10mm,bottom=5mm}
+
+
+\renewcommand{\thepage}{}
+
+\title{情報科学類 オペレーティングシステムII 課題7}
+\author{学籍番号 200911434 \\ 名前 青木大祐}
+
+\lstset{
+  language=C,
+  basicstyle=\ttfamily\scriptsize,
+  commentstyle=\textit,
+  classoffset=1,
+  keywordstyle=\bfseries,
+  frame=trbl,
+  framesep=5pt,
+  showstringspaces=false,
+  numbers=none,
+  stepnumber=1,
+  numberstyle=\tiny,
+  tabsize=2,
+  breaklines = true
+}
+\begin{document}
+\maketitle
+\setcounter{section}{6}
+\section{割り込み処理}
+\setcounter{subsection}{700}
+\subsection{割り込みの利用}
+\begin{screen}
+キーボード、マウス、ネットワーク・カード等のデバイスからの入力では割り込みが多く使われている。割り込みを使う方法と割り込みを使わない方法を対比して、割り込みを使う方法の利点を説明しなさい。
+\end{screen}
+そのようなデバイスからはデータが入力されるタイミングがコンピュータ側から
+制御できないため、割り込みを使わない場合はポーリングする必要がある。ポー
+リングは間隔が長いと遅延が出るが、間隔が短いと負荷が高くなるため、このよ
+うなデバイスには向かない。
+一方割り込みを用いる場合は、デバイスがデータを準備してから任意のタイミン
+グで入力を行えるため、ポーリングのような問題は発生せずオーバヘッドが小さ
+くなる。
+
+\subsection{x86 CMOS Real-Time Clock の割り込みハンドラ}
+\begin{screen}
+x86 CMOS Real-Time Clock の割り込みハンドラを関数名で答えなさい。その関
+ 数の引数と結果を、簡単に説明しなさい。
+\end{screen}
+\begin{description}
+ \item[関数名] rtc\_interrupt
+ \item[引数] \begin{description}
+              \item[int irq] 割り込み番号
+              \item[void *dev\_id] \mbox{} デバイス番号。ひとつの割り込みが複数デ
+                         バイスで共有されるときに、デバイスを区別するた
+                         めの値。
+             \end{description}
+\end{description}
+
+\subsection{x86 CMOS Real-Time Clock の割り込みハンドラの呼び出し}
+\begin{screen}
+ 今日の資料の中で、x86 CMOS Real-Time Clock の割り込みハンドラを呼び出し
+ ていると思われる関数と行数を答えなさい。
+\end{screen}
+
+\begin{description}
+ \item[mod\_timer()] 263
+ \item[handle\_IRQ\_event()] 375
+\end{description}
+
+\end{document}
+

@@ -1,0 +1,2 @@
+php_flag log_errors On
+php_value error_log /home/ugrad/09/s0911434/public_html/jikken-s11/2-2/error.log

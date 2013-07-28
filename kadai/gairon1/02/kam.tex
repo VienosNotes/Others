@@ -1,0 +1,68 @@
+\documentclass[a4j,9pt]{jsarticle}
+
+
+\usepackage{fancybox}
+\usepackage{url}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{epsfig}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{times}
+\usepackage{ascmac}
+\usepackage{here}
+\usepackage{pxfonts}
+\usepackage{listings, jlisting}
+
+%\renewcommand{\lstlistingname}{
+\lstset{
+  basicstyle=\ttfamily\scriptsize,
+  commentstyle=\textit,
+  classoffset=1,
+  keywordstyle=\bfseries,
+  frame=trbl,
+  framesep=5pt,
+  showstringspaces=false,
+%  numbers=left,
+  stepnumber=1,
+  numberstyle=\tiny,
+  tabsize=2,
+  breaklines = true,
+  language=perl
+}
+
+\usepackage{geometry}
+\geometry{left=25mm,right=25mm,top=0mm,bottom=25mm}
+
+\setlength{\parskip}{0em}
+\setlength{\topsep}{0em}
+\setlength{\columnsep}{3zw}
+
+\usepackage{setspace}
+
+
+\title{情報科学概論I レポート}
+\author{学籍番号 200911434 \\ 名前 青木大祐}
+
+
+\begin{document}
+\maketitle
+\section*{マージソートの図示}
+マージソートの手順は、以下のプログラムによって図示される。
+\lstinputlisting{merge.pl}
+
+\begin{lstlisting}
+1,2,2,3,4,6,7,8,9,10
+
+[10, 2, 8, 9, 2, 1, 4, 7, 6, 3]
+[10, 2, 8, 9, 2][1, 4, 7, 6, 3]
+[10, 2, 8][9, 2][1, 4, 7][6, 3]
+[10, 2][8][9][2][1, 4][7][6][3]
+{2, 10}{8}{9}{2}{1, 4}{7}{6}{3}
+{2, 8, 10}{2, 9}{1, 4, 7}{3, 6}
+{2, 2, 8, 9, 10}{1, 3, 4, 6, 7}
+{1, 2, 2, 3, 4, 6, 7, 8, 9, 10}
+\end{lstlisting}
+\end{document}
+
+
+

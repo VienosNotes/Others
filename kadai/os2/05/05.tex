@@ -1,0 +1,88 @@
+\documentclass[a4j,9pt]{jsarticle}
+\usepackage{stdrep}
+\usepackage{ascmac}	% required for `\screen' (yatex added)
+\usepackage{fancybox}
+\usepackage{geometry}
+\usepackage{setspace}
+
+%\setstretch{0.8}
+\geometry{top=10mm,bottom=5mm}
+
+
+\renewcommand{\thepage}{}
+
+\title{情報科学類 オペレーティングシステムII 課題5}
+\author{学籍番号 200911434 \\ 名前 青木大祐}
+
+\lstset{
+  language=C,
+  basicstyle=\ttfamily\scriptsize,
+  commentstyle=\textit,
+  classoffset=1,
+  keywordstyle=\bfseries,
+  frame=trbl,
+  framesep=5pt,
+  showstringspaces=false,
+  numbers=none,
+  stepnumber=1,
+  numberstyle=\tiny,
+  tabsize=2,
+  breaklines = true
+}
+\begin{document}
+\maketitle
+\setcounter{section}{4}
+\section{メモリ管理、アドレス空間、ページテーブル}
+\setcounter{subsection}{500}
+
+\subsection{/proc/PID/maps}
+\begin{screen}
+ /proc/PID/mapsの内容は、このページの中でどの構造体のリストを表示したも
+ のと考えられるか。次の点を答えなさい。
+\begin{itemize}
+ \item リストの起点を保持している構造体の名前
+ \item リストの起点を保持している構造体の中のフィールド名
+ \item リストにつながれている構造体の名前
+\end{itemize}
+\end{screen}
+
+\begin{description}
+ \item[リストの起点を保持している構造体の名前] {\ttfamily mm\_struct}
+ \item[リストの起点を保持している構造体の中のフィールド名] {\ttfamily mmap}
+ \item[リストにつながれている構造体の名前] {\ttfamily vm\_area\_struct}
+\end{description}
+
+\subsection{1段のページテーブル}
+\begin{screen}
+
+ 仮想アドレスのサイズが32ビット、1ページの大きさが4KBとする。 次の３ペー
+ ジが割り当てられてしたとする。
+
+\begin{itemize}
+{\ttfamily 
+ \item 0x00000000 から 0x00000fff まで
+ \item 0x00001000 から 0x00001fff まで
+ \item 0xfffff000 から 0xffffffff まで
+}
+\end{itemize}
+1段のページテーブルを用いていた場合、ページテーブルに必要なメモリは何バイトになるか。ページテーブルの1エントリのバイトは、4バイトとする。なお、末端のページ・フレームに必要なメモリ(この場合は、3ページ、12KB)は、ページテーブルに必要なメモリではないので、計算に入れない。
+\end{screen}
+$4KB = 12bit$より$32 - 12 = 20bit$がページ内オフセット。1エントリ
+$4byte$なので$4 * 2^{20} = 4MB$
+
+\subsection{2段のページテーブル}
+\begin{screen}
+ 問題(502)で、次のような2段のページテーブル(「x86のページ・テーブル」と同じ)を用いていたとする。
+\begin{description}
+ \item[1段目] 31..22ビット (上位10ビット)
+ \item[2段目] 21..12ビット
+ \item[オフセット] 下位12ビット (11..0ビット)
+\end{description}
+
+この時、ページテーブルに必要なメモリは何バイトになるか。ページテーブルの1エントリのバイトは、上位のページテーブルも下位のページテーブルも4バイトとする。
+\end{screen}
+それぞれの上位10bitに従って、1段目のテーブルは2つのエントリが、2段目にはページテー
+ブルが2つ生成される。1つ4KBのテーブルが3つ生成されるので、合計12KB必要に
+なる。
+\end{document}
+

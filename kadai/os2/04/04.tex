@@ -1,0 +1,99 @@
+\documentclass[a4j,9pt]{jsarticle}
+\usepackage{stdrep}
+\usepackage{ascmac}	% required for `\screen' (yatex added)
+\usepackage{fancybox}
+\usepackage{geometry}
+\usepackage{setspace}
+
+%\setstretch{0.8}
+\geometry{top=10mm,bottom=5mm}
+
+
+\renewcommand{\thepage}{}
+
+\title{情報科学類 オペレーティングシステムII 課題4}
+\author{学籍番号 200911434 \\ 名前 青木大祐}
+
+\lstset{
+  language=C,
+  basicstyle=\ttfamily\scriptsize,
+  commentstyle=\textit,
+  classoffset=1,
+  keywordstyle=\bfseries,
+  frame=trbl,
+  framesep=5pt,
+  showstringspaces=false,
+  numbers=none,
+  stepnumber=1,
+  numberstyle=\tiny,
+  tabsize=2,
+  breaklines = true
+}
+\begin{document}
+\maketitle
+\setcounter{section}{3}
+\section{メモリ管理、Buddyシステム、kmalloc、スラブアロケータ}
+\setcounter{subsection}{400}
+\subsection{struct page}
+\begin{screen}
+struct pageの大きさは、アーキテクチャやコンパイル時のオプションによって異なる。あるシステムで、struct pageの大きさが40バイトであったとする。そのシステムに、1GBのメモリが搭載されていた時、struct pageのために、何MBのメモリが使われるか。ページサイズは、4KBとする。
+\end{screen}
+$1024*1024*1024/(4*1024) * 40KB = 10MB$
+
+
+\subsection{kmalloc()とkfree()}
+\begin{screen}
+以下は、ユーザ空間でメモリを割当て、利用し、開放するプログラムの一部である。
+\begin{lstlisting}
+   struct s1 *p;
+   p = malloc( sizeof(struct s1) );
+   use( p );
+   free( p ); 
+\end{lstlisting}
+このプログラムを、カーネル内で動かすことを想定してkmalloc()とkfree()を使って書き換えなさい。ただし、gfp のフラグとしては、GFP\_KERNEL を使いなさい。
+\begin{lstlisting}
+利用
+   struct s1 *p;
+   /*回答*/
+   use( p );
+   /*回答*/ 
+\end{lstlisting}
+\end{screen}
+
+\begin{lstlisting}
+   struct s1 *p;
+   p = kmalloc( sizeof(struct s1), GFP_KERNEL );
+   use( p );
+   kfree( p );
+\end{lstlisting}
+
+\subsection{スラブアロケータ}
+\begin{screen}
+問題(402) のプログラムを、スラブアロケータを使って書き換えなさい。すなわ
+ ち、kmem\_cache\_create()、kmem\_cache\_alloc()、および、
+ kmem\_cache\_free()を使って書き換えなさい。ただし、
+ kmem\_cache\_create() の 第3引数のalignとしては、0を、第4引数のflagsと
+ しては、SLAB\_PANIC、第5引数のコンストラクタとしては、NULLを指定しなさ
+ い。
+
+\begin{lstlisting}
+初期化
+   /*回答*/
+
+利用
+   struct s1 *p;
+   /*回答*/
+   use( p );
+   /*回答*/
+\end{lstlisting}
+\end{screen}
+
+\begin{lstlisting}
+struct s1 *p;
+kmem_cache_p = kmem_cache_create("hoge", sizeof(struct s1), 0, SLAB_PANIC, NULL);
+p = kmem_cache_alloc(kmem_cache_p, GFP_KERNEL);
+use( p );
+kmem_cache_free(kmem_cache_p, p);
+\end{lstlisting}
+\end{document}
+

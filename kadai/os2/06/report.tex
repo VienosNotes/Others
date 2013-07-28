@@ -1,0 +1,95 @@
+\documentclass[a4j,9pt]{jsarticle}
+\usepackage{stdrep}
+\usepackage{ascmac}	% required for `\screen' (yatex added)
+\usepackage{fancybox}
+\usepackage{geometry}
+\usepackage{setspace}
+
+%\setstretch{0.8}
+\geometry{top=10mm,bottom=5mm}
+
+
+\renewcommand{\thepage}{}
+
+\title{情報科学類 オペレーティングシステムII 課題6}
+\author{学籍番号 200911434 \\ 名前 青木大祐}
+
+\lstset{
+  language=C,
+  basicstyle=\ttfamily\scriptsize,
+  commentstyle=\textit,
+  classoffset=1,
+  keywordstyle=\bfseries,
+  frame=trbl,
+  framesep=5pt,
+  showstringspaces=false,
+  numbers=none,
+  stepnumber=1,
+  numberstyle=\tiny,
+  tabsize=2,
+  breaklines = true
+}
+\begin{document}
+\maketitle
+\setcounter{section}{5}
+\section{デバイスドライバ、inb()とoutb()}
+\setcounter{subsection}{600}
+
+\subsection{CMOS RTC のデバイスドライバ}
+\begin{screen}
+{\ttfamily rtc-read-time.c}のプログラムでシステム・コールが実行されると、CMOS RTC
+のデバイス・ドライバに含まれる関数が実行される。次のシステム・コールが
+実行された時に、どんな関数が実行されるかを答えなさい。
+{\ttfamily drivers/char/rtc.c}に含まれる関数の名前で答えなさい。
+\begin{itemize}
+ \item open() システム・コール(23行目):
+ \item ioctl() システム・コール(28行目):
+ \item close() システム・コール(36行目):
+\end{itemize}
+\end{screen}
+
+\begin{description}
+ \item[open()] rtc\_open
+ \item[ioctl()] rtc\_ioctl
+ \item[close()] rtc\_release
+\end{description}
+
+\subsection{copy\_to\_user()とmemcpy()}
+\begin{screen}
+関数{\ttfamily rtc\_do\_ioctl()}は、{\ttfamily copy\_to\_user()}を呼び出している。これは正しいプ
+ログラムであるが、もしも{\ttfamily copy\_to\_user()}を{\ttfamily memcpy()}やポインタを操作
+して直接ユーザ空間のメモリにアクセスすると問題がある。714行目から715行目
+を、{\ttfamily memcpy()}を使って「間違ったプログラム」に書き換えなさい。
+ただし、{\ttfamily copy\_to\_user()}は必ず成功するものとして、エラー処理を省略しなさい。
+
+ 以下の「/*空欄*/」を埋めなさい。
+
+\begin{lstlisting}
+memcpy( /*空欄(a)*/,/*空欄(b)*/,/*空欄(c)*/ );
+return 0;
+\end{lstlisting}
+\end{screen}
+\begin{lstlisting}
+memcpy( arg, &wtime, sizeof wtime );
+return 0;
+\end{lstlisting}
+
+\subsection{x86 CMOS RTCからの時間データの入力}
+\begin{screen}
+ 次のプログラムはx86 CMOS RTCハードウェアから時間({\itshape hours})データ
+ を読み出し変数{\ttfamily hh}に入れるプログラムの一部である。/*空欄(a)*/
+ と/*空欄(b)*/を埋めて完成させなさい。
+ \begin{lstlisting}
+ unsigned char hh;
+ outb( /*空欄(a)*/, 0x70 );
+ hh = inb( /*空欄(b)*/ );
+ \end{lstlisting}
+\end{screen}
+
+\begin{lstlisting}
+unsigned char hh;
+outb(4, 0x70 );
+hh = inb( 0x71 );
+\end{lstlisting}
+\end{document}
+

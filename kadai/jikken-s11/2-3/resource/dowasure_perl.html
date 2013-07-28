@@ -1,0 +1,531 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML lang="ja">
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Script-Type" content="text/javascript">
+  <link rel="stylesheet" href="style_hata.css" type="text/css">
+  <link rel="Contents" href="index.html">
+<title>どわすれ Perl メモ</title>
+
+</HEAD>
+
+<body>
+<a name="topofpage"> </a>
+<A href="index.html">Top Pageに戻る。</A>
+<script type="text/javascript"><!--
+var ID="100218572";
+var AD=1;
+var FRAME=0;
+// --></script>
+<script src="http://j1.ax.xrea.com/l.j?id=100218572" type="text/javascript"></script>
+<noscript>
+<a href="http://w1.ax.xrea.com/c.f?id=100218572" target="_blank"><img src="http://w1.ax.xrea.com/l.f?id=100218572&amp;url=X" alt="AX" border="0"></a>
+</noscript>
+
+
+<hr>
+<H1>どわすれ Perl メモ</H1>
+<p>Perlの小技をまとめておきます。</p>
+
+<!-- =========================================== -->
+<h2>目次</h2>
+
+<ul>
+<li><strong><a href="#array1">配列あれこれ</A></strong>
+	<ul>
+	<li><a href="#array1-1">配列にある値が含まれているかどうかを調べる</a>
+	</ul>
+
+<li><strong><a href="#array2">多次元配列あれこれ</A></strong>
+	<ul>
+	<li><a href="#array2-1">多次元配列の作成</a>
+	<li><a href="#array2-2">多次元配列の要素となる配列を取り出す</a>
+	<li><a href="#array2-3">2次元配列をコピー(deep copy)する関数</a>
+	<li><a href="#array2-4">2次元配列をつなげる関数</a>
+	<li><a href="#array2-5">2次元配列の最後に配列を追加</a>
+	</ul>
+
+<li><strong><A href="#matrix">行列計算 &mdash; MatrixRealパッケージを使う</A></strong>
+	<ul>
+	<li><a href="#matrix01">MatrixRealパッケージのインストール</a>
+	<li><a href="#matrix02">MatrixRealパッケージの読み込み</a>
+	<li><a href="#matrix03">行列の定義</a>
+	<li><a href="#matrix04">行列の情報を取得</a>
+	<li><a href="#matrix05">行列を部分的に変更</a>
+	<li><a href="#matrix10">行列の足し算・掛け算</a>
+	<li><a href="#matrix11">逆行列を求める</a>
+	<li><a href="#matrix12">転置行列を作る</a>
+	<li><a href="#matrix13">行列式・対角和を求める</a>
+	</ul>
+
+</ul>
+
+
+<!-- =========================================== -->
+<H2><a name="array1">配列あれこれ</a></H2>
+
+<H3><a name="array1-1">配列にある値が含まれているかどうかを調べる</a></H3>
+<p>
+<code>grep</code> を使えばできます。
+しかし、配列の要素数が多いときは時間がかかるので、おすすめできません。
+</p>
+<ul>
+<li>Example
+<pre>
+@a1 = ( 1, 3, 5, 7 );
+@a2 = ( 2, 4, 6, 8 );
+if( grep( $_==3, @a1 )&gt;0 ){ print "3 is in \@a1\n"; }else{ print "3 is not in \@a1\n"; }
+if( grep( $_==3, @a2 )&gt;0 ){ print "3 is in \@a2\n"; }else{ print "3 is not in \@a2\n"; }
+</pre>
+<li>Output
+<pre>
+3 is in @a1
+3 is not in @a2
+</pre></ul>
+
+<h2><a name="array2">多次元配列あれこれ</a></h2>
+
+<h3><a name="array2-1">多次元配列の作成</a></h3>
+<p>
+配列の各要素に、配列への参照を代入すれば多次元配列ができあがり。
+</p>
+<ul>
+<li>Example(2次元配列)
+<pre>
+@a = ( [1,2,3], [4,5,6] );
+print "(0,0):$a[0][0]  (0,1):$a[0][1]  (0,2):$a[0][2]\n";
+print "(1,0):$a[1][0]  (1,1):$a[1][1]  (1,2):$a[1][2]\n";
+</pre>
+<li>Output
+<pre>
+(0,0):1  (0,1):2  (0,2):3
+(1,0):4  (1,1):5  (1,2):6
+</pre></ul>
+
+<ul>
+<li>Example(3次元配列)
+<pre>
+@a = ( 
+        [[11,12], [21,22], [31,32]], 
+        [[41,42], [51,52], [61,62]]
+);
+foreach $i ( 0..1 ){
+foreach $j ( 0..2 ){
+        print "($i,$j,0):$a[$i][$j][0]  ($i,$j,1):$a[$i][$j][1]\n";
+}}
+</pre>
+<li>Output
+<pre>
+(0,0,0):11  (0,0,1):12
+(0,1,0):21  (0,1,1):22
+(0,2,0):31  (0,2,1):32
+(1,0,0):41  (1,0,1):42
+(1,1,0):51  (1,1,1):52
+(1,2,0):61  (1,2,1):62
+</pre></ul>
+
+<h3><a name="array2-2">多次元配列の要素となる配列を取り出す</a></h3>
+<p>
+多次元配列の要素となっている配列を取り出すには、
+下のように <code>@{～}</code> とすればよい。
+</p>
+<ul>
+<li>Example
+<pre>
+@a = ( [1,2,3], [4,5,6] );
+
+# 第2成分のみをコピー
+@b = @{$a[1]}; # 第2成分の配列全体。
+print "\@b = ( $b[0], $b[1], $b[2] )\n";
+
+# 2次元配列 foreach ループでを表示
+print "\@a =\n";
+foreach ( @a ){ print "( @$_ )\n"; }
+</pre>
+<li>Output
+<pre>
+@b = ( 4, 5, 6 )
+@a =
+( 1 2 3 )
+( 4 5 6 )
+</pre></ul>
+
+<h3><a name="array2-3">2次元配列をコピー(deep copy)する関数</a></h3>
+<p>
+<code>@b=@a</code>だとうまくいかないので要注意．
+次のような関数でコピーできます．
+</p>
+<ul>
+<li>Example
+<pre>
+sub copy_array_of_arrays(\@\@\@){
+  my ( $orig, $copy ) = @_;
+  @{$copy} = ();
+  foreach ( @{$orig} ){ push( @{$copy}, [ @$_ ] ); }
+}
+
+@a = ( [1,3,5], [2,4,6,8] );
+
+&amp;copy_array_of_arrays(\@a,\@b);
+# @a を @b にコピー．@b の要素を変更しても @a の要素は変わりません．
+print "\@a="; foreach ( @a ){ print "( @$_ ) "; }  print "\n";
+print "\@b="; foreach ( @b ){ print "( @$_ ) "; }  print "\n\n";
+$b[0][2]=7;
+print "\@a="; foreach ( @a ){ print "( @$_ ) "; }  print "\n";
+print "\@b="; foreach ( @b ){ print "( @$_ ) "; }  print "\n\n";
+
+# 失敗例：@a を @c にコピー．@c の要素を変更すると @a の要素も変わってしまう．．．
+@c=@a;
+print "\@a="; foreach ( @a ){ print "( @$_ ) "; }  print "\n";
+print "\@c="; foreach ( @c ){ print "( @$_ ) "; }  print "\n\n";
+$c[0][2]=7;
+print "\@a="; foreach ( @a ){ print "( @$_ ) "; }  print "\n";
+print "\@c="; foreach ( @c ){ print "( @$_ ) "; }  print "\n";
+</pre>
+</li>
+<li>Output
+<pre>
+@a=( 1 3 5 ) ( 2 4 6 8 )
+@b=( 1 3 5 ) ( 2 4 6 8 )
+
+@a=( 1 3 <strong>5</strong> ) ( 2 4 6 8 )
+@b=( 1 3 <strong>7</strong> ) ( 2 4 6 8 )
+
+@a=( 1 3 5 ) ( 2 4 6 8 )
+@c=( 1 3 5 ) ( 2 4 6 8 )
+
+@a=( 1 3 <strong>7</strong> ) ( 2 4 6 8 )
+@c=( 1 3 <strong>7</strong> ) ( 2 4 6 8 )
+</pre>
+</li>
+</ul>
+
+
+<h3><a name="array2-4">2次元配列をつなげる関数</a></h3>
+<p>
+2つの2次元配列をつなげて，あらたに2次元配列を作る関数．
+</p>
+<ul>
+<li>Example
+<pre>
+sub join_array_of_arrays(\@\@\@){
+  my ( $orig1, $orig2, $result ) = @_;
+  @{$result} = ();
+  foreach ( @{$orig1} ){ push( @{$result}, [ @$_ ] ); }
+  foreach ( @{$orig2} ){ push( @{$result}, [ @$_ ] ); }
+}
+
+@a = ( [1,3,5], [2,4,6] );
+@b = ( [9,7], [8,6] );
+&amp;join_array_of_arrays(\@a,\@b,\@c);
+foreach ( @c ){ print "( @$_ )\n"; }
+</pre>
+</li>
+
+<li>Output
+<pre>
+( 1 3 5 )
+( 2 4 6 )
+( 9 7 )
+( 8 6 )
+</pre>
+</li>
+</ul>
+
+<h3><a name="array2-5">2次元配列の最後に配列を追加</a></h3>
+<p>
+2次元配列の最後に，（1次元）配列を追加するには，
+<code>[ @～ ]</code> を <code>push</code> すればよいです。
+</p>
+<ul>
+<li>Example
+<pre>
+@a = ( [1,3,5], [2,4,6] );
+@c=(9,7);
+push( @a, [ @c ] );
+foreach ( @a ){ print "( @$_ )\n"; }
+</pre>
+</li>
+
+<li>Output
+<pre>
+( 1 3 5 )
+( 2 4 6 )
+( 9 7 )
+</pre>
+</li>
+</ul>
+
+
+
+
+<!-- =========================================== -->
+<H2><A name="matrix">行列計算 &mdash; MatrixRealパッケージを使う</A></H2>
+<p>
+MatrixRealパッケージを使って、Perlで行列計算を行う方法をまとめておきます。
+<font color="red">MatrixReal Version:1.9について記述しています．
+最新版で動くかどうかは未確認です．ソースファイルなどへのリンクは1.9のままです．古いです．</font>
+行列の乗算・逆行列・転置行列・行列式・トレース・実対称行列の対角化
+などいろいろできます。
+詳しくは、
+<a href="http://search.cpan.org/~leto/Math-MatrixReal-1.9/MatrixReal.pm">
+マニュアル</a>を参照。
+</p>
+
+
+<H3><a name="matrix01">MatrixRealパッケージのインストール</a></H3>
+<p>
+<a href="http://search.cpan.org/src/LETO/Math-MatrixReal-1.9/MatrixReal.pm">
+MatrixReal.pm</a> をダウンロードして、
+<tt>/usr/lib/perl5/Math/</tt> っぽい名前のディレクトリの下に
+保存すれば使えるようになります。<br>
+ActivePerl では，「スタートメニュー」→「Active Perl」→「Perl Package Manager」を
+実行（もしくはコマンドプロンプトからppm を実行）すれば，GUI画面でインストールできると思われます。便利です。
+</p>
+
+
+<H3><a name="matrix02">MatrixRealパッケージの読み込み</a></H3>
+<p>ソースファイルの先頭あたりに以下を書いておく。</p>
+<pre>use Math::MatrixReal;</pre>
+
+
+
+<H3><a name="matrix03">行列の定義</a></H3>
+<p>べたっと書くのが最も簡単。</p>
+<ul>
+<li>Example
+<pre>
+use Math::MatrixReal;
+$mat = Math::MatrixReal-&gt;new_from_string(&lt;&lt;'MATRIX');
+[  2 -1 ]
+[ -3  2 ]
+MATRIX
+print "$mat";
+</pre>
+<li>Output
+<pre>
+[  2.000000000000E+000 -1.000000000000E+000 ]
+[ -3.000000000000E+000  2.000000000000E+000 ]
+</pre></ul>
+
+<p><a href="#array2">2次元配列</a>への参照を渡して定義することも可能。</p>
+<ul>
+<li>Example
+<pre>
+use Math::MatrixReal;
+@array = ( [2,-1], [-3, 2] ); # 2次元配列を定義
+$mat  = Math::MatrixReal-&gt;new_from_rows(\@array);
+print "$mat";
+</pre>
+<li>Output
+<pre>
+[  2.000000000000E+000 -1.000000000000E+000 ]
+[ -3.000000000000E+000  2.000000000000E+000 ]
+</pre></ul>
+
+<p><code>n</code>行<code>m</code>列の0行列は、
+<code>new Math::MatrixReal(n,m)</code> とすればできる。
+</p>
+<ul>
+<li>Example
+<pre>
+use Math::MatrixReal;
+$mat = new Math::MatrixReal(2,3);
+print "$mat";
+</pre>
+<li>Output
+<pre>
+[  0.000000000000E+000  0.000000000000E+000  0.000000000000E+000 ]
+[  0.000000000000E+000  0.000000000000E+000  0.000000000000E+000 ]
+</pre></ul>
+
+<p>行列の各要素を表す関数を使っても定義できる。</p>
+<ul>
+<li>Example: (i,j)-要素が i+2*j となる3行3列の行列を作る。
+<pre>
+use Math::MatrixReal;
+$mat = new Math::MatrixReal(3,3);
+$mat = $mat-&gt;each ( sub { my( $x,$i,$j)=@_; $i+2*$j } );
+print "$mat";
+</pre>
+<li>Output
+<pre>
+[  3.000000000000E+000  5.000000000000E+000  7.000000000000E+000 ]
+[  4.000000000000E+000  6.000000000000E+000  8.000000000000E+000 ]
+[  5.000000000000E+000  7.000000000000E+000  9.000000000000E+000 ]
+</pre></ul>
+
+
+<h3><a name="matrix04">行列の情報を取得</a></h3>
+<p>
+<code>$mat-&gt;dim()</code> とすれば、
+<code>$mat</code> の (行数, 列数) が返ってくる。
+</p>
+<p>
+<code>$mat-&gt;element(i,j)</code> とすれば、
+<code>$mat</code> の <code>(i,j)</code>-要素の値が返ってくる。
+</p>
+<ul>
+<li>Example
+<pre>
+use Math::MatrixReal;
+$mat = Math::MatrixReal-&gt;new_from_string(&lt;&lt;'MATRIX');
+[ -1  2  3 ]
+[ -4 -5 -6 ]
+MATRIX
+
+($d1,$d2)= $mat-&gt;dim();  # 行列の次元数を取得
+$x = $mat-&gt;element(2,1); # 2行1列の要素を取得
+print "$d1 rows, $d2 columns, (2,1)-element is $x\n"; 
+</pre>
+<li>Output
+<pre>
+2 rows, 3 columns, (2,1)-element is -4
+</pre>
+</ul>
+
+
+
+
+<h3><a name="matrix05">行列を部分的に変更</a></h3>
+<p>
+<code>$mat-&gt;assign(i,j,x)</code> とすれば、
+<code>$mat</code> の <code>(i,j)</code>-要素を <code>x</code> に変更できる。
+</p>
+<ul>
+<li>Example
+<pre>
+use Math::MatrixReal;
+$mat = Math::MatrixReal-&gt;new_from_string(&lt;&lt;'MATRIX');
+[ -1  2  3 ]
+[ -4 -5 -6 ]
+MATRIX
+
+$mat-&gt;assign(2,1,7);  # 2行1列の要素を7に変える。
+print "$mat";
+</pre>
+<li>Output
+<pre>
+[ -1.000000000000E+000  2.000000000000E+000  3.000000000000E+000 ]
+[  7.000000000000E+000 -5.000000000000E+000 -6.000000000000E+000 ]
+</pre>
+</ul>
+
+
+<H3><a name="matrix10">行列の足し算・掛け算</a></H3>
+<p>
+普通の数字の演算と同じく、
+<code>+, -, *, **</code> などが使える。
+</p>
+<ul>
+<li>Example
+<pre>
+use Math::MatrixReal;
+$mat1 = Math::MatrixReal-&gt;new_from_string(&lt;&lt;'MATRIX');
+[  2 -1 ]
+[ -3  2 ]
+MATRIX
+$mat2 = Math::MatrixReal-&gt;new_from_string(&lt;&lt;'MATRIX');
+[ -2  0 ]
+[  1  1 ]
+MATRIX
+
+$mat = $mat1 + $mat2;  print "$mat\n";  # 足し算
+$mat = $mat1 - $mat2;  print "$mat\n";  # 引き算
+$mat = $mat1 * $mat2;  print "$mat\n";  # 掛け算
+$mat = $mat1 *  3;     print "$mat\n";  # 定数倍
+$mat = $mat1 ** 3;     print "$mat\n";  # 行列のべき乗
+</pre>
+</li>
+</ul>
+
+
+<H3><a name="matrix11">逆行列を求める</a></H3>
+<p>
+<code>$mat-&gt;inverse()</code> とすれば、
+<code>$mat</code> の逆行列が返ってくる。
+逆行列がない場合は、<code>undef</code> が返ってくる。</p>
+<ul>
+<li>Example
+<pre>
+use Math::MatrixReal;
+$mat = Math::MatrixReal-&gt;new_from_string(&lt;&lt;'MATRIX');
+[  2 -1 ]
+[ -3  2 ]
+MATRIX
+
+if( $inv  = $mat-&gt;inverse() ){
+        print "$inv";
+}else{
+        print "No inverse matrix.\n";
+}
+</pre>
+<li>Output
+<pre>
+[  2.000000000000E+000  1.000000000000E+000 ]
+[  3.000000000000E+000  2.000000000000E+000 ]
+</pre>
+</ul>
+
+<H3><a name="matrix12">転置行列を作る</a></H3>
+<p>
+<code>$mat2-&gt;trans($mat1)</code> とすれば、
+<code>$mat2</code> に <code>$mat1</code> の転置行列が代入される。
+ただし、<code>$mat2</code> は、あらかじめしかるべきサイズの
+行列として定義されている必要がある。
+</p>
+<ul>
+<li>Example
+<pre>
+use Math::MatrixReal;
+$mat1 = Math::MatrixReal-&gt;new_from_string(&lt;&lt;'MATRIX');
+[ -1  2  3 ]
+[ -4 -5 -6 ]
+MATRIX
+
+$mat2 = new Math::MatrixReal( reverse $mat1-&gt;dim() );
+$mat2-&gt;transpose($mat1);
+print "$mat2";
+</pre>
+<li>Output
+<pre>
+[ -1.000000000000E+000 -4.000000000000E+000 ]
+[  2.000000000000E+000 -5.000000000000E+000 ]
+[  3.000000000000E+000 -6.000000000000E+000 ]
+</pre>
+</ul>
+
+
+
+<H3><a name="matrix13">行列式・対角和を求める</a></H3>
+<code>$mat-&gt;det(), $mat-&gt;trans()</code> で、
+<code>$mat</code> の行列式, 対角和（トレース）が返ってくる。
+<ul>
+<li>Example
+<pre>
+use Math::MatrixReal;
+$mat = Math::MatrixReal-&gt;new_from_string(&lt;&lt;'MATRIX');
+[  2 -1 ]
+[ -3  2 ]
+MATRIX
+
+$x = $mat-&gt;det();   print "determinant: $x\n";  # 行列式
+$x = $mat-&gt;trace(); print "trace      : $x\n";  # 対角成分の和
+</pre>
+<li>Output
+<pre>
+determinant: 1
+trace      : 4
+</pre>
+</li>
+</ul>
+
+<!-- =========================================== -->
+<!-- 本文終わり。以下、フッター -->
+<HR>
+<a href="index.html">Top Pageに戻る。</a>
+<a href="#topofpage">このページの上へ。</a>
+</BODY>
+</HTML>
+
+

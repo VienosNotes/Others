@@ -1,0 +1,77 @@
+[17-Feb-2013 14:40:56] PHP Parse error:  syntax error, unexpected ')' in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 21
+[17-Feb-2013 14:57:35] PHP Warning:  fopen(target.txt): failed to open stream: Permission denied in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/add.php on line 2
+[17-Feb-2013 14:57:35] PHP Warning:  fwrite() expects parameter 1 to be resource, boolean given in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/add.php on line 3
+[17-Feb-2013 14:57:35] PHP Warning:  fclose() expects parameter 1 to be resource, boolean given in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/add.php on line 4
+[17-Feb-2013 14:58:23] PHP Warning:  fopen(target.txt): failed to open stream: Permission denied in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/add.php on line 2
+[17-Feb-2013 14:58:23] PHP Warning:  fwrite() expects parameter 1 to be resource, boolean given in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/add.php on line 3
+[17-Feb-2013 14:58:23] PHP Warning:  fclose() expects parameter 1 to be resource, boolean given in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/add.php on line 4
+[17-Feb-2013 14:58:31] PHP Warning:  fopen(target.txt): failed to open stream: Permission denied in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/add.php on line 2
+[17-Feb-2013 14:58:31] PHP Warning:  fwrite() expects parameter 1 to be resource, boolean given in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/add.php on line 3
+[17-Feb-2013 14:58:31] PHP Warning:  fclose() expects parameter 1 to be resource, boolean given in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/add.php on line 4
+[17-Feb-2013 14:58:36] PHP Warning:  fopen(target.txt): failed to open stream: Permission denied in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/add.php on line 2
+[17-Feb-2013 14:58:36] PHP Warning:  fwrite() expects parameter 1 to be resource, boolean given in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/add.php on line 3
+[17-Feb-2013 14:58:36] PHP Warning:  fclose() expects parameter 1 to be resource, boolean given in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/add.php on line 4
+[17-Feb-2013 14:58:38] PHP Warning:  fopen(target.txt): failed to open stream: Permission denied in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/add.php on line 2
+[17-Feb-2013 14:58:38] PHP Warning:  fwrite() expects parameter 1 to be resource, boolean given in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/add.php on line 3
+[17-Feb-2013 14:58:38] PHP Warning:  fclose() expects parameter 1 to be resource, boolean given in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/add.php on line 4
+[17-Feb-2013 15:36:59] PHP Notice:  Undefined variable: file in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/index.php on line 39
+[17-Feb-2013 15:36:59] PHP Warning:  fgetcsv() expects parameter 1 to be resource, null given in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/index.php on line 39
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[17-Feb-2013 15:40:54] PHP Warning:  preg_match(): Compilation failed: missing terminating ] for character class at offset 10 in /home/ugrad/09/s0911434/public_html/jikken-s11/1-1/search.php on line 26
+[03-Mar-2013 17:12:39] PHP Warning:  fopen(target.txt): failed to open stream: Permission denied in /home/ugrad/09/s0911434/public_html/jikken-s11/2/add.php on line 2
+[03-Mar-2013 17:12:39] PHP Warning:  fwrite() expects parameter 1 to be resource, boolean given in /home/ugrad/09/s0911434/public_html/jikken-s11/2/add.php on line 3
+[03-Mar-2013 17:12:39] PHP Warning:  fclose() expects parameter 1 to be resource, boolean given in /home/ugrad/09/s0911434/public_html/jikken-s11/2/add.php on line 4
+[03-Mar-2013 17:30:56] PHP Parse error:  syntax error, unexpected '}' in /home/ugrad/09/s0911434/public_html/jikken-s11/2/search.php on line 45
+[03-Mar-2013 17:37:10] PHP Parse error:  syntax error, unexpected '}' in /home/ugrad/09/s0911434/public_html/jikken-s11/2/search.php on line 27
+[03-Mar-2013 17:37:14] PHP Parse error:  syntax error, unexpected '}' in /home/ugrad/09/s0911434/public_html/jikken-s11/2/search.php on line 27
+[03-Mar-2013 17:40:28] PHP Parse error:  syntax error, unexpected '}' in /home/ugrad/09/s0911434/public_html/jikken-s11/2/search.php on line 27
+[03-Mar-2013 17:41:38] PHP Notice:  Undefined variable: data in /home/ugrad/09/s0911434/public_html/jikken-s11/2/search.php on line 25
+[03-Mar-2013 17:41:38] PHP Notice:  Undefined variable: data in /home/ugrad/09/s0911434/public_html/jikken-s11/2/search.php on line 25
+[03-Mar-2013 17:41:38] PHP Notice:  Undefined variable: data in /home/ugrad/09/s0911434/public_html/jikken-s11/2/search.php on line 25
+[03-Mar-2013 17:41:38] PHP Notice:  Undefined variable: data in /home/ugrad/09/s0911434/public_html/jikken-s11/2/search.php on line 25
+[03-Mar-2013 17:41:38] PHP Notice:  Undefined variable: data in /home/ugrad/09/s0911434/public_html/jikken-s11/2/search.php on line 25
+[03-Mar-2013 17:41:45] PHP Notice:  Undefined variable: data in /home/ugrad/09/s0911434/public_html/jikken-s11/2/search.php on line 25
+[03-Mar-2013 17:41:45] PHP Notice:  Undefined variable: data in /home/ugrad/09/s0911434/public_html/jikken-s11/2/search.php on line 25
+[03-Mar-2013 17:41:45] PHP Notice:  Undefined variable: data in /home/ugrad/09/s0911434/public_html/jikken-s11/2/search.php on line 25
+[03-Mar-2013 17:41:45] PHP Notice:  Undefined variable: data in /home/ugrad/09/s0911434/public_html/jikken-s11/2/search.php on line 25
+[03-Mar-2013 17:41:45] PHP Notice:  Undefined variable: data in /home/ugrad/09/s0911434/public_html/jikken-s11/2/search.php on line 25
+[03-Mar-2013 18:04:43] PHP Parse error:  syntax error, unexpected T_FOREACH in /home/ugrad/09/s0911434/public_html/jikken-s11/2/search.php on line 67
+[06-Mar-2013 08:33:17] PHP Parse error:  syntax error, unexpected T_DOUBLE_ARROW in /home/ugrad/09/s0911434/public_html/jikken-s11/3/search.php on line 35
